@@ -10,6 +10,11 @@ tags:
 - '10.7'
 - lion
 - Recovery HD
+
+Categories:
+- Lion
+- Server
+- Code
 ---
 
 I've pushed some updates to this script, mainly switching to using [The Luggage](https://github.com/unixorn/luggage) for making the package. As ever, it's up on [Github](https://github.com/grahamgilbert/Make-Recovery-HD).

@@ -10,13 +10,15 @@ tags:
 - BT
 - pain
 - rant
+
+categories: Rant
 ---
 
 Before I descend into a massive rant, let me preface this post with this: I hate BT. I always have, and I probably always will. They are generally the most incompetent, uncooperative company on the planet. 
 
 Let me take you back to October 2011. I was perusing the BT website looking for BT Infinity - their brand name for up to 40meg VDSL. I popped in my postcode and was told that I was in a trial area for [FTTP](http://en.wikipedia.org/wiki/Fiber_to_the_x#Fiber_to_the_premises) at a stonking 100meg. Obviously I thought about the pain I was letting myself in for, having to deal with BT, but I was sure that I could cope with it if I was getting such insanely fast Internet at the end of it. 
 
-If only I knew how painful it was going to be. 
+If only I knew how painful it was going to be. <!--more-->
 
 My first install date was in November. This was cancelled a couple of days before the appointment with no real reason given. The exact same happened in December (that's two days of holiday wasted now, if your counting). I was then given an install date in January. Cancelled. I was told they needed to dig through a neighbour's garden. I live on the corner of the street and the BT manhole is literally outside my front door, and the cabinet is on the opposite side of the road - so basically BT told me a great big fat lie (the final fibre did indeed go to the manhole cover, so they were absolutely lying to me).
 

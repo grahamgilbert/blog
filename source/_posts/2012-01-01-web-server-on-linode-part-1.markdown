@@ -10,6 +10,10 @@ tags:
 - apache
 - linode
 - ubuntu
+
+categories:
+- Apache
+- Ubuntu
 ---
 
 Recently, I was tasked with moving a client's web server from a box in their office, to something a little more robust when they put something up there that caused the server to go nuts (30 mb/s nuts!).
@@ -22,7 +26,7 @@ The main goals were:
   * Use GUI's as much as possible for admin so lower level techs could make changes on the server.
 
 
-After considering several options, we decided to go with Linode. I've had great success hosting my own site with them, and as we had full access to the box, we could install anything we wanted - including CrashPlan.
+After considering several options, we decided to go with Linode. I've had great success hosting my own site with them, and as we had full access to the box, we could install anything we wanted - including CrashPlan.<!--more-->
 
 So, first things first. Get yourself a Linode account. Start off with the cheapest 512 account and work your way upwards if you need the horsepower. Once you've got your account, pick your data centre, and get your VM up and running. We usually go for Ubuntu 10.04 LTS as you'll find the most support online for that.
 

@@ -12,6 +12,12 @@ tags:
 - lion
 - postgres
 - server
+
+categories:
+- Lion
+- Server
+- Code
+
 ---
 
 Starting with Lion Server, a fair bit of data is now stored in Postgres databases. If you use Time Machine, you'll get this backed up properly for you. If you use a proper backup solution (I prefer CrashPlan), you won't get automated dumps. This script rectifies this, by dumping all of your Postgres data, and keeping 7 days worth.

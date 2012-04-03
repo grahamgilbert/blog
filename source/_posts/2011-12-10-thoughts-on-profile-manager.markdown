@@ -11,6 +11,10 @@ tags:
 - lion
 - Profile Manager
 - server
+
+categories:
+- Lion
+- Server
 ---
 
 We've been using a 10.7 Server in the office since Lion was released, but it is only now that I'm about to install an all Lion office, so will get the chance to use Profile Manager in a real install. Over the last few months, I've noticed a couple of things:

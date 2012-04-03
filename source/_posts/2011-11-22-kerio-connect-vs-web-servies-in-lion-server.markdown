@@ -13,6 +13,11 @@ tags:
 - server
 - web
 - webappctl
+
+categories:
+- Lion
+- Server
+- Code
 ---
 
 ### The problem

@@ -10,6 +10,11 @@ tags:
 - '10.7'
 - lion
 - Recovery HD
+
+categories:
+- Lion
+- Server
+- Code
 ---
 
 So you've lovingly crafted your never booted image in InstaDMG. It's fully up to date and lovely. And then you try to enable FileVault 2. As you have no Recovery HD, it's not going to happen.
