@@ -3,6 +3,7 @@ date: '2012-03-24 13:09:19'
 layout: post
 slug: the-agony-and-ecstasy-of-100meg-broadband
 status: publish
+comments: true
 title: The agony and ecstasy of 100meg broadband
 wordpress_id: '74'
 tags:

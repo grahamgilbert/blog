@@ -5,6 +5,7 @@ slug: making-a-lion-recovery-hd
 status: publish
 title: Making a Lion Recovery HD
 wordpress_id: '57'
+comments: true
 tags:
 - '10.7'
 - lion

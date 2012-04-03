@@ -5,6 +5,7 @@ slug: web-server-on-linode-part-1
 status: publish
 title: Web server on Linode part 1
 wordpress_id: '47'
+comments: true
 tags:
 - apache
 - linode

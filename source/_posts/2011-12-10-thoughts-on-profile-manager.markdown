@@ -5,6 +5,7 @@ slug: thoughts-on-profile-manager
 status: publish
 title: Thoughts on Profile Manager
 wordpress_id: '40'
+comments: true
 tags:
 - '10.7'
 - lion

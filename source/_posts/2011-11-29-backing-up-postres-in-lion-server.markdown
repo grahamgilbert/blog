@@ -5,6 +5,7 @@ slug: backing-up-postres-in-lion-server
 status: publish
 title: Backing up Postres in Lion Server
 wordpress_id: '30'
+comments: true
 tags:
 - '10.7'
 - backup
