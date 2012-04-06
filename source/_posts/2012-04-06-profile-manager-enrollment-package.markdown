@@ -11,6 +11,8 @@ categories:
 ---
 Over the past week or so, we had a need to enroll macs automagically with a Lion Profile Manager server. My first plan was to do what Charles Edge did in his recent [blog post](http://krypted.com/mac-os-x/automating-profile-manager-enrollment-through-deploystudio/) and use DeployStudio. Then I remembered another post by Charles on [/usr/bin/profiles](http://krypted.com/iphone/profile-manager-and-profiles/) and wondered if I could make a workflow that can be used throughout our deployment and system maintenance process - yup, the humble pkg, that can be popped into Munki for existing macs, installed with DeployStudio for imaging and pushed out with ARD if need be. 
 
+[Get the code from GitHub](https://github.com/grahamgilbert/Profile-Manager-Enrollment)
+
 Assuming you've got [The Luggage](https://github.com/unixorn/luggage) set up, first off you'll need your enrollment and trust profiles:
 
 1.	Create a new enrollment profile
