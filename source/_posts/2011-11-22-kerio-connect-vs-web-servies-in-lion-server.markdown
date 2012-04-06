@@ -56,5 +56,6 @@ Entourage accounts will need to be reconfigured with the Kerio setup tool. They 
 
 #### Kerio Services
 The services in Kerio Admin will need to be set to run on All Interfaces rather than a set IP address, as they won't start on a specific address (it is unknown whether this is because of the reverse proxy / webapp process or if this is a general Lion issue). If the service has stopped, the webapp will need to be restarted:
-```sudo webappctl stop com.grahamgilbert.kerio mail.example.com
-sudo webappctl start com.grahamgilbert.kerio mail.example.com```
+
+	sudo webappctl stop com.grahamgilbert.kerio mail.example.com
+	sudo webappctl start com.grahamgilbert.kerio mail.example.com

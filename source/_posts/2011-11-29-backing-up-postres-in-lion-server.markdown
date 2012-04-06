@@ -31,9 +31,10 @@ You can grab the code, along with a pre-built pkg installer from [GitHub](https:
 
 By default, the script puts it's backups in /Backups/Postgres - if you wish to change it, you will need to edit line 3 of /usr/local/pgbackup/pgbackup.sh
 
-``` bash /usr/local/pgbackup/pgbackup.sh
+{% codeblock lang:bash %}
+/usr/local/pgbackup/pgbackup.sh
 FINAL_BACKUP_DIR=/path/where/you/want/things/kept
-```
+{% endcodeblock %}
 
 The LaunchDaemon will trigger the script every night at 21:00. If you wish to change this, you will need to edit the CalendarStartInterval part of com.grahamgilbert.pgbackup.plist
 
