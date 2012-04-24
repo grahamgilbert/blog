@@ -15,14 +15,6 @@ VirtualBox needs to know where the vm lives now, so remove the original vm you m
 
 One last step - the launchd item to control the vm. 
 
-I recently had a requirement to run an Ununtu machine, but the client had only mac servers, and no budget for additional hardware. The solution turned out to be VirtualBox - we could run it headless and have it start when the mac booted.
-
-First, get your VM set up how you like it and shut it down. I like to move my VMs out of the boot drive, so move the entire ~/VirtualBox VMs directory onto your storage device. 
-
-VirtualBox needs to know where the vm lives now, so remove the original vm you made, then double click the moved vbox file. 
-
-One last step - the launchd item to control the vm. 
-
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 	<plist version="1.0">
@@ -51,12 +43,6 @@ Change some "The name of your VM" to what your vm is actually called, change Use
 Save the plist into /Library/LaunchDaemons/ as com.yourcompany.mysupervm.plist (or whatever you want) and chown it to root:wheel
 
 To start the vm, crack open terminal and issue
-	
-Change some key to the name of the vm, change another key to the admin username on the server, and finally change the path to match the location of your VirtualBox VMs directory. 
-
-Save the plist into /Library/LaunchDeamons/ as com.yourcompany.mysupervm.plist (or whatever you want) and chown it to root:wheel
-
-To start the vm, crack open terminal and bash in:
 	sudo launchctl load /Library/LaunchDaemons/com.yourcompany.mysupervm.plist
 	
 And to stop:
