@@ -8,6 +8,8 @@ categories:
 - Mountain Lion
 - Code
 ---
+__Update:__ There's a better method over at [afp548](http://afp548.com/2012/08/15/creating-a-10-8-recovery-hd-package-with-luggage/) that does this better. Use that!
+
 A few months ago I made a package to create a Recovery HD on a freshly deployed Lion Mac. It's time to do the same for [Mountain Goat](https://twitter.com/fordy/status/228218744177033216).
 
 In true Blue Peter style, you will need:
