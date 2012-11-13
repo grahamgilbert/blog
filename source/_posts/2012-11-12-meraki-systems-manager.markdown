@@ -4,8 +4,8 @@ title: "Meraki Systems Manager"
 date: 2012-11-12 16:07
 comments: true
 categories: 
--Cloud
--OS X
+- Cloud
+- OS X
 ---
 Maintaining visibility over your fleet of machines is always difficult. It's even more difficult when you've got Macs. It gets nearly impossible when you decide you'd like something hosted in the cloud.
 
