@@ -3,6 +3,7 @@ layout: post
 title: "Casper versus DeployStudio"
 date: 2012-12-04 10:43
 comments: true
+published: false
 categories: 
 - OS X
 - Deployment
