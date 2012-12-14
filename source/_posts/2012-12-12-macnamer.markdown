@@ -8,6 +8,6 @@ categories:
 - Code
 - Python
 ---
-A few months ago, we decided to move away from DeployStudio for imaging our Macs to reduce the OS X footprint in the server room (a plain old NetRestore can be run from [NetSUS](https://jamfnation.jamfsoftware.com/viewProduct.html?id=180&view=info). This left us with a problem - how are we going to name our Macs now (a task previously performed by DeployStudio)?
+A few months ago, we decided to move away from DeployStudio for imaging our Macs to reduce the OS X footprint in the server room (a plain old NetRestore can be run from [NetSUS](https://jamfnation.jamfsoftware.com/viewProduct.html?id=180&view=info)). This left us with a problem - how are we going to name our Macs now (a task previously performed by DeployStudio)?
 
 Enter [MacNamer](https://github.com/grahamgilbert/macnamer). It's usage and installation is detailled in the Readme file, please fork, try to break, file pull requests. This has been in production for several months at work, but I'm sure someone will manage to make it break!
