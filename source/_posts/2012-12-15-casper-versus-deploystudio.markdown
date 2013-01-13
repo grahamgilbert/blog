@@ -6,6 +6,8 @@ comments: true
 categories: 
 - OS X
 - Deployment
+- Casper
+- DeployStudio
 ---
 I'll preface this with one thing - I'm not a Casper Suite expert. I don't use it reguarly, and at what it costs, I probably won't! It's this price that gave me high expectations for this last install. Unfortunately they were unfounded.
 

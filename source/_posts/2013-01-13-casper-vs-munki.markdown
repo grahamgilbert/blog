@@ -6,6 +6,8 @@ comments: true
 categories: 
 - OS X
 - Deployment
+- Casper
+- Munki
 ---
 Next up in the battle of Casper vs the rest of the Mac admin toolset looking to reign supreme in the contest of software installation is Munki.
 
