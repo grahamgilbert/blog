@@ -43,11 +43,11 @@ Winner: Munki - the direct relationship between updates and their parent package
 
 By default, this is what a client sees when Munki wants to install something:
 
-{% img images/posts/2013-01-13/Munki.png %}
+{% img /images/posts/2013-01-13/Munki.png %}
 
 And this is what you see with Casper. 
 
-{% img images/posts/2013-01-13/Blank_Desktop.png %}
+{% img /images/posts/2013-01-13/Blank_Desktop.png %}
 
 No, I've not made a mistake. No warning, no option to delay to a more convenient time, nothing. Nada. Zilch. And you better hope that the app isn't running! It's crash time otherwise. 
 
