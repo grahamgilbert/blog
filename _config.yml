@@ -58,10 +58,10 @@ default_asides: [custom/asides/about.html, asides/twitter.html, asides/recent_po
 # ----------------------- #
 
 # Github repositories
-github_user: 
-github_repo_count: 
-github_show_profile_link: 
-github_skip_forks: 
+github_user: grahamgilbert
+github_repo_count: 4
+github_show_profile_link: true
+github_skip_forks: true
 
 # Twitter
 twitter_user: grahamgilbert

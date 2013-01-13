@@ -22,4 +22,4 @@ Assuming you've got [The Luggage](https://github.com/unixorn/luggage) set 
 
 [{% img  center /images/posts/2012-04-06/profile_enrollment_and_trust-thumb.jpg %}](/images/posts/2012-04-06/profile_enrollment_and_trust-full.jpg)
 
-If your attachments auto open, click cancel when you're asked if you want to install the profiles so they stay in ~/Downloads. Rename them to enroll.mobileconfig and trust.mobileconfig and pop them into the directory you cloned from GitHub. A quick `make pkg` and you've got your package .
+If your attachments auto open, click cancel when you're asked if you want to install the profiles so they stay in ~/Downloads. Rename them to enroll.mobileconfig and trust.mobileconfig and pop them into the directory you cloned from GitHub. A quick `make pkg` and you've got your package.
