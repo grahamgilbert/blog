@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Crypt: A FilveVault 2 escrow solution"
+title: "Crypt: A FileVault 2 escrow solution"
 date: 2013-01-18 08:05
 comments: true
 categories: 
