@@ -17,11 +17,11 @@ Make sure your test Mac is pointing to the right server - unless you’ve change
 
 __Updates from the previous post:__ Since the last post was published, Puppet version 3.1 has been released - the main bonus to Mac users is that the Puppet user and group are now created, so the manual Puppet run command is a little shorter. What was this:
 	
-	sudo puppet agent --test --verbose --group 0
+	sudo puppet agent --test --group 0
 
 Can now be shortened to:
 
-	sudo puppet agent --test --verbose
+	sudo puppet agent --test
 	
 As the Puppet user and group now exist, you no longer need to run Puppet as root. This creates another issue (the Puppet user is visible at the login screen despite it not being able to log in), but we'll get around that in this article. Regardless, you want to install [Puppet 3.1](http://downloads.puppetlabs.com/mac/). Back to the main event.
 
@@ -69,7 +69,7 @@ node puppetclient {
 
 Save it, and then back on your client perform a Puppet run:
 
-	sudo puppet agent --test --verbose
+	sudo puppet agent --test
 	
 Of course nothing has changed - that’s because your client’s configuration is how you have described it in site.pp. Try changing ladmin’s password in system preferences, then perform another Puppet run. You’ll see Puppet change the password right back.
 

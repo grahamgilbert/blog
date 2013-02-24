@@ -31,7 +31,7 @@ node puppetclient {
 
 Then on your client Mac:
 
-	sudo puppet agent --test --verbose --group 0
+	sudo puppet agent --test --group 0
 
 And then magic happens! 
 
@@ -48,7 +48,7 @@ Making a file isn't overly impressive. Any package installer or even ARD could d
 
 Now you've made sure the file isn't there, run Puppet again:
 
-	sudo puppet agent --test --verbose --group 0
+	sudo puppet agent --test --group 0
 
 You'll see Puppet telling you that it's creating the file again:
 
@@ -61,7 +61,7 @@ Now what happens if you change the content of the file on the client Mac? Enter 
 	
 And then invoke Puppet again:
 
-	sudo puppet agent --test --verbose --group 0
+	sudo puppet agent --test --group 0
 	
 You now see Puppet correcting the file back to what we've described in the node's definition. (Once again, ignore the errors, they're down to using the pre-built VM again.)
 
