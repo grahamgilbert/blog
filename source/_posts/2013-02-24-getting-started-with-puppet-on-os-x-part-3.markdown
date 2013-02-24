@@ -54,7 +54,7 @@ node puppetclient {
 	user { 'ladmin':
   		ensure     => 'present',
   		comment    => 'Local Admin',
-		gid        => '20',
+  		gid    => '20',
   		groups     => ['_appserveradm', '_appserverusr', '_lpadmin', 'admin'],
   		home       => '/Users/ladmin',
   		iterations => '21881',
