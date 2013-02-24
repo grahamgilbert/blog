@@ -77,3 +77,4 @@ Notice: /Stage[main]//Node[puppetclient]/File[puppettest]/content:
 
 Victory! In the next part we'll make our admin user and ensure that it stays on the machine. In the mean time, have a play with changing the file through the Puppet Master - try changing it's mode or contents - or you could remove it by setting the ``ensure => present`` to ``ensure => absent``.
 	
+[Onwards to part 3!](/blog/2013/02/24/getting-started-with-puppet-on-os-x-part-3/)

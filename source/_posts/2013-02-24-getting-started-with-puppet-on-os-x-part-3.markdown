@@ -3,11 +3,12 @@ layout: post
 title: "Getting Started With Puppet on OS X (Part 3)"
 date: 2013-02-24 14:59
 comments: true
-published: false
 categories: 
 - OS X
 - Puppet
 ---
+In this post, we’ll do something pretty much all Mac admins will need to do - set up their admin user. Bust first, a little housekeeping.
+
 Before reading this post, you really need to read [part 1](http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/), [part 2](http://grahamgilbert.com/blog/2013/01/27/getting-started-with-puppet-on-os-x-part-2/) and most importantly my post on [building a Puppet Master with Vagrant](http://grahamgilbert.com/blog/2013/02/13/building-a-test-puppet-master-with-vagrant/). The Puppet Labs provided VM won’t cut it here, we need the latest version of Puppet on our Master. If you are using the same Mac / OS X VM that was previously hooked up to the Puppet Master VM, you will need to run the following command on the client - don’t worry, it will get new certificates from your very own Puppet Master:
 
 	sudo rm -rf /var/lib/puppet/ssl
@@ -24,7 +25,7 @@ Can now be shortened to:
 	
 As the Puppet user and group now exist, you no longer need to run Puppet as root. This creates another issue (the Puppet user is visible at the login screen despite it not being able to log in), but we'll get around that in this article. Regardless, you want to install [Puppet 3.1](http://downloads.puppetlabs.com/mac/). Back to the main event.
 
-In this post, we’ll do something pretty much all Mac admins will need to do - set up their admin user. First thing’s first, create your admin user. I’ve called mine “Local Administrator”, with a short name of “ladmin” and the very imaginative passord of “password”. Next open up a Terminal window on your puppetclient Mac and issue the following command:
+First thing’s first, create your admin user. I’ve called mine “Local Administrator”, with a short name of “ladmin” and the very imaginative passord of “password”. Next open up a Terminal window on your puppetclient Mac and issue the following command:
 
 	sudo puppet resource user ladmin
 	
@@ -79,14 +80,14 @@ node puppetclient {
 	user { 'ladmin':
   		ensure     => 'present',
   		comment    => 'Local Admin',
-		gid        => '20',
+  		gid        => '20',
   		groups     => ['_appserveradm', '_appserverusr', '_lpadmin', 'admin'],
-  		home       => ‘/var/ladmin',
+  		home       => '/var/ladmin',
   		iterations => '21881',
   		password   => '401e3aa796b3bfff2c8e929a003b727be1bd548aa0f0b0e131f0d11f3953162be210200a70872734a28be747a933e12e2458ffdcc60d209eab9e006a9f4042dc883148070e6e8ad05f4a5e5d44bd0ddfc9494482f0d16c9d5eb1de086183db1b89df9982d2856eeed431d65e03ff99177c3185aa61bc926b1a0020c49621ddd8',
   		salt       => '0c3cd42b97d0b0df45542fcb5961a2920f2fd6204aa151bf08d762d9dd44fd0c',
   		shell      => '/bin/bash',
-  		uid        => ‘404’,
+  		uid        => '404',
 	}
 }
 {% endcodeblock %}
@@ -108,12 +109,12 @@ node puppetclient {
   		comment    => 'Local Admin',
 		gid        => '20',
   		groups     => ['_appserveradm', '_appserverusr', '_lpadmin', 'admin'],
-  		home       => ‘/var/ladmin',
+  		home       => '/var/ladmin',
   		iterations => '21881',
   		password   => '401e3aa796b3bfff2c8e929a003b727be1bd548aa0f0b0e131f0d11f3953162be210200a70872734a28be747a933e12e2458ffdcc60d209eab9e006a9f4042dc883148070e6e8ad05f4a5e5d44bd0ddfc9494482f0d16c9d5eb1de086183db1b89df9982d2856eeed431d65e03ff99177c3185aa61bc926b1a0020c49621ddd8',
   		salt       => '0c3cd42b97d0b0df45542fcb5961a2920f2fd6204aa151bf08d762d9dd44fd0c',
   		shell      => '/bin/bash',
-  		uid        => ‘404’,
+  		uid        => '404',
   		notify     => Exec['Hide sub-500 users'],
 	}
 	

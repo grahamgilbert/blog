@@ -92,3 +92,5 @@ Once you see your puppetclient's certificate waiting to be signed, sign it on th
 After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it's magic - although Puppet won't do anything yet, as you've not described any configuration for the client - yet. We'll do that next time. 
 
 Apologies for the slightly boring post, but you've done the hard part now, it's all good from here!
+
+[Onwards to part 2!](/blog/2013/01/27/getting-started-with-puppet-on-os-x-part-2/)
