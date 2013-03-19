@@ -1,10 +1,10 @@
 ---
 date: '2011-11-22 21:17:27'
 layout: post
-slug: kerio-connect-vs-web-servies-in-lion-server
+slug: kerio-connect-vs-web-services-in-lion-server
 status: publish
 comments: true
-title: Kerio Connect vs Web Servies in Lion Server
+title: Kerio Connect vs Web Services in Lion Server
 wordpress_id: '13'
 tags:
 - '10.7'
