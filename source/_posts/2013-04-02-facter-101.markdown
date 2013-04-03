@@ -60,7 +60,7 @@ This is to stop Puppet complaining that there's nothing to import - which there 
 sudo puppet agent -t
 ```
 
-You'll see a load of files being synced to your test Mac - these are custom Facts being pulled from the server. We'll get to using custom Facts in a moment. If you load up [http://192.168.33.10:3000](http://192.168.33.10:3000) in your browser of choice, you'll see your client having checked into Puppet. Click on it's hostname and you'll be presented with a list of all of the available Facts for that machine.
+You'll see a load of files being synced to your test Mac - these are custom Facts, plugins and assorted other goodies being pulled from the server. We'll get to using custom Facts in a moment. If you load up [http://192.168.33.10:3000](http://192.168.33.10:3000) in your browser of choice, you'll see your client having checked into Puppet. Click on it's hostname and you'll be presented with a list of all of the available Facts for that machine.
 
 [{% img center /images/posts/2013-04-02/Puppet_Node_Manager.png  %}](/images/posts/2013-04-02/Puppet_Node_Manager.png)
 
