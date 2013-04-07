@@ -4,7 +4,7 @@ layout: post
 slug: kerio-connect-vs-web-services-in-lion-server
 status: publish
 comments: true
-title: Kerio Connect vs Web Services in Lion Server
+title: "Kerio Connect vs Web Services in Lion Server"
 wordpress_id: '13'
 tags:
 - '10.7'

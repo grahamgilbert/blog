@@ -4,7 +4,7 @@ layout: post
 slug: the-agony-and-ecstasy-of-100meg-broadband
 status: publish
 comments: true
-title: The agony and ecstasy of 100meg broadband
+title: "The agony and ecstasy of 100meg broadband"
 wordpress_id: '74'
 tags:
 - BT

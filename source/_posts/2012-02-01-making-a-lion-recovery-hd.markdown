@@ -3,7 +3,7 @@ date: '2012-02-01 17:30:35'
 layout: post
 slug: making-a-lion-recovery-hd
 status: publish
-title: Making a Lion Recovery HD
+title: "Making a Lion Recovery HD"
 wordpress_id: '57'
 comments: true
 tags:

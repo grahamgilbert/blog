@@ -3,7 +3,7 @@ date: '2011-12-10 20:45:29'
 layout: post
 slug: thoughts-on-profile-manager
 status: publish
-title: Thoughts on Profile Manager
+title: "Thoughts on Profile Manager"
 wordpress_id: '40'
 comments: true
 tags:
