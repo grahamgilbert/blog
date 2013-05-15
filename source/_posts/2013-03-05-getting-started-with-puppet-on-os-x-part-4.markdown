@@ -73,7 +73,7 @@ Make your ``puppet/manifests/site.pp`` look like this:
 
 {% codeblock puppet/manifests/site.pp lang:ruby %}
 node puppetclient {
-    import my_super_module
+    include my_super_module
 }
 {% endcodeblock %}
 
