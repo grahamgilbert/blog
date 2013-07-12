@@ -11,7 +11,7 @@ So, you've heard of this crankd thing, maybe even had a look at it, but have no 
 
 ## What is crankd?
 
-It's part of the [PyMacAdmin](https://code.google.com/p/pymacadmin/) set of tools that Google released a while ago. In a nutshell, it runs in the background via a LaunchDaemon and reacts to events on the Mac by running a script or a Python function, class or method. It has loads of events it knows about (application launches, power events, network events etc), but in this case I wanted to run a method when there was a network change. Some of our machines never get turned off (and for some reason the Puppet Launch Daemon has crapped out), or aren't turned on long enough for Puppet or Munki to run. I wanted a script that would run every time the machine came back onto the network, checking if there was an active connection and run Puppet and Munki.
+It's part of the [PyMacAdmin](https://code.google.com/p/pymacadmin/) set of tools that [Chris Adams](http://chris.improbable.org/) and [Nigel Kersten](http://explanatorygap.net) released a while ago. In a nutshell, it runs in the background via a LaunchDaemon and reacts to events on the Mac by running a script or a Python function, class or method. It has loads of events it knows about (application launches, power events, network events etc), but in this case I wanted to run something when there was a network change. Some of our machines never get turned off (and for some reason the Puppet Launch Daemon has crapped out), or aren't turned on long enough for Puppet or Munki to run. I wanted a script that would run every time the machine came back onto the network, checking if there was an active connection and run Puppet and Munki.
 
 ## What do I need to do?
 
@@ -91,7 +91,7 @@ Now for the actual Python code. This is very heavily inspired by [Gary Larizza's
 #
 #    CrankTools.py
 #        The OnNetworkLoad method is called from crankd on a network state change, all other
-#            methods assist it. Modified from Gary Larizz's script (https://gist.github.com/glarizza/626169).
+#            methods assist it. Modified from Gary Larizza's script (https://gist.github.com/glarizza/626169).
 #
 #    Last Revised - 10/07/2013
 
