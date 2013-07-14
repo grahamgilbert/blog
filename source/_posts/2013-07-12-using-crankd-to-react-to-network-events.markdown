@@ -7,6 +7,8 @@ categories:
 - OS X
 - Python
 ---
+Updated 14/7/2013: After [Alister's suggestion](https://twitter.com/Sacrilicious/status/355756510535614464), the script now loops over network interfaces up to en19 (hopefully that's enough!).
+
 So, you've heard of this crankd thing, maybe even had a look at it, but have no idea how to get it going? You're in the right place. I'm by no means an expert on it, having only been playing with it for less than a week, but I already have it running in production running the simple script below. My initial work, and therefore this post was inspired by Gary Larizza's [two](http://web.archive.org/web/20120111031339/http://glarizza.posterous.com/using-crankd-to-react-to-network-events) [articles](http://garylarizza.com/blog/2011/12/31/using-the-google-macops-crankd-and-facter-code/) on the subject.
 
 ## What is crankd?
@@ -88,6 +90,7 @@ As we want to call the CrankTools class and the OnNetworkLoad method every time 
 Now for the actual Python code. This is very heavily inspired by [Gary Larizza's](http://garylarizza.com) work. We're checking if either en0 or en1 has a valid network connection (as this event is for any network change - both connecting and disconnecting), and if there is a valid connection, run Puppet and then run Munki. This code could easily be modified to run anything you wanted to at the command line (for example a Casper policy). Put the following script in ``/Library/Application Support/crankd/CrankTools.py``.
 
 {% codeblock CrankTools.py %}#!/usr/bin/env python
+#!/usr/bin/env python
 #
 #    CrankTools.py
 #        The OnNetworkLoad method is called from crankd on a network state change, all other
@@ -96,7 +99,7 @@ Now for the actual Python code. This is very heavily inspired by [Gary Larizza's
 #    Last Revised - 10/07/2013
 
 __author__ = 'Graham Gilbert (graham@grahamgilbert.com)'
-__version__ = '0.5'
+__version__ = '0.6'
 
 import syslog
 import subprocess
@@ -115,9 +118,7 @@ class CrankTools():
         Returns:  Nothing
         """
         command = ['/usr/bin/puppet','agent','-t']
-        if not self.LinkState('en1'):
-            self.callCmd(command)
-        elif not self.LinkState('en0'):
+        if self.LinkState():
             self.callCmd(command)
         else:
             syslog.syslog(syslog.LOG_ALERT, "Internet Connection Not Found, Puppet Run Exiting...")
@@ -130,9 +131,7 @@ class CrankTools():
         Returns:  Nothing
         """
         command = ['/usr/local/munki/managedsoftwareupdate','--auto']
-        if not self.LinkState('en1'):
-            self.callCmd(command)
-        elif not self.LinkState('en0'):
+        if self.LinkState():
             self.callCmd(command)
         else:
             syslog.syslog(syslog.LOG_ALERT, "Internet Connection Not Found, Munki Run Exiting...")
@@ -146,15 +145,26 @@ class CrankTools():
         task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         task.communicate()
     
-    def LinkState(self, interface):
+    def LinkState(self):
         """This utility returns the status of the passed interface.
         ---
         Arguments:
-            interface - Either en0 or en1, the BSD interface name of a Network Adapter
+            None
         Returns:
             status - The return code of the subprocess call
         """
-        return subprocess.call(["ipconfig", "getifaddr", interface])
+        
+        theState = False
+        
+        for interface in range(0, 20):
+            interface = str(interface)
+            adapter = 'en' + interface
+            print 'checking adapter '+adapter
+            if not subprocess.call(["ipconfig", "getifaddr", adapter]):
+                theState = True
+                break
+        
+        return theState
     
     def OnNetworkLoad(self, *args, **kwargs):
         """Called from crankd directly on a Network State Change. We sleep for 10 seconds to ensure that
