@@ -89,8 +89,7 @@ As we want to call the CrankTools class and the OnNetworkLoad method every time 
 
 Now for the actual Python code. This is very heavily inspired by [Gary Larizza's](http://garylarizza.com) work. We're checking if either en0 or en1 has a valid network connection (as this event is for any network change - both connecting and disconnecting), and if there is a valid connection, run Puppet and then run Munki. This code could easily be modified to run anything you wanted to at the command line (for example a Casper policy). Put the following script in ``/Library/Application Support/crankd/CrankTools.py``.
 
-{% codeblock CrankTools.py %}#!/usr/bin/env python
-#!/usr/bin/env python
+{% codeblock lang:python title:CrankTools.py %}#!/usr/bin/env python
 #
 #    CrankTools.py
 #        The OnNetworkLoad method is called from crankd on a network state change, all other

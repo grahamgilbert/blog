@@ -43,7 +43,7 @@ module Jekyll
     end
 
     def render(context)
-      gh = Octokit::Client.new
+      gh = Octokit::Client.new(:login => "grahamgilbert", :oauth_token => "27046a3cb915a975523e9df6d3b932979db7bb39")
       obj = gh.blob(@repo, @hash)
       Base64.decode64(obj.content)
     end
