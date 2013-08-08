@@ -23,17 +23,15 @@ You've got a few options - Iceberg, Packages, Composer, you've even got Package 
 
 We're going to grab the current version of The Luggage from the git repository. If you don't have git, you can install the Command Line Tools from within [Xcode's](https://itunes.apple.com/gb/app/xcode/id497799835?mt=12) preferences if you don't have it.
 
-``
-$ cd ~/src
+{% codeblock lang:bash %}$ cd ~/src
 $ git clone https://
-``
+{% endcodeblock %}
 
 Now we are going to use The Luggage to install itself (oooh, meta).
 
-``
-$ cd ~/src/luggage
+{% codeblock lang:bash %}$ cd ~/src/luggage
 $ make bootstrap_files
-``
+{% endcodeblock %}
 
 ## Your first Makefile
 
