@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Creating an OS X base box for Vagrant with Veewee"
+title: "Creating an OS X base box for Vagrant with Packer"
 date: 2013-03-28 11:30
 comments: true
 published: false
@@ -10,7 +10,7 @@ categories:
 - VMWare
 ---
 
-The chaps over at the [Vagrant](http://www.vagrantup.com/) project have recently released a [plugin to let Vagrant work with VMWare Fusion](http://www.vagrantup.com/vmware) - this means we can finally use Vagrant to provision OS X VMs. This post is largely based on [Gary Larizza's work](http://garylarizza.com/blog/2013/01/20/using-veewee-to-build-os-x-vms/), but has been updated for the latest version of Vagrant.
+A while ago, the chaps over at the [Vagrant](http://www.vagrantup.com/) project have recently released a [plugin to let Vagrant work with VMWare Fusion](http://www.vagrantup.com/vmware) - this means we can finally use Vagrant to provision OS X VMs. 
 
 ##Pre-requisites
 
