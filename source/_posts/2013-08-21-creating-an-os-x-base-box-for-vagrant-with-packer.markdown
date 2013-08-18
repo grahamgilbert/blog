@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Creating an OS X base box for Vagrant with Packer"
-date: 2013-08-19 11:30
+date: 2013-08-21 11:30
 comments: true
-
+published: false
 categories: 
 - Vagrant
 - OS X

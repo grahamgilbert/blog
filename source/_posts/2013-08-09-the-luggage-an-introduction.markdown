@@ -40,20 +40,23 @@ Now you've got everything set up, we're going to write our first Makefile. We're
 
 First we're going to grab the repository from GitHub:
 
-{% codeblock lang:bash %}$ cd ~/src
-$ git clone https://github.com/natewalck/Scripts.git natewalk-scripts
-{% endcodeblock %}
+``` bash
+$ cd ~/src
+$ git clone https://github.com/natewalck/Scripts.git natewalck-scripts
+```
 
 Now we're going to make a directory to work in for our package and copy scriptRunner.py into it.
 
-{% codeblock lang:bash %}$ cd ~/src
+``` bash
+$ cd ~/src
 $ mkdir -p ~/src/scriptRunnerPkg
-$ cp ~/src/natewalk-scripts/scriptRunner.py ~/src/scriptRunnerPkg/scriptRunner.py
-{% endcodeblock %}
+$ cp ~/src/natewalck-scripts/scriptRunner.py ~/src/scriptRunnerPkg/scriptRunner.py
+```
 
 So far so good. Now for the actual Makefile. Create a file in your favourite editor (I recommend [TextMate 2](http://macromates.com/download)), save it as Makefile in ``~/src/scriptRunnerPkg`` and put in the following content:
 
-{% codeblock %}USE_PKGBUILD=1
+```
+USE_PKGBUILD=1
 include /usr/local/share/luggage/luggage.make
 TITLE=scriptRunnerPkg
 REVERSE_DOMAIN=com.grahamgilbert
@@ -64,7 +67,7 @@ pack-scriptRunner: l_usr_local_bin
 	@sudo ${CP} ./scriptRunner.py ${WORK_D}/usr/local/bin/scriptRunner.py
 	@sudo chmod 755 ${WORK_D}/usr/local/bin/scriptRunner.py
 	@sudo chown root:wheel ${WORK_D}/usr/local/bin/scriptRunner.py
-{% endcodeblock %}
+```
 
 Let's go through this line by line. First, we're overloading a default variable. Back in the day, The Luggage used Package Maker to perform the actual build of the package. This has been deprecated by Apple, replaced with pkgbuild and productbuild. We're just telling The Luggage to go straight ahead and use pkgbuild.
 
@@ -80,14 +83,17 @@ Makefiles are really picky about formatiting and spacing - if you get strange er
 ## Prepare the build!
 We're ready to build. Let's do it. No need to run this as sudo, The Luggage will ask for your password if it needs it.
 
-{% codeblock lang:bash %}$ cd ~/src/scriptRunnerPkg
+``` bash
+$ cd ~/src/scriptRunnerPkg
 make pkg
-{% endcodeblock %}
+```
 
 If everything has gone well, some text will scroll into your Terminal window and you'll be left with a package sitting in ``~/src/scriptRunnerPkg``.
 
 That's all well and good, but we need a LaunchAgent to run the script when someone logs in. Save the following in ``~/src/scriptRunnerPkg`` and name it ``com.grahamgilbert.scriptrunner.plist``.
-{% codeblock %}<?xml version="1.0" encoding="UTF-8"?>
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -105,22 +111,24 @@ That's all well and good, but we need a LaunchAgent to run the script when someo
 	<true/>
 </dict>
 </plist>
-{% endcodeblock %}
+```
 
 This will tell scriptRunner.py to run everything in ``/Library/Management/scriptRunner/once`` once per use and everything in ``/Library/Management/scriptRunner/every`` each and every single time the user logs in.
 
 That's nice, but how do we get it into our package? Change the payload section to look like this:
 
-{% codeblock %}PAYLOAD=\
+```
+PAYLOAD=\
 	pack-scriptRunner\
 	pack-Library-LaunchAgents-com.grahamgilbert.scriptrunner.plist
-{% endcodeblock %}
+```
 
 And now rebuild the package:
 
-{% codeblock lang:bash %}$ cd ~/src/scriptRunnerPkg
+``` bash
+$ cd ~/src/scriptRunnerPkg
 make pkg
-{% endcodeblock %}
+```
 
 And that's it! As putting a plist into ``/Library/LaunchAgents`` is as common as a BSOD on Vista, it's built right into The Luggage. A list of most of the available payload additions can be found on [the wiki](https://github.com/unixorn/luggage/wiki) - this isn't everything though. Have a nose through ``/usr/local/share/luggage/luggage.make`` to see everything you can do.
 
