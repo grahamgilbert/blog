@@ -72,9 +72,9 @@ pack-script:
 	@sudo chmod 755 ${WORK_D}/Library/Management/scriptRunner/once/Desktop_Icons_201308
 ```
 
-And the script that does the work will look like:
+And the script that does the work (``Desktop_Icons_201308``) will look like:
 
-``` bash Desktop_Icons_201308
+``` bash
 #!/bin/bash
 if [ -e ~/Desktop/File\ Server.afploc ]
     then
