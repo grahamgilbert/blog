@@ -28,7 +28,7 @@ $ vagrant up
 
 This will pull down the needed bits to get your own Puppet Master running and then ``vagrant up`` will start things going. If you get errors about Postgres, just issue a ``vagrant reload``
 
-Now for your test Mac: I've made a script to automate the process. If you __don't__ have a DNS entry for your Puppet Master, and you're using the Vagrant setup described above, run this in your termainal:
+Now for your test Mac: I've made a script to automate the process. If you __don't__ have a DNS entry for your Puppet Master, and you're using the Vagrant setup described above, run this in your terminal:
 
 ```bash
 $ curl -o /tmp/install_puppet.py https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py; sudo python /tmp/install_puppet.py --appendhosts

@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Creating an OS X base box for Vagrant with Packer"
-date: 2013-08-21 11:30
+date: 2013-08-23 11:30
 comments: true
-published: false
 categories: 
 - Vagrant
 - OS X
@@ -13,7 +12,7 @@ categories:
 
 A while ago, the chaps over at the [Vagrant](http://www.vagrantup.com/) project have recently released a [plugin to let Vagrant work with VMWare Fusion](http://www.vagrantup.com/vmware) - this means we can finally use Vagrant to provision OS X VMs. 
 
-Why is this a good thing? Do you NetBoot VMWare to test your builds? Or maybe you still have that test Mac on your desk to test your builds. Either way, it's going to be a good few minutes to restore an image, even if you're thin imaging. With the VM already on your machine, you're ready to go in seconds. Another bonus is that Vagrant isn't only limited to OS X virtual machines - for example, I have a Vagrant configuration that spins up an Ubuntu box configured as a Munki server, with a copy of my repository on an external drive. This allows me to test deployments from anywhere, with everything local to my Mac (have you ever tried testing a Final Cut Studio package from home? 48GB takes a while to download.). I'll go into more detail on this setup in a future post, but for now here's how to get a Mac base box into Vagrant.<!--more-->
+Why is this a good thing? Do you NetBoot VMWare to test your builds? Or maybe you still have that test Mac on your desk to test your builds. Either way, it's going to be several minutes to restore an image, even if you're thin imaging. With the VM already on your machine, you're ready to go in seconds. Another bonus is that Vagrant isn't only limited to OS X virtual machines - for example, I have a Vagrant configuration that spins up an Ubuntu box configured as a Munki server, with a copy of my repository on an external drive. This allows me to test deployments from anywhere, with everything local to my Mac (have you ever tried testing a Final Cut Studio package from home? 48GB takes a while to download.). I'll go into more detail on this setup in a future post, but for now here's how to get a Mac base box into Vagrant.<!--more-->
 
 ##Pre-requisites
 
