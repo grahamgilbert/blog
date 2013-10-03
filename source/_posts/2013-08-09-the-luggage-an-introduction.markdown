@@ -16,7 +16,7 @@ You've got a few options - Iceberg, Packages, Composer, you've even got Package 
 *  __It's free:__ if it costs nothing, there's no reason it can't be installed on everyone's machine.
 * __It's (still) all text files:__ Want to see what will be in the package without any extra work? Crack open the Makefile and you can see straight away what will be in the package.
 * __The Luggage has a metric buttload of shortcuts built in:__ it does the hard work, so you don't have to.
-* __It's repeatable:__ Have you ever tried to talk someone through a series of windows and buttons to ge the same result as you're getting? Every time you run The Luggage, you will get the same result.
+* __It's repeatable:__ Have you ever tried to talk someone through a series of windows and buttons to get the same result as you're getting? Every time you run The Luggage, you will get the same result.
 * __It's (really, still) all text files:__ It's the most precise tool I've used - you only package exactly what you need, no cruft is left behind.
 * __Your workflow is limited only by your imagination:__ Seriously, you can do pretty much anything you can think of. We'll be going through more advanced workflows in future posts, but let's get started with using The Luggage.<!--more-->
 
@@ -78,7 +78,7 @@ We're then including the main Makefile, which contains all of the pre-built work
 Finally, we're specifying what our payload is going to consist of - in this case, just scriptRunner. Line 8 is using the foundation that The Luggage has already built - installing software into ``/usr/local/bin`` is pretty standard, so we don't need to reinvent the wheel here - we just need to tell The Luggage what to do with the one file we're installing, it will work out the rest.
 
 ### An important note on Makefiles
-Makefiles are really picky about formatiting and spacing - if you get strange errors, make sure you are using tab charcters rather than spaces for example. and make sure you've not missed off a colon or a back-slash anywhere.
+Makefiles are really picky about formatting and spacing - if you get strange errors, make sure you are using tab characters rather than spaces for example. and make sure you've not missed off a colon or a back-slash anywhere.
 
 ## Prepare the build!
 We're ready to build. Let's do it. No need to run this as sudo, The Luggage will ask for your password if it needs it.
