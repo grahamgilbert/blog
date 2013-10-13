@@ -157,7 +157,7 @@ $ znc --makeconf
 [ ?? ] Launch ZNC now? (yes/no) [yes]: no
 ```
 
-Still with me? One last thing to do - make sure ZNC starts and keeps running. We'll use Upstart.
+Still with me? One last thing to do - make sure ZNC starts and keeps running. We'll use Upstart (hat-tip to [@natewalck](https://twitter.com/natewalck/status/389345376811356160)).
 
 ``` bash
 $ sudo nano /etc/init/znc.conf
