@@ -154,19 +154,38 @@ $ znc --makeconf
 [ ** ] And this in your browser...
 [ ** ] https://<znc_server_ip>:6666/
 [ ** ]
-[ ?? ] Launch ZNC now? (yes/no) [yes]: yes
+[ ?? ] Launch ZNC now? (yes/no) [yes]: no
 ```
 
-Still with me? One last thing to do - we'll start ZNC every 10 minutes via cron - if it's already running, nothing will happen.
+Still with me? One last thing to do - make sure ZNC starts and keeps running. We'll use Upstart.
 
 ``` bash
-crontab -e
+$ sudo nano /etc/init/znc.conf
 ```
 
-You'll be asked for the editor to use if you've not chosen before. As before, I chose nano. Add the following line to the bottom of the file:
+And pop in the following, replacing ``sudo -u graham`` with your own username.
+
+```
+# znc - IRC Bouncer
+
+description "IRC Bouncer"
+
+start on runlevel [2345]
+
+stop on runlevel [016]
+
+respawn
+respawn limit 15 5
+
+script
+  exec sudo -u graham /usr/bin/znc
+end script
+```
+
+Then finally start it up:
 
 ``` bash
-*/10 * * * *   znc
+$ sudo start znc
 ```
 
 Configuring each IRC client is different, but for Textual (my prefered client), it's pretty straightforward. Go to the Server menu and choose Add Server. Make the settings look like below, obviously replaing the hostname and password with the ones you chose.
