@@ -38,7 +38,7 @@ import plistlib
 # Group System Preferences should be opened to
 group = 'everyone'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -66,7 +66,7 @@ import plistlib
 # Group System Preferences should be opened to
 group = 'everyone'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -79,7 +79,7 @@ if formatted['group'] != group:
     # Convert back to plist
     input_plist = plistlib.writePlistToString(formatted)
     # Write the plist back to the authorizationdb
-    command = ['security', 'authorizationdb', 'write', 'system.preferences']
+    command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)
 {% endcodeblock %}
@@ -98,7 +98,7 @@ import plistlib
 # Set the group back to admin
 group = 'admin'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -110,7 +110,7 @@ if formatted['group'] != group:
     # Convert back to plist
     input_plist = plistlib.writePlistToString(formatted)
     # Write the plist back to the authorizationdb
-    command = ['security', 'authorizationdb', 'write', 'system.preferences']
+    command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)
 {% endcodeblock %}
@@ -173,7 +173,7 @@ import plistlib
 # Group System Preferences should be opened to
 group = 'everyone'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -196,7 +196,7 @@ import plistlib
 # Group System Preferences should be opened to
 group = 'everyone'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -209,7 +209,7 @@ if formatted['group'] != group:
     # Convert back to plist
     input_plist = plistlib.writePlistToString(formatted)
     # Write the plist back to the authorizationdb
-    command = ['security', 'authorizationdb', 'write', 'system.preferences']
+    command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)</string>
 
@@ -227,7 +227,7 @@ import plistlib
 # Set the group back to admin
 group = 'admin'
 
-command = ['security', 'authorizationdb', 'read', 'system.preferences']
+command = ['/usr/bin/security', 'authorizationdb', 'read', 'system.preferences']
 
 task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (out, err) = task.communicate()
@@ -239,7 +239,7 @@ if formatted['group'] != group:
     # Convert back to plist
     input_plist = plistlib.writePlistToString(formatted)
     # Write the plist back to the authorizationdb
-    command = ['security', 'authorizationdb', 'write', 'system.preferences']
+    command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)</string>
 </dict>
