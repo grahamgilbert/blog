@@ -45,6 +45,7 @@ class MavCompatibility(IPlugin):
             'theid': theid
         })
         return t.render(c), 3
+        
     def filter_machines(self, machines, data):
         if data == 'notcompatible':
             machines = machines.filter(condition__condition_name='supported_major_os_upgrades').exclude(condition__condition_name='supported_major_os_upgrades', condition__condition_data__contains='10.9')
