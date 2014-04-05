@@ -7,7 +7,7 @@ footer: true
 ---
 My name is Graham Gilbert, and I'm a Mac admin based in London, with an almost unhealthy interest in automation.
 
-I've been playing around with Macs for as long as I can remember, and I'm now in the fortunate position of being able to earn a living doing what I love.  I like speaking about Puppet, Munki, deploying Macs, and the intersection of the three.
+I've been playing around with Macs for as long as I can remember, and I'm now in the fortunate position of being able to earn a living doing what I love.  I like [speaking]({{ root_url }}/talks) about Puppet, Munki, deploying Macs, and the intersection of the three.
 
 Please feel free to link to anything I've written here and all of the code can be considered open source unless otherwise stated.
 
