@@ -11,10 +11,11 @@ I've been playing around with Macs for as long as I can remember, and I'm now in
 
 Please feel free to link to anything I've written here and all of the code can be considered open source unless otherwise stated.
 
+If you think you've got the perfect role for me, or if you just want to say 'hi',  feel free to drop me an email.
+
 ##Elsewhere
  * __Twitter:__[grahamgilbert](http://twitter.com/grahamgilbert)
- * __App dot Net:__ [grahamgilbert](https://alpha.app.net/grahamgilbert)
- * __Email:__ graham (at this domain)
+ *  __Email:__ graham (at this domain)
  * __GitHub:__ [grahamgilbert](https://github.com/grahamgilbert)
  * __Linked In:__ [grahamgilbert](http://uk.linkedin.com/in/grahamgilbert)
 

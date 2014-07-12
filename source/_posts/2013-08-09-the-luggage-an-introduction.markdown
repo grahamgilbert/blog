@@ -4,7 +4,7 @@ title: "The Luggage: An Introduction"
 date: 2013-08-09 18:00
 comments: true
 categories: 
-- osx
+- OS X
 - packaging
 - deployment
 ---

@@ -4,7 +4,7 @@ title: "The Luggage: Further automation"
 date: 2013-08-19 11:33
 comments: true
 categories: 
-- osx
+- OS X
 - packaging
 - deployment
 ---

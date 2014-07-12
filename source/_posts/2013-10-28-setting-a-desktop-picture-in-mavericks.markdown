@@ -4,7 +4,7 @@ title: "Setting a desktop picture in Mavericks"
 date: 2013-10-28 14:48
 comments: true
 categories: 
-- osx
+- OS X
 - Mavericks
 - Python
 ---
