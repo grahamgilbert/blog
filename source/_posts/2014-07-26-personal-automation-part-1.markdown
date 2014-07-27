@@ -11,7 +11,7 @@ categories:
 - Boxen
 ---
 
-[Earlier this year](http://grahamgilbert.com/blog/2014/04/04/updating-boxen/), I professed my love of Boxen - the personal automation solution based on Puppet released by Github. Indeed, it served me well for quite some time, but I began to find myself spending more time fixing Boxen than actually getting things done. As Boxen was deigned for internal use at Github, it set some things up how they liked them - which wasn't necesarily how I liked them. Sysadmins have similar needs to developers, but not exactly the same. 
+[Earlier this year](http://grahamgilbert.com/blog/2014/04/04/updating-boxen/), I professed my love of Boxen - the personal automation solution based on Puppet released by Github. Indeed, it served me well for quite some time, but I began to find myself spending more time fixing Boxen than actually getting things done. As Boxen was designed for internal use at Github, it set some things up how they liked them - which wasn't necesarily how I liked them. Sysadmins have similar needs to developers, but not exactly the same. 
 
 Then I updated Boxen. All of my modules were out of date, so I spent a good couple of hours updating all of them so they worked again. Ugh.
 
