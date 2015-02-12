@@ -10,7 +10,7 @@ categories:
 ---
 Over the past few months, I've been trying to take small pieces of our workflow and see if we can expand on the number of people able to manage it. We've got [AutoPkg](https://github.com/autopkg/autopkg) populating our [Munki](https://github.com/munki/munki) repositories without any manual intervention, but we still need to edit pkgsinfo files to move items through development to testing to production catalogs. Sure, there are existing tools  like [MunkiWebAdmin](https://github.com/munki/munkiwebadmin) or [MunkiAdmin](https://github.com/hjuutilainen/munkiadmin), but they either still require knowledge of how Munki works or full access to the repository via a file share of some sort. And we obviously already have a tool for assigning software to machines in Sal+ - we needed something that can speed this incredibly common task.
 
-Then I cast my mind back to a conversation I had with Pepijn Bruienne at PSU last year about his workflow using [Trello](https://trello.com) to promote items in his Munki repository. So, after pestering him for some information, I devised a workflow that matched how we worked. 
+Then I cast my mind back to a conversation I had with [Pepijn Bruienne](https://twitter.com/bruienne) at PSU last year about his workflow using [Trello](https://trello.com) to promote items in his Munki repository. So, after pestering him for some information, I devised a workflow that matched how we worked. 
 
 ## "So how does it work", I hear you cry
 

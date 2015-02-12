@@ -13,3 +13,5 @@ vendor
 node_modules
 
 *.cache
+
+deploy/
