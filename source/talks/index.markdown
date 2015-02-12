@@ -6,6 +6,10 @@ sharing: true
 footer: true
 ---
 
+## Twisting Munki (MacTech Conference, 2014
+
+Munki is one of the best tools for installing software on a Mac, but it isn't a configuration management system. It does however, share certain traits with them. We'll take a look at how Munki can be used to apply configuration to OS X devices, how we can use some of the mechanisms that Munki provides to ensure that the desired state is maintained and how we can use some of Munki's features to make it behave more like dedicated configuration management tools. Along the way we'll take a look at some methods for applying some of the more common (and some of the stranger!) settings on OS X using profiles, payload free packages and the command line. [(slides and code)](https://github.com/grahamgilbert/mactech_2014)
+
 ## Automate yourself out of a job (Penn State MacAdmins, 2014)
 
 {% youtube sjbESCx-G48 420 315 %}
