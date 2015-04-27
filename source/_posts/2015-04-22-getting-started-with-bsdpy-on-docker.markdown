@@ -54,7 +54,7 @@ If you're not made it already, we need to make the directory we'll store our per
 
 ``` bash
 $ sudo -i
-$ mkdir -p /usr/local/docker
+$ mkdir -p /usr/local/docker/nbi
 ```
 
 And fire up your favourite editor and put in the first part of our script:
