@@ -105,7 +105,7 @@ docker run -d \
 
 docker run -d \
   -p 0.0.0.0:69:69/udp \
-  -v /user/local/docker/nbi:/nbi \
+  -v /usr/local/docker/nbi:/nbi \
   --name tftpd \
   --restart=always \
   macadmins/tftpd
