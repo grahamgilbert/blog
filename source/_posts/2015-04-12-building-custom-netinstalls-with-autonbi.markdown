@@ -18,13 +18,7 @@ We're going to need AutoNBI to start off with. Open up your Terminal and:
 
 ``` bash
 $ git clone https://bitbucket.org/bruienne/autonbi.git
-```
-
-The current development version has some new features in it that we're going to use, so we're going to switch to it:
-
-``` bash
 $ cd autonbi
-$ git checkout remotes/origin/feature/extra-frameworks
 ```
 
 ## Prepare the build!
