@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Introducting Imagr"
+title: "Introducing Imagr"
 date: 2015-05-08 14:41:37 +0100
 comments: true
-categories: 
+categories:
 - Python
 - Deployment
 ---
@@ -14,4 +14,3 @@ For the past few weeks, I've been working with some other Mac admins on a new ap
 It's not intended to be a full replacement for Deploystudio, but it's now got all of the features I need to use Imagr full time. If you'd like to get started with Imagr, head on over to the [Wiki](https://github.com/grahamgilbert/imagr/wiki/Getting-Started) - the only requirement is a web server, so the barrier to entry is pretty low (if you followed my guide on how to set up [BSDPy](/blog/2015/04/22/getting-started-with-bsdpy-on-docker/), you can use that web server).
 
 I hope you'll give it a go and maybe, just maybe, we can get rid of those little Mac Minis for good!
-
