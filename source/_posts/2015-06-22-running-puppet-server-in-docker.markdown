@@ -146,9 +146,9 @@ $ docker run -d \
   --restart="always" \
   -v /usr/local/docker/puppetserver/puppet:/etc/puppet \
   -v /usr/local/docker/puppetserver/puppetserver:/etc/puppetserver \
-  -v /usr/local/docker/puppetserver/lib/puppet/ssl:/var/lib/puppet/ssl \
+  -v /usr/local/docker/puppetserver/lib/ssl:/var/lib/puppet/ssl \
   -v /usr/local/docker/puppetserver/jruby-gems:/var/lib/puppet/jruby-gems \
-  -v /usr/local/docker/puppetserver/lib/puppet/lib:/var/lib/puppet/lib \
+  -v /usr/local/docker/puppetserver/lib/lib:/var/lib/puppet/lib \
   -p 0.0.0.0:8140:8140 \
   -e PUPPETSERVER_JAVA_ARGS="-Xms384m -Xmx384m -XX:MaxPermSize=256m" \
   -h puppet.yourdomain.com \
