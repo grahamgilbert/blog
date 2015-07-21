@@ -17,6 +17,9 @@ If we schedule the below script to happen regularly (via cron), we also get our 
 ``` bash /usr/local/bin/munki-trello.sh
 #!/bin/bash
 
+# Cron doesn't have $PATH set as we do, need to find git fat
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$PATH
+
 # Change this to wherever your Munki repository is on disk
 cd /usr/local/docker/munki
 
