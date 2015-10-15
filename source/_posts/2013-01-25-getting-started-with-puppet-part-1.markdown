@@ -50,7 +50,7 @@ Still with me? Good, it's time to install Puppet and Facter. Head on over to [th
 
 	curl -s https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py | sudo python
 	
-Cushty, Puppet and Facter are installed. Puppet won't do much though until we write it's configuration file. I'm going to call the Mac puppetclient here.  Pop ``sudo nano /etc/puppet/puppet.conf`` in the Mac's termainl window and paste in the following and save it:
+Cushty, Puppet and Facter are installed. Puppet won't do much though until we write it's configuration file. I'm going to call the Mac puppetclient here.  Pop ``sudo nano /etc/puppet/puppet.conf`` in the Mac's terminal window and paste in the following and save it:
 {% codeblock %}
 [main]
 logdir=/var/log/puppet
