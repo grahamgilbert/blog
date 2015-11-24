@@ -37,10 +37,10 @@
     
       {% if post.link %}
       <article>
-        <h3 class="link-post"><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> <a href="{{ post.link }}" target="_blank" title="{{ post.title }}"><i class="fa fa-link"></i></h3>
+        <h2 class="link-post"><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> <a href="{{ post.link }}" target="_blank" title="{{ post.title }}"><i class="fa fa-link"></i></h2>
       </article>
       {% else %}
-        <h2><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+        <h1><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h1>
           <article>
           {% if post.content contains site.excerpt_separator %}
             {{ post.excerpt | markdownify }}
