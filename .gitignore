@@ -13,6 +13,7 @@ vendor
 node_modules
 .code-highlighter-cache
 .deploy
+_site
 
 *.cache
 
