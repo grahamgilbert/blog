@@ -1,0 +1,418 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Using the Sal API &#8211; graham gilbert dot com</title>
+<meta name="description" content="As previously mentioned, Sal now has an API. You might be wondering what you can do with this wonderous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.
+
+The basic workflow of this script is:
+
+
+  Use the API to get a list of all Machine Groups in Sal - this will return JSON (a markup language that is easily parsable with languages like Python)
+  Download the Sal postflight scripts
+  Download the latest Facter installer
+  For each machine group, build a package that will install all of the packages and then set the correct Sal preferences.
+
+
+You can find the script in this Gist. I’m not going to go through the script line by line, but we’ll cover how to configure it.
+
+First off you will need an API key configuring. Log into Sal as a user with Global Admin privelages and choose the ‘person’ menu at the top right and then choose Settings. From the sidebar, choose API keys and then choose to make a new one. Give it a name so you can recognise it - I called this one “PKG Generator”. You will then be given a public key and a private key. Make a note of them, we’ll need them in the next section.
+
+Configuring the script
+
+Edit the variables at the top to match your environment:
+
+``` python
+# No trailing slash on this one - I was lazy and didn’t check for it
+SAL_URL = “https://sal.yourcompany.com”
+PUBLIC_KEY = “yourpublickeyhere”
+PRIVATE_KEY = “yourreallyreallyreallylongprivatekeyhere”
+PKG_IDENTIFIER = “com.yourcompany.sal_enrol”
+SAL_PKG = “https://github.com/salopensource/sal/releases/download/v0.4.0/sal_scripts.pkg”
+FACTER_PKG = “https://downloads.puppetlabs.com/mac/facter-latest.dmg”
+
+```
+
+There are some caveats with this script:
+
+
+  It will spit the packages out in your current directory. Make sure you’ve cd-ed into where you want the packages to be generated.
+  It uses urllib2 to request the information from Sal and to download the packages - this means that there is no verification of the SSL certificates, so make sure you know where you’re connecting to.
+
+
+All ready to run it?
+
+bash
+$ sudo python sal_package_generator.py
+
+
+And you’ll get a directory full of packages that will get your fleet reporting into Sal.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Using the Sal API">
+<meta name="twitter:description" content="As previously mentioned, Sal now has an API. You might be wondering what you can do with this wonderous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.
+
+The basic workflow of this script is:
+
+
+  Use the API to get a list of all Machine Groups in Sal - this will return JSON (a markup language that is easily parsable with languages like Python)
+  Download the Sal postflight scripts
+  Download the latest Facter installer
+  For each machine group, build a package that will install all of the packages and then set the correct Sal preferences.
+
+
+You can find the script in this Gist. I’m not going to go through the script line by line, but we’ll cover how to configure it.
+
+First off you will need an API key configuring. Log into Sal as a user with Global Admin privelages and choose the ‘person’ menu at the top right and then choose Settings. From the sidebar, choose API keys and then choose to make a new one. Give it a name so you can recognise it - I called this one “PKG Generator”. You will then be given a public key and a private key. Make a note of them, we’ll need them in the next section.
+
+Configuring the script
+
+Edit the variables at the top to match your environment:
+
+``` python
+# No trailing slash on this one - I was lazy and didn’t check for it
+SAL_URL = “https://sal.yourcompany.com”
+PUBLIC_KEY = “yourpublickeyhere”
+PRIVATE_KEY = “yourreallyreallyreallylongprivatekeyhere”
+PKG_IDENTIFIER = “com.yourcompany.sal_enrol”
+SAL_PKG = “https://github.com/salopensource/sal/releases/download/v0.4.0/sal_scripts.pkg”
+FACTER_PKG = “https://downloads.puppetlabs.com/mac/facter-latest.dmg”
+
+```
+
+There are some caveats with this script:
+
+
+  It will spit the packages out in your current directory. Make sure you’ve cd-ed into where you want the packages to be generated.
+  It uses urllib2 to request the information from Sal and to download the packages - this means that there is no verification of the SSL certificates, so make sure you know where you’re connecting to.
+
+
+All ready to run it?
+
+bash
+$ sudo python sal_package_generator.py
+
+
+And you’ll get a directory full of packages that will get your fleet reporting into Sal.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using the Sal API">
+<meta property="og:description" content="As previously mentioned, Sal now has an API. You might be wondering what you can do with this wonderous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.
+
+The basic workflow of this script is:
+
+
+  Use the API to get a list of all Machine Groups in Sal - this will return JSON (a markup language that is easily parsable with languages like Python)
+  Download the Sal postflight scripts
+  Download the latest Facter installer
+  For each machine group, build a package that will install all of the packages and then set the correct Sal preferences.
+
+
+You can find the script in this Gist. I’m not going to go through the script line by line, but we’ll cover how to configure it.
+
+First off you will need an API key configuring. Log into Sal as a user with Global Admin privelages and choose the ‘person’ menu at the top right and then choose Settings. From the sidebar, choose API keys and then choose to make a new one. Give it a name so you can recognise it - I called this one “PKG Generator”. You will then be given a public key and a private key. Make a note of them, we’ll need them in the next section.
+
+Configuring the script
+
+Edit the variables at the top to match your environment:
+
+``` python
+# No trailing slash on this one - I was lazy and didn’t check for it
+SAL_URL = “https://sal.yourcompany.com”
+PUBLIC_KEY = “yourpublickeyhere”
+PRIVATE_KEY = “yourreallyreallyreallylongprivatekeyhere”
+PKG_IDENTIFIER = “com.yourcompany.sal_enrol”
+SAL_PKG = “https://github.com/salopensource/sal/releases/download/v0.4.0/sal_scripts.pkg”
+FACTER_PKG = “https://downloads.puppetlabs.com/mac/facter-latest.dmg”
+
+```
+
+There are some caveats with this script:
+
+
+  It will spit the packages out in your current directory. Make sure you’ve cd-ed into where you want the packages to be generated.
+  It uses urllib2 to request the information from Sal and to download the packages - this means that there is no verification of the SSL certificates, so make sure you know where you’re connecting to.
+
+
+All ready to run it?
+
+bash
+$ sudo python sal_package_generator.py
+
+
+And you’ll get a directory full of packages that will get your fleet reporting into Sal.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/" rel="bookmark" title="Using the Sal API">Using the Sal API</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>As previously mentioned, Sal now has an <a href="https://github.com/salopensource/sal/blob/master/docs/API.md">API</a>. You might be wondering what you can do with this wonderous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.</p>
+
+<p>The basic workflow of this script is:</p>
+
+<ul>
+  <li>Use the API to get a list of all Machine Groups in Sal - this will return JSON (a markup language that is easily parsable with languages like Python)</li>
+  <li>Download the Sal postflight scripts</li>
+  <li>Download the latest Facter installer</li>
+  <li>For each machine group, build a package that will install all of the packages and then set the correct Sal preferences.</li>
+</ul>
+
+<p><a href="https://gist.github.com/grahamgilbert/8ccba318d3ecadee02b1">You can find the script in this Gist</a>. I’m not going to go through the script line by line, but we’ll cover how to configure it.</p>
+
+<p>First off you will need an API key configuring. Log into Sal as a user with Global Admin privelages and choose the ‘person’ menu at the top right and then choose Settings. From the sidebar, choose API keys and then choose to make a new one. Give it a name so you can recognise it - I called this one “PKG Generator”. You will then be given a public key and a private key. Make a note of them, we’ll need them in the next section.</p>
+
+<h2 id="configuring-the-script">Configuring the script</h2>
+
+<p>Edit the variables at the top to match your environment:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># No trailing slash on this one - I was lazy and didn&#39;t check for it</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">SAL_URL</span> <span class="o">=</span> <span class="s">&quot;https://sal.yourcompany.com&quot;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">PUBLIC_KEY</span> <span class="o">=</span> <span class="s">&quot;yourpublickeyhere&quot;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">PRIVATE_KEY</span> <span class="o">=</span> <span class="s">&quot;yourreallyreallyreallylongprivatekeyhere&quot;</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">PKG_IDENTIFIER</span> <span class="o">=</span> <span class="s">&quot;com.yourcompany.sal_enrol&quot;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">SAL_PKG</span> <span class="o">=</span> <span class="s">&quot;https://github.com/salopensource/sal/releases/download/v0.4.0/sal_scripts.pkg&quot;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">FACTER_PKG</span> <span class="o">=</span> <span class="s">&quot;https://downloads.puppetlabs.com/mac/facter-latest.dmg&quot;</span></div></div></pre></div></figure>
+
+<p>There are some caveats with this script:</p>
+
+<ul>
+  <li>It will spit the packages out in your current directory. Make sure you’ve <code>cd</code>-ed into where you want the packages to be generated.</li>
+  <li>It uses <code>urllib2</code> to request the information from Sal and to download the packages - this means that there is no verification of the SSL certificates, so make sure you know where you’re connecting to.</li>
+</ul>
+
+<p>All ready to run it?</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo python sal_package_generator.py</div></div></pre></div></figure>
+
+<p>And you’ll get a directory full of packages that will get your fleet reporting into Sal.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2015/07/10/using-the-sal-api/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Using the Sal API</strong> was published on <time datetime="2015-07-10T11:12:36+01:00">July 10, 2015</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

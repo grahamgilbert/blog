@@ -1,0 +1,287 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>InstaDMG Tips &#8211; graham gilbert dot com</title>
+<meta name="description" content="I’ve been using InstaDMG for nearly two years now. We all know it’s awesome (if you aren’t aware of it’s awesomeness, I suggest taking a look at Allister Banks’ talk at PSU MacAdmins last year). I’m almost ashamed to admit that I was happily making my Golden Master images on my test iMac and hoping for the best when I cleaned them up by hand and pushed them out. Anyway, that’s enough of my admissions. Over these two years, I’ve picked up a few tips and tricks for working effectively with InstaDMG.
+
+Put an SSD in your laptop
+Seriously, just do it. If your boss complains at how much it costs, then they’re not charging enough for you. The price of the SSD was covered by the time I saved when doing one particularly chunky build (around 30GB including packages). InstaDMG is primarily I/O bound, so an SSD will change your InstaDMG life.
+
+Keep your InstaUp2DatePackages on a web server
+If you’ve got more than one person building images in your organisation, you’ll soon find that your packages will get out of sync with each other. One person will be using 0.8.2 of Munki, another 0.8.3, it all goes horribly wrong. As InstaDMG can pull packages from a web server, this lends itself to having a central repository for packages in your oganisation. Remember to keep it safely behind your firewall if you’ve got sensitive info in your packages (like one that creates your admin user, for example).
+
+Keep our CatalogFiles in source control
+Now that everyone has access to your InstaUp2DatePackages, we ought to get our CatalogFiles in check too. Keep them in some sort of source control like Git and be happy. Mine can be found on my GitHub.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="InstaDMG Tips">
+<meta name="twitter:description" content="I’ve been using InstaDMG for nearly two years now. We all know it’s awesome (if you aren’t aware of it’s awesomeness, I suggest taking a look at Allister Banks’ talk at PSU MacAdmins last year). I’m almost ashamed to admit that I was happily making my Golden Master images on my test iMac and hoping for the best when I cleaned them up by hand and pushed them out. Anyway, that’s enough of my admissions. Over these two years, I’ve picked up a few tips and tricks for working effectively with InstaDMG.
+
+Put an SSD in your laptop
+Seriously, just do it. If your boss complains at how much it costs, then they’re not charging enough for you. The price of the SSD was covered by the time I saved when doing one particularly chunky build (around 30GB including packages). InstaDMG is primarily I/O bound, so an SSD will change your InstaDMG life.
+
+Keep your InstaUp2DatePackages on a web server
+If you’ve got more than one person building images in your organisation, you’ll soon find that your packages will get out of sync with each other. One person will be using 0.8.2 of Munki, another 0.8.3, it all goes horribly wrong. As InstaDMG can pull packages from a web server, this lends itself to having a central repository for packages in your oganisation. Remember to keep it safely behind your firewall if you’ve got sensitive info in your packages (like one that creates your admin user, for example).
+
+Keep our CatalogFiles in source control
+Now that everyone has access to your InstaUp2DatePackages, we ought to get our CatalogFiles in check too. Keep them in some sort of source control like Git and be happy. Mine can be found on my GitHub.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InstaDMG Tips">
+<meta property="og:description" content="I’ve been using InstaDMG for nearly two years now. We all know it’s awesome (if you aren’t aware of it’s awesomeness, I suggest taking a look at Allister Banks’ talk at PSU MacAdmins last year). I’m almost ashamed to admit that I was happily making my Golden Master images on my test iMac and hoping for the best when I cleaned them up by hand and pushed them out. Anyway, that’s enough of my admissions. Over these two years, I’ve picked up a few tips and tricks for working effectively with InstaDMG.
+
+Put an SSD in your laptop
+Seriously, just do it. If your boss complains at how much it costs, then they’re not charging enough for you. The price of the SSD was covered by the time I saved when doing one particularly chunky build (around 30GB including packages). InstaDMG is primarily I/O bound, so an SSD will change your InstaDMG life.
+
+Keep your InstaUp2DatePackages on a web server
+If you’ve got more than one person building images in your organisation, you’ll soon find that your packages will get out of sync with each other. One person will be using 0.8.2 of Munki, another 0.8.3, it all goes horribly wrong. As InstaDMG can pull packages from a web server, this lends itself to having a central repository for packages in your oganisation. Remember to keep it safely behind your firewall if you’ve got sensitive info in your packages (like one that creates your admin user, for example).
+
+Keep our CatalogFiles in source control
+Now that everyone has access to your InstaUp2DatePackages, we ought to get our CatalogFiles in check too. Keep them in some sort of source control like Git and be happy. Mine can be found on my GitHub.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/" rel="bookmark" title="InstaDMG Tips">InstaDMG Tips</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>I’ve been using <a href="http://code.google.com/p/instadmg/">InstaDMG</a> for nearly two years now. We all know it’s awesome (if you aren’t aware of it’s awesomeness, I suggest taking a look at <a href="http://www.youtube.com/watch?v=o8xtO5E4MzE">Allister Banks’ talk at PSU MacAdmins last year</a>). I’m almost ashamed to admit that I was happily making my Golden Master images on my test iMac and hoping for the best when I cleaned them up by hand and pushed them out. Anyway, that’s enough of my admissions. Over these two years, I’ve picked up a few tips and tricks for working effectively with InstaDMG.</p>
+
+<h2 id="put-an-ssd-in-your-laptop">Put an SSD in your laptop</h2>
+<p>Seriously, just do it. If your boss complains at how much it costs, then they’re not charging enough for you. The price of the SSD was covered by the time I saved when doing one particularly chunky build (around 30GB including packages). InstaDMG is primarily I/O bound, so an SSD will change your InstaDMG life.</p>
+
+<h2 id="keep-your-instaup2datepackages-on-a-web-server">Keep your InstaUp2DatePackages on a web server</h2>
+<p>If you’ve got more than one person building images in your organisation, you’ll soon find that your packages will get out of sync with each other. One person will be using 0.8.2 of Munki, another 0.8.3, it all goes horribly wrong. As InstaDMG can pull packages from a web server, this lends itself to having a central repository for packages in your oganisation. Remember to keep it safely behind your firewall if you’ve got sensitive info in your packages (like one that creates your admin user, for example).</p>
+
+<h2 id="keep-our-catalogfiles-in-source-control">Keep our CatalogFiles in source control</h2>
+<p>Now that everyone has access to your InstaUp2DatePackages, we ought to get our CatalogFiles in check too. Keep them in some sort of source control like <a href="http://grahamgilbert.com/blog/2012/09/21/five-reasons-sysadmins-should-use-git/">Git</a> and be happy. Mine can be found on my <a href="https://github.com/grahamgilbert/InstaDMG-Catalogs">GitHub</a>.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2013/01/05/instadmg-tips/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>InstaDMG Tips</strong> was published on <time datetime="2013-01-05T14:35:00+00:00">January 05, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

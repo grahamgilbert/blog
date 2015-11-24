@@ -1,7 +1,0 @@
-{
-  "name": "grahamgilbert",
-  "root": "./public",
-  "redirects": {
-    "blog/2015/05/08/introducting-imagr/": "blog/2015/05/08/introducing-imagr/"
-  }
-}

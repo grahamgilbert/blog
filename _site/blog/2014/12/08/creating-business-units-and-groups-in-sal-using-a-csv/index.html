@@ -1,0 +1,347 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Creating Business Units and Groups in Sal using a CSV &#8211; graham gilbert dot com</title>
+<meta name="description" content="Obviously I’m a little biased, but I love Sal. But, it can be a little tedious to get everything set up the first time if you have hundreds of Business Units and Machine Groups. I’ve quietly ignored the problem for a while, but then I saw this tweet pop up in my feed:
+
+@hunty1er Pretty sure you could automate BU/MG creation through the DB backend. What say you @grahamgilbert ?&mdash; Pepijn Bruienne (@bruienne) December 8, 2014
+
+
+What say I Mr Bruienne? Like the man from Del Monte, I say YES!
+
+The plan
+
+We’re going to use a few of the parts that make Django and Docker awesome. We will:
+
+
+  Make a custom management command that will read in a CSV
+  The command will make the Business Units and Groups if they don’t exist
+  We’re than going to run it in a temporary Docker container when we’re ready to do the actual import. This is one of the strengths of Docker - we can spin up a linked container that will operate on the main database, but won’t interfere with your container serving the app.
+
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Creating Business Units and Groups in Sal using a CSV">
+<meta name="twitter:description" content="Obviously I’m a little biased, but I love Sal. But, it can be a little tedious to get everything set up the first time if you have hundreds of Business Units and Machine Groups. I’ve quietly ignored the problem for a while, but then I saw this tweet pop up in my feed:
+
+@hunty1er Pretty sure you could automate BU/MG creation through the DB backend. What say you @grahamgilbert ?&mdash; Pepijn Bruienne (@bruienne) December 8, 2014
+
+
+What say I Mr Bruienne? Like the man from Del Monte, I say YES!
+
+The plan
+
+We’re going to use a few of the parts that make Django and Docker awesome. We will:
+
+
+  Make a custom management command that will read in a CSV
+  The command will make the Business Units and Groups if they don’t exist
+  We’re than going to run it in a temporary Docker container when we’re ready to do the actual import. This is one of the strengths of Docker - we can spin up a linked container that will operate on the main database, but won’t interfere with your container serving the app.
+
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating Business Units and Groups in Sal using a CSV">
+<meta property="og:description" content="Obviously I’m a little biased, but I love Sal. But, it can be a little tedious to get everything set up the first time if you have hundreds of Business Units and Machine Groups. I’ve quietly ignored the problem for a while, but then I saw this tweet pop up in my feed:
+
+@hunty1er Pretty sure you could automate BU/MG creation through the DB backend. What say you @grahamgilbert ?&mdash; Pepijn Bruienne (@bruienne) December 8, 2014
+
+
+What say I Mr Bruienne? Like the man from Del Monte, I say YES!
+
+The plan
+
+We’re going to use a few of the parts that make Django and Docker awesome. We will:
+
+
+  Make a custom management command that will read in a CSV
+  The command will make the Business Units and Groups if they don’t exist
+  We’re than going to run it in a temporary Docker container when we’re ready to do the actual import. This is one of the strengths of Docker - we can spin up a linked container that will operate on the main database, but won’t interfere with your container serving the app.
+
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/" rel="bookmark" title="Creating Business Units and Groups in Sal using a CSV">Creating Business Units and Groups in Sal using a CSV</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Obviously I’m a little biased, but I love Sal. But, it can be a little tedious to get everything set up the first time if you have hundreds of Business Units and Machine Groups. I’ve quietly ignored the problem for a while, but then I saw this tweet pop up in my feed:</p>
+
+<blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/hunty1er">@hunty1er</a> Pretty sure you could automate BU/MG creation through the DB backend. What say you <a href="https://twitter.com/grahamgilbert">@grahamgilbert</a> ?</p>&mdash; Pepijn Bruienne (@bruienne) <a href="https://twitter.com/bruienne/status/541811445512830976">December 8, 2014</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>What say I Mr Bruienne? Like the <a href="https://www.youtube.com/watch?v=mjB9Chw_6FE">man from Del Monte</a>, I say YES!</p>
+
+<h2 id="the-plan">The plan</h2>
+
+<p>We’re going to use a few of the parts that make Django and Docker awesome. We will:</p>
+
+<ul>
+  <li>Make a custom management command that will read in a CSV</li>
+  <li>The command will make the Business Units and Groups if they don’t exist</li>
+  <li>We’re than going to run it in a temporary Docker container when we’re ready to do the actual import. This is one of the strengths of Docker - we can spin up a linked container that will operate on the main database, but won’t interfere with your container serving the app.
+<!-- more -->
+## Let’s do this thing</li>
+</ul>
+
+<p>Custom management commands are where you can add your own command to be available under <code>./manage.py my_command</code> - and they’re pretty easy to make. I’ve made a quick and dirty one (that works, but there will probbaly be edge cases where it doesn’t).</p>
+
+<p>I’m assuming you’re running Sal in the recommended way using Docker. If you’re not, you can drop the management repo in <code>/path/to/sal/server/management</code>.</p>
+
+<p>To use it, first you’re going to need to clone the repository somewhere on your disk. I’m going to assume you’re working out of <code>/usr/local/docker</code>. There’s an example CSV included in the repo.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd</span> /usr/local/docker
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>git clone https://github.com/grahamgilbert/sal-import-example</div></div></pre></div></figure>
+
+<p>Next we’re going to run a temporary Docker container on the same host that our existing Sal container is running on. This container will run the import, and when it’s done it will delete itself (<code>--rm</code>). We’ve linked in the import data and the additional management command. So we can see the output, we’re running it in the foreground as well (<code>-i</code>). Finally, we run the custom management command and point it to the CSV.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>docker run -t -i -v /vagrant/sal/settings.py:/home/docker/sal/sal/settings.py <span class="se">\</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">  -e <span class="nv">ADMIN_PASS</span><span class="o">=</span>pass <span class="se">\</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">  -e <span class="nv">DB_NAME</span><span class="o">=</span>sal <span class="se">\</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">  -e <span class="nv">DB_USER</span><span class="o">=</span>admin <span class="se">\</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  -e <span class="nv">DB_PASS</span><span class="o">=</span>password <span class="se">\</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">  --link postgres-sal:db <span class="se">\</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">  --rm <span class="se">\</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">  -v /vagrant/sal/management:/home/docker/sal/server/management <span class="se">\</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">  -v /vagrant/sal/data.csv:/data.csv <span class="se">\</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">  macadmins/sal <span class="se">\</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">  python /home/docker/sal/manage.py loadcsv /data.csv</div></div></pre></div></figure>
+
+<p>And you’ll get the output reporting that your CSV did it’s job:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Omni Mega Corp didn<span class="s1">&#39;t exist and has been created.</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="s1">Machine Group 1 didn&#39;</span>t exist and has been created.
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">Omni Mega Corp already exists.
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">Machine Group <span class="m">2</span> didn<span class="s1">&#39;t exist and has been created.</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="s1">Honest Bob&#39;</span>s Burgers didn<span class="s1">&#39;t exist and has been created.</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="s1">Machine Group 3 didn&#39;</span>t exist and has been created.</div></div></pre></div></figure>
+
+<p>There it is - a simple management command to automate tasks with Sal and running it in a temporary Docker container. You can use the temporary container technique for many tasks - performing a <code>repo_sync</code> on a <a href="https://registry.hub.docker.com/u/macadmins/reposado/">Reposado container</a> is a good example.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2014/12/08/creating-business-units-and-groups-in-sal-using-a-csv/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Creating Business Units and Groups in Sal using a CSV</strong> was published on <time datetime="2014-12-08T07:52:21+00:00">December 08, 2014</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

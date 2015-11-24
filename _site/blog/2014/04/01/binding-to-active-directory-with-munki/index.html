@@ -1,0 +1,354 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Binding to Active Directory with Munki &#8211; graham gilbert dot com</title>
+<meta name="description" content="Many organisations need to bind their Macs to AD. There are quite a few options however, that need to be changed. It’s quite  a straightforward process to automate this with Munki, although you do have a few options to consider.
+
+First off, how are you going to deliver the actual bind script? You have the option of a no-pkg pkginfo file, with the script directly in the pkginfo plist. Whilst the script is now easily editable in the pkginfo, it does pose a security issue in that the catalog is kept in /Library/Managed Installs/catalogs, which will contain your script. Along with your AD bind account’s details. Whoops!
+
+Prepare the Bind!
+
+My preferred way of deploying the bind script is with a payload-free package made with The Luggage. My bind script is nothing special, it was originally borrowed from DeployStudio. You can find the script and the Makefile on my macscripts repo. If you need a primer on The Luggage, I wrote about it in August 2013. You just need to edit the variables at the top of the script to suit your environment and build the package.
+
+So you’ve got the machine bound to AD. Great. What happens if the binding doesn’t go to plan? Or a well meaning tech manages to unbind the machine, but can’t manage to re-bind it? Or even worse, the user manages to unbind it themselves? We need to make Munki check that the Mac is still bound to AD.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Binding to Active Directory with Munki">
+<meta name="twitter:description" content="Many organisations need to bind their Macs to AD. There are quite a few options however, that need to be changed. It’s quite  a straightforward process to automate this with Munki, although you do have a few options to consider.
+
+First off, how are you going to deliver the actual bind script? You have the option of a no-pkg pkginfo file, with the script directly in the pkginfo plist. Whilst the script is now easily editable in the pkginfo, it does pose a security issue in that the catalog is kept in /Library/Managed Installs/catalogs, which will contain your script. Along with your AD bind account’s details. Whoops!
+
+Prepare the Bind!
+
+My preferred way of deploying the bind script is with a payload-free package made with The Luggage. My bind script is nothing special, it was originally borrowed from DeployStudio. You can find the script and the Makefile on my macscripts repo. If you need a primer on The Luggage, I wrote about it in August 2013. You just need to edit the variables at the top of the script to suit your environment and build the package.
+
+So you’ve got the machine bound to AD. Great. What happens if the binding doesn’t go to plan? Or a well meaning tech manages to unbind the machine, but can’t manage to re-bind it? Or even worse, the user manages to unbind it themselves? We need to make Munki check that the Mac is still bound to AD.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binding to Active Directory with Munki">
+<meta property="og:description" content="Many organisations need to bind their Macs to AD. There are quite a few options however, that need to be changed. It’s quite  a straightforward process to automate this with Munki, although you do have a few options to consider.
+
+First off, how are you going to deliver the actual bind script? You have the option of a no-pkg pkginfo file, with the script directly in the pkginfo plist. Whilst the script is now easily editable in the pkginfo, it does pose a security issue in that the catalog is kept in /Library/Managed Installs/catalogs, which will contain your script. Along with your AD bind account’s details. Whoops!
+
+Prepare the Bind!
+
+My preferred way of deploying the bind script is with a payload-free package made with The Luggage. My bind script is nothing special, it was originally borrowed from DeployStudio. You can find the script and the Makefile on my macscripts repo. If you need a primer on The Luggage, I wrote about it in August 2013. You just need to edit the variables at the top of the script to suit your environment and build the package.
+
+So you’ve got the machine bound to AD. Great. What happens if the binding doesn’t go to plan? Or a well meaning tech manages to unbind the machine, but can’t manage to re-bind it? Or even worse, the user manages to unbind it themselves? We need to make Munki check that the Mac is still bound to AD.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/" rel="bookmark" title="Binding to Active Directory with Munki">Binding to Active Directory with Munki</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Many organisations need to bind their Macs to AD. There are quite a few options however, that need to be changed. It’s quite  a straightforward process to automate this with Munki, although you do have a few options to consider.</p>
+
+<p>First off, how are you going to deliver the actual bind script? You have the option of a <a href="https://code.google.com/p/munki/wiki/ManagingPrintersWithMunki#Alternate_Method_Using_nopkg">no-pkg pkginfo</a> file, with the script directly in the pkginfo plist. Whilst the script is now easily editable in the pkginfo, it does pose a security issue in that the catalog is kept in /Library/Managed Installs/catalogs, which will contain your script. Along with your AD bind account’s details. Whoops!</p>
+
+<h2 id="prepare-the-bind">Prepare the Bind!</h2>
+
+<p>My preferred way of deploying the bind script is with a payload-free package made with The Luggage. My bind script is nothing special, it was originally borrowed from DeployStudio. You can find the <a href="https://github.com/grahamgilbert/macscripts/blob/master/AD%20Bind/postinstall">script</a> and the <a href="https://github.com/grahamgilbert/macscripts/blob/master/AD%20Bind/Makefile">Makefile</a> on my <a href="https://github.com/grahamgilbert/macscripts/tree/master/AD%20Bind">macscripts repo</a>. If you need a primer on The Luggage, <a href="http://grahamgilbert.com/blog/2013/08/09/the-luggage-an-introduction/">I wrote about it in August 2013</a>. You just need to edit the variables at the top of the script to suit your environment and build the package.</p>
+
+<p>So you’ve got the machine bound to AD. Great. What happens if the binding doesn’t go to plan? Or a well meaning tech manages to unbind the machine, but can’t manage to re-bind it? Or even worse, the user manages to unbind it themselves? We need to make Munki check that the Mac is still bound to AD.</p>
+
+<!-- more -->
+
+<h2 id="installcheckscriptsh">installcheck_script.sh</h2>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c">#!/bin/sh</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># You need to change this.</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The Domain we&#39;re supposed to be on</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">DOMAIN</span><span class="o">=</span><span class="s2">&quot;ad.company.com&quot;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c">## STOP EDITING ##</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The version from dsconfigad</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">ACTUAL_DOMAIN</span><span class="o">=</span><span class="sb">`</span>/usr/sbin/dsconfigad -show <span class="p">|</span> /usr/bin/grep -i <span class="s2">&quot;Active Directory Domain&quot;</span> <span class="p">|</span> /usr/bin/sed -n <span class="s1">&#39;s/[^.]*= //p&#39;</span><span class="sb">`</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$ACTUAL_DOMAIN&quot;</span> <span class="o">=</span> <span class="s2">&quot;$DOMAIN&quot;</span> <span class="o">]</span>
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">then</span>
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># We&#39;re on the right domain, no need to install</span>
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nb">exit </span>1
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">else</span>
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># Domain isn&#39;t being returned from dsconfigad, need to install</span>
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nb">exit </span>0
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">fi</span></div></div></pre></div></figure>
+
+<p>You should save this as install <code>check_script.sh</code> in the same directory as your binding package. This script is querying the Active Directory domain the Mac is on and checking it’s the one you want.</p>
+
+<p>Simple.</p>
+
+<p>Job done.</p>
+
+<p>Right…?</p>
+
+<h2 id="not-quite-finished">Not quite finished</h2>
+
+<p>The main issue with using an <code>installcheck_script</code> is that we’re bypassing every other mechanism that Munki uses to check if an item needs to be installed, which means that if we ever need to update our AD bind package and install it, or if the Mac was previously bound to AD, Munki will cheerfully ignore the package because as far as it’s concerned, if it passes the installcheck_script, everything’s fine and dandy.</p>
+
+<h2 id="installcheckscriptsh-take-2">installcheck_script.sh take 2</h2>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c">#!/bin/sh</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># You need to change these.</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The Domain we&#39;re supposed to be on</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">DOMAIN</span><span class="o">=</span><span class="s2">&quot;ad.company.com&quot;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The version of the package (today&#39;s date if created using the usual Luggage Makefile)</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">PKG_VERSION</span><span class="o">=</span><span class="s2">&quot;20140401&quot;</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The identifier of the package</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">PKG_ID</span><span class="o">=</span><span class="s2">&quot;com.grahamgilbert.ad-bind&quot;</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c">## STOP EDITING ##</span>
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The version from dsconfigad</span>
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">ACTUAL_DOMAIN</span><span class="o">=</span><span class="sb">`</span>/usr/sbin/dsconfigad -show <span class="p">|</span> /usr/bin/grep -i <span class="s2">&quot;Active Directory Domain&quot;</span> <span class="p">|</span> /usr/bin/sed -n <span class="s1">&#39;s/[^.]*= //p&#39;</span><span class="sb">`</span>
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># The version installed from pkgutil</span>
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">VERSION_INSTALLED</span><span class="o">=</span><span class="sb">`</span>/usr/sbin/pkgutil --pkg-info <span class="k">$&#x7b;</span><span class="nv">PKG_ID</span><span class="k">&#x7d;</span> <span class="p">|</span> /usr/bin/grep version <span class="p">|</span> /usr/bin/sed <span class="s1">&#39;s/^[^:]*: //&#39;</span><span class="sb">`</span>
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$ACTUAL_DOMAIN&quot;</span> <span class="o">=</span> <span class="s2">&quot;$DOMAIN&quot;</span> <span class="o">]</span>
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">then</span>
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># We&#39;re on the right domain, make sure we&#39;ve got the right version of the package</span>
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$VERSION_INSTALLED&quot;</span> <span class="o">=</span> <span class="s2">&quot;$PKG_VERSION&quot;</span> <span class="o">]</span>
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">then</span>
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># Everything&#39;s ok, no need to install</span>
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nb">exit </span>1
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">else</span>
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># Package is out of date, need to install</span>
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nb">exit </span>0
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">fi</span>
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">else</span>
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># Domain isn&#39;t being returned from dsconfigad, need to install</span>
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nb">exit </span>0
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">fi</span></div></div></pre></div></figure>
+
+<p>This is a little more complicated, but not much. First off we’re doing the same check as before, making sure we’re actually bound to the domain. If we aren’t, we obviously need to install the package, so that’s the end of that. If we are bound, we next need to check which version of the package we have. As previously mentioned, Munki would usually do this for us, but by using the installcheck_script, we’ve engaged the “leave me alone, I know what the fuck I’m doing” mode in Munki, so we’re implementing that check ourselves. If the version or package identifier don’t match, we want our bind script installed, screw those other guys with their not-as-good-as-our-way of binding.</p>
+
+<p>All that’s left now is to <code>munkiimport</code> your package with your script as an <code>installcheck_script</code>:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>/usr/local/munki/munkiimport ad-bind.pkg --installcheck_script<span class="o">=</span>installcheck_script.sh</div></div></pre></div></figure>
+
+<p>There you have it, how to keep a Mac bound to AD with Munki. You may wish to change some other settings later on (particularly if you have to do battle with a .local domain), but this will get you going with a basic AD bind.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2014/04/01/binding-to-active-directory-with-munki/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Binding to Active Directory with Munki</strong> was published on <time datetime="2014-04-01T20:15:39+01:00">April 01, 2014</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

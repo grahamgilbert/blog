@@ -1,0 +1,375 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Facter 101 &#8211; graham gilbert dot com</title>
+<meta name="description" content="Facter is what gives Puppet it’s brains. It collects information about the computer it is run on and then passes it to the Puppet Master for use in manifests and can optionally be stored. I know, it doesn’t sound like the most earth shattering revelation of all time, but stop for a moment. Every time your current scripts need to taget a specific OS version or a machine with a certain bit of hardware, you need to code it directly into the script. If the method of extracting that information changes, you need to modify every single script that uses that method. With Facter, you’re editing one file, which is always up to date on the client. Anyway, that’s enough waffle from me. Let’s get started.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Facter 101">
+<meta name="twitter:description" content="Facter is what gives Puppet it’s brains. It collects information about the computer it is run on and then passes it to the Puppet Master for use in manifests and can optionally be stored. I know, it doesn’t sound like the most earth shattering revelation of all time, but stop for a moment. Every time your current scripts need to taget a specific OS version or a machine with a certain bit of hardware, you need to code it directly into the script. If the method of extracting that information changes, you need to modify every single script that uses that method. With Facter, you’re editing one file, which is always up to date on the client. Anyway, that’s enough waffle from me. Let’s get started.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Facter 101">
+<meta property="og:description" content="Facter is what gives Puppet it’s brains. It collects information about the computer it is run on and then passes it to the Puppet Master for use in manifests and can optionally be stored. I know, it doesn’t sound like the most earth shattering revelation of all time, but stop for a moment. Every time your current scripts need to taget a specific OS version or a machine with a certain bit of hardware, you need to code it directly into the script. If the method of extracting that information changes, you need to modify every single script that uses that method. With Facter, you’re editing one file, which is always up to date on the client. Anyway, that’s enough waffle from me. Let’s get started.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2013/04/02/facter-101/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2013/04/02/facter-101/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2013/04/02/facter-101/" rel="bookmark" title="Facter 101">Facter 101</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Facter is what gives Puppet it’s brains. It collects information about the computer it is run on and then passes it to the Puppet Master for use in manifests and can optionally be stored. I know, it doesn’t sound like the most earth shattering revelation of all time, but stop for a moment. Every time your current scripts need to taget a specific OS version or a machine with a certain bit of hardware, you need to code it directly into the script. If the method of extracting that information changes, you need to modify every single script that uses that method. With Facter, you’re editing one file, which is always up to date on the client. Anyway, that’s enough waffle from me. Let’s get started.<!-- more --></p>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li><a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a></li>
+  <li><a href="http://downloads.vagrantup.com/">Vagrant</a></li>
+  <li>Either a Mac running 10.8 that you don’t mind wiping, or a Virtual Machine running in VMWare Fusion or similar.</li>
+  <li>Git (Install the Command Line Tools from within <a href="https://itunes.apple.com/gb/app/xcode/id497799835?mt=12">Xcode’s</a> preferences if you don’t have it).</li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+<p>We need a Puppet Master - fortunately there’s one pre-built that has everything we need. Make sure you’ve installed everything in the requirements, and then open up your trusty Terminal:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>mkdir ~/src
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>git clone https://github.com/grahamgilbert/vagrant-puppetmaster.git facter-101
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd </span>facter-101
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>vagrant up</div></div></pre></div></figure>
+
+<p>This will pull down the needed bits to get your own Puppet Master running and then <code>vagrant up</code> will start things going. If you get errors about Postgres, just issue a <code>vagrant reload</code></p>
+
+<p>Now for your test Mac: I’ve made a script to automate the process. If you <strong>don’t</strong> have a DNS entry for your Puppet Master, and you’re using the Vagrant setup described above, run this in your terminal:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>curl -o /tmp/install_puppet.py https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py<span class="p">;</span> sudo python /tmp/install_puppet.py --appendhosts</div></div></pre></div></figure>
+
+<p>If you are using a different setup, please refer to the <a href="https://github.com/grahamgilbert/macscripts/tree/master/Puppet-Install">script’s readme</a> for more information</p>
+
+<h2 id="learn-some-facts">Learn some Facts</h2>
+<p>On your client machine, run this in a Terminal</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo facter</div></div></pre></div></figure>
+
+<p>Your test Mac will churn away for a minute and then spit out a ton of information - you’ll see everything from the uptime of the machine to the amount of RAM. Still not overly useful sitting on that one machine. We need this information somewhere central to make use of it.</p>
+
+<p>We need to make one small change to <code>~/src/facter-101/puppet/manifests/site.pp</code> to get the puppet run working:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c1"># comment out the next line by putting a hash in front of it</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c1"># import &quot;classes/*&quot;</span></div></div></pre></div></figure>
+
+<p>This is to stop Puppet complaining that there’s nothing to import - which there isn’t yet.</p>
+
+<p>Assuming your Puppet Master is running, this is on your test Mac:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">sudo puppet agent -t</div></div></pre></div></figure>
+
+<p>You’ll see a load of files being synced to your test Mac - these are custom Facts, plugins and assorted other goodies being pulled from the server. We’ll get to using custom Facts in a moment. If you load up <a href="http://192.168.33.10:3000">http://192.168.33.10:3000</a> in your browser of choice, you’ll see your client having checked into Puppet. Click on it’s hostname and you’ll be presented with a list of all of the available Facts for that machine.</p>
+
+<p><a href="/images/posts/2013-04-02/Puppet_Node_Manager.png"><img class="center" src="/images/posts/2013-04-02/Puppet_Node_Manager.png" alt="" /></a></p>
+
+<p>That’s all very nice, but what can we use it for?</p>
+
+<h2 id="the-plan">The Plan</h2>
+
+<p>We’re going to install some extra facts from the Puppet Forge onto our Master, and then write some code to target a specific set of machines. In our fictional world, every Mac with 4GB or more of RAM will be designated a “design” Mac. We’ll install Firefox on those (that’s a design app, right?).</p>
+
+<p>First we’ll install the extra Facts onto our Master from the Forge.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd</span> ~/src/facter-101
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>vagrant ssh
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># You&#39;re on the Puppet Master now</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo puppet module install grahamgilbert/mac_facts
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># Get out of the Puppet Master</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">exit</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># Restart the Puppet Master to pick up the new module</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>vagrant reload</div></div></pre></div></figure>
+
+<p>Now we’ll write a class that will:</p>
+
+<ul>
+  <li>Test that the client machine is a Mac</li>
+  <li>Test that the client machine also has more than 4GB RAM</li>
+  <li>If both conditions are satisfied, will install Firefox.</li>
+</ul>
+
+<p>Create your <code>~/src/facter-101/puppet/manifests/classes/design.pp</code>and make it look like the following.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">~/src/facter-101/puppet/manifests/classes/design.pp</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">class</span> <span class="n">design</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="k">if</span> <span class="vg">$:</span><span class="ss">:operatingsystem</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span> <span class="ow">and</span> <span class="vg">$:</span><span class="ss">:mac_memory_in_gb</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">&#x7b;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="n">package</span> <span class="p">&#x7b;</span> <span class="s1">&#39;Firefox&#39;</span><span class="p">:</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="k">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">provider</span> <span class="o">=&gt;</span> <span class="n">appdmg</span><span class="p">,</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">source</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/19.0.2/mac/en-US/Firefox%2019.0.2.dmg&quot;</span><span class="p">,</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="p">&#x7d;</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="p">&#x7d;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>Puppet has a default node - all machines checking into the Master get anything that’s declared in this node by default. Open up <code>~/src/facter-101/puppet/manifests/site.pp</code> and make it look like:</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">~/src/facter-101/puppet/manifests/site.pp</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">import</span> <span class="s2">&quot;classes/*&quot;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">node</span> <span class="n">default</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="kp">include</span> <span class="n">design</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>We’ve added some classes, so the Puppet Master process needs to be restarted - rebooting the whole VM is probably quicker.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>vagrant reload</div></div></pre></div></figure>
+
+<p>On your Test Mac, perform a Puppet run.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo puppet agent -t</div></div></pre></div></figure>
+
+<p><img class="center" src="/images/posts/2013-04-02/Firefox_Installed.png" alt="" /></p>
+
+<p>Depending on how much memory is in your test Mac, this might or might not do anything. Play with the $::mac_memory_in_gb value, starting high and then bringing it down to the amount of RAM in your test Mac - or if you are running your test Mac in a VM, you could also adjust the amount of memory assigned to it.</p>
+
+<p>So that’s Facter - you’re not limited to using this with the default node, this technique can be used anywhere you write Puppet code. Try changing your design.pp file to look like the following - we’re using Facter Facts directly within our manifest to write data to the test Mac.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">~/src/facter-101/puppet/manifests/classes/design.pp</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">class</span> <span class="n">design</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="k">if</span> <span class="vg">$:</span><span class="ss">:operatingsystem</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span> <span class="ow">and</span> <span class="vg">$:</span><span class="ss">:mac_memory_in_gb</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">&#x7b;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="n">package</span> <span class="p">&#x7b;</span> <span class="s1">&#39;Firefox&#39;</span><span class="p">:</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="k">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">provider</span> <span class="o">=&gt;</span> <span class="n">appdmg</span><span class="p">,</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">source</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/19.0.2/mac/en-US/Firefox%2019.0.2.dmg&quot;</span><span class="p">,</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="p">&#x7d;</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="p">&#x7d;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="n">file</span> <span class="p">&#x7b;</span> <span class="s1">&#39;/tmp/mac_ver&#39;</span><span class="p">:</span> 
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="n">content</span> <span class="o">=&gt;</span> <span class="s2">&quot;This Mac is running $&#x7b;::sp_os_version&#x7d;&quot;</span><span class="p">,</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="p">&#x7d;</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>Which gives us</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>less /tmp/mac_ver
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">This Mac is running OS X 10.8.3 <span class="o">(</span>12D78<span class="o">)</span></div></div></pre></div></figure>
+
+<p>This is a very simple example of how you can use Facter to configure your machines. Facter can be used anywhere you’d set a variable manually - the <a href="http://docs.puppetlabs.com/puppet/latest/reference/lang_conditional.html">Puppet documentation on Conditional Statements</a> is an excellent next step with dynamically assigning configuration to your machines.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2013/04/02/facter-101/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2013/04/02/facter-101/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2013/04/02/facter-101/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Facter 101</strong> was published on <time datetime="2013-04-02T10:11:00+01:00">April 02, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

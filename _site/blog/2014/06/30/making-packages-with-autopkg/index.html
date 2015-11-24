@@ -1,0 +1,663 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Making packages with AutoPkg &#8211; graham gilbert dot com</title>
+<meta name="description" content="Over the past few weeks, I’ve had the same conversation over and over:
+people telling me that once they get started using Munki, their next
+step will be to start using AutoPkg. I gave each person the same
+response: “you’re doing it wrong”.
+
+AutoPkg a has a reputation of being difficult to use. This is totally
+unjustfied. You don’t need to be using Munki for it to be useful, you
+don’t need to set it up to run automatically via Jenkins or a
+LaunchDaemon. If you need to get software into a package,  AutoPkg is
+the easiest way.
+
+Installing AutoPkg
+
+Head over to the releases page on AutoPkg’s GitHub repository and
+download the latest version  (0.3.0 at the time of writing). It’s an
+Apple package, so double click it and get it installed. If you have Gate Keeper enabled, you’ll need to right-click on the package and choose to install it from there, as it’s not been signed.
+
+Recipes
+
+AutoPkg is useless without recipes. Fortunately, there are hundreds
+that have already been made by the community.
+
+We’ll add the set of recipes maintained by AutoPkg’s authors, which
+contains some of the most common software. Open up a terminal window
+and enter :
+
+$ autopkg repo-add https://github.com/autopkg/recipes
+
+You’ll see AutoPkg downloading and adding the recipes to your Mac.
+
+Attempting git clone...
+ Adding /Users/grahamgilbert/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes to RECIPE_SEARCH_DIRS...
+Updated search path:
+  &#39;.&#39;
+  &#39;~/Library/AutoPkg/Recipes&#39;
+  &#39;/Library/AutoPkg/Recipes&#39;
+  &#39;/Users/vagrant/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes&#39;
+
+Using the thing
+
+Let’s see what recipes we just added. Still in your terminal, enter:
+
+$ autopkg list-recipes
+
+You’ll see a whole load of output like:
+
+Adium.download
+Adium.munki
+Adium.pkg
+AdobeAIR.pkg
+AdobeAcrobatPro9Update.download
+AdobeAcrobatPro9Update.munki
+AdobeAcrobatProXUpdate.download
+AdobeAcrobatProXUpdate.munki
+AdobeAir.munki
+AdobeFlashPlayer.download
+AdobeFlashPlayer.munki
+AdobeFlashPlayer.pkg
+AdobeFlashPlayerExtractPackage.munki
+...
+
+The naming convention in AutoPKG is SoftwareName.output. For for
+example, to run a recipe that downloads Google Chrome and adds it to
+Munki, you would use the GoogleChrome.munki recipe, but if you just
+wanted to download it an make a package, you’d use the GoogleChrome.pkg recipe. It just so happens that making a package of Chrome is exactly what we want to do.
+
+Back into your terminal and enter:
+
+$ autopkg run GoogleChrome.pkg
+
+The AutoPkg robot will churn away and you’ll get some output similar to:
+
+Processing GoogleChrome.pkg...
+ The following new items were downloaded:
+    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/downloads/GoogleChrome.dmg
+ The following packages were built:
+    Identifier               Version          Pkg path                        
+    ----------               -------          --------                        
+    com.google.Chrome        35.0.1916.153    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/GoogleChrome-35.0.1916.153.pkg
+
+And when it’s all finished, you’ll be left with a nice package that
+you can use anywhere you’d use finely crafted packages - ARD, AutoDMG or even Casper if you’re that way inclined (although Allister Banks has been
+working on a way of automating importing packages into the JSS - see
+his recent talk for more on that subject).
+
+Doing it all again
+
+What happens next time you want to build an updated package?
+
+$ autopkg run GoogleChrome.pkg
+
+Right?
+
+Well, kinda.
+
+What happens if Google changes the URL AutoPkg uses to download
+Chrome? Fortunately we’re using the community provided recipes, and if
+something’s broken they usually get fixed pretty quickly. We just need
+to tell AutoPkg to update the installed recipes.
+
+$ autopkg update-repo all
+
+And then we’re able to build our package safe in the knowledge that
+someone else has done all of the hard work for us.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Making packages with AutoPkg">
+<meta name="twitter:description" content="Over the past few weeks, I’ve had the same conversation over and over:
+people telling me that once they get started using Munki, their next
+step will be to start using AutoPkg. I gave each person the same
+response: “you’re doing it wrong”.
+
+AutoPkg a has a reputation of being difficult to use. This is totally
+unjustfied. You don’t need to be using Munki for it to be useful, you
+don’t need to set it up to run automatically via Jenkins or a
+LaunchDaemon. If you need to get software into a package,  AutoPkg is
+the easiest way.
+
+Installing AutoPkg
+
+Head over to the releases page on AutoPkg’s GitHub repository and
+download the latest version  (0.3.0 at the time of writing). It’s an
+Apple package, so double click it and get it installed. If you have Gate Keeper enabled, you’ll need to right-click on the package and choose to install it from there, as it’s not been signed.
+
+Recipes
+
+AutoPkg is useless without recipes. Fortunately, there are hundreds
+that have already been made by the community.
+
+We’ll add the set of recipes maintained by AutoPkg’s authors, which
+contains some of the most common software. Open up a terminal window
+and enter :
+
+$ autopkg repo-add https://github.com/autopkg/recipes
+
+You’ll see AutoPkg downloading and adding the recipes to your Mac.
+
+Attempting git clone...
+ Adding /Users/grahamgilbert/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes to RECIPE_SEARCH_DIRS...
+Updated search path:
+  &#39;.&#39;
+  &#39;~/Library/AutoPkg/Recipes&#39;
+  &#39;/Library/AutoPkg/Recipes&#39;
+  &#39;/Users/vagrant/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes&#39;
+
+Using the thing
+
+Let’s see what recipes we just added. Still in your terminal, enter:
+
+$ autopkg list-recipes
+
+You’ll see a whole load of output like:
+
+Adium.download
+Adium.munki
+Adium.pkg
+AdobeAIR.pkg
+AdobeAcrobatPro9Update.download
+AdobeAcrobatPro9Update.munki
+AdobeAcrobatProXUpdate.download
+AdobeAcrobatProXUpdate.munki
+AdobeAir.munki
+AdobeFlashPlayer.download
+AdobeFlashPlayer.munki
+AdobeFlashPlayer.pkg
+AdobeFlashPlayerExtractPackage.munki
+...
+
+The naming convention in AutoPKG is SoftwareName.output. For for
+example, to run a recipe that downloads Google Chrome and adds it to
+Munki, you would use the GoogleChrome.munki recipe, but if you just
+wanted to download it an make a package, you’d use the GoogleChrome.pkg recipe. It just so happens that making a package of Chrome is exactly what we want to do.
+
+Back into your terminal and enter:
+
+$ autopkg run GoogleChrome.pkg
+
+The AutoPkg robot will churn away and you’ll get some output similar to:
+
+Processing GoogleChrome.pkg...
+ The following new items were downloaded:
+    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/downloads/GoogleChrome.dmg
+ The following packages were built:
+    Identifier               Version          Pkg path                        
+    ----------               -------          --------                        
+    com.google.Chrome        35.0.1916.153    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/GoogleChrome-35.0.1916.153.pkg
+
+And when it’s all finished, you’ll be left with a nice package that
+you can use anywhere you’d use finely crafted packages - ARD, AutoDMG or even Casper if you’re that way inclined (although Allister Banks has been
+working on a way of automating importing packages into the JSS - see
+his recent talk for more on that subject).
+
+Doing it all again
+
+What happens next time you want to build an updated package?
+
+$ autopkg run GoogleChrome.pkg
+
+Right?
+
+Well, kinda.
+
+What happens if Google changes the URL AutoPkg uses to download
+Chrome? Fortunately we’re using the community provided recipes, and if
+something’s broken they usually get fixed pretty quickly. We just need
+to tell AutoPkg to update the installed recipes.
+
+$ autopkg update-repo all
+
+And then we’re able to build our package safe in the knowledge that
+someone else has done all of the hard work for us.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Making packages with AutoPkg">
+<meta property="og:description" content="Over the past few weeks, I’ve had the same conversation over and over:
+people telling me that once they get started using Munki, their next
+step will be to start using AutoPkg. I gave each person the same
+response: “you’re doing it wrong”.
+
+AutoPkg a has a reputation of being difficult to use. This is totally
+unjustfied. You don’t need to be using Munki for it to be useful, you
+don’t need to set it up to run automatically via Jenkins or a
+LaunchDaemon. If you need to get software into a package,  AutoPkg is
+the easiest way.
+
+Installing AutoPkg
+
+Head over to the releases page on AutoPkg’s GitHub repository and
+download the latest version  (0.3.0 at the time of writing). It’s an
+Apple package, so double click it and get it installed. If you have Gate Keeper enabled, you’ll need to right-click on the package and choose to install it from there, as it’s not been signed.
+
+Recipes
+
+AutoPkg is useless without recipes. Fortunately, there are hundreds
+that have already been made by the community.
+
+We’ll add the set of recipes maintained by AutoPkg’s authors, which
+contains some of the most common software. Open up a terminal window
+and enter :
+
+$ autopkg repo-add https://github.com/autopkg/recipes
+
+You’ll see AutoPkg downloading and adding the recipes to your Mac.
+
+Attempting git clone...
+ Adding /Users/grahamgilbert/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes to RECIPE_SEARCH_DIRS...
+Updated search path:
+  &#39;.&#39;
+  &#39;~/Library/AutoPkg/Recipes&#39;
+  &#39;/Library/AutoPkg/Recipes&#39;
+  &#39;/Users/vagrant/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes&#39;
+
+Using the thing
+
+Let’s see what recipes we just added. Still in your terminal, enter:
+
+$ autopkg list-recipes
+
+You’ll see a whole load of output like:
+
+Adium.download
+Adium.munki
+Adium.pkg
+AdobeAIR.pkg
+AdobeAcrobatPro9Update.download
+AdobeAcrobatPro9Update.munki
+AdobeAcrobatProXUpdate.download
+AdobeAcrobatProXUpdate.munki
+AdobeAir.munki
+AdobeFlashPlayer.download
+AdobeFlashPlayer.munki
+AdobeFlashPlayer.pkg
+AdobeFlashPlayerExtractPackage.munki
+...
+
+The naming convention in AutoPKG is SoftwareName.output. For for
+example, to run a recipe that downloads Google Chrome and adds it to
+Munki, you would use the GoogleChrome.munki recipe, but if you just
+wanted to download it an make a package, you’d use the GoogleChrome.pkg recipe. It just so happens that making a package of Chrome is exactly what we want to do.
+
+Back into your terminal and enter:
+
+$ autopkg run GoogleChrome.pkg
+
+The AutoPkg robot will churn away and you’ll get some output similar to:
+
+Processing GoogleChrome.pkg...
+ The following new items were downloaded:
+    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/downloads/GoogleChrome.dmg
+ The following packages were built:
+    Identifier               Version          Pkg path                        
+    ----------               -------          --------                        
+    com.google.Chrome        35.0.1916.153    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/GoogleChrome-35.0.1916.153.pkg
+
+And when it’s all finished, you’ll be left with a nice package that
+you can use anywhere you’d use finely crafted packages - ARD, AutoDMG or even Casper if you’re that way inclined (although Allister Banks has been
+working on a way of automating importing packages into the JSS - see
+his recent talk for more on that subject).
+
+Doing it all again
+
+What happens next time you want to build an updated package?
+
+$ autopkg run GoogleChrome.pkg
+
+Right?
+
+Well, kinda.
+
+What happens if Google changes the URL AutoPkg uses to download
+Chrome? Fortunately we’re using the community provided recipes, and if
+something’s broken they usually get fixed pretty quickly. We just need
+to tell AutoPkg to update the installed recipes.
+
+$ autopkg update-repo all
+
+And then we’re able to build our package safe in the knowledge that
+someone else has done all of the hard work for us.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/" rel="bookmark" title="Making packages with AutoPkg">Making packages with AutoPkg</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Over the past few weeks, I’ve had the same conversation over and over:
+people telling me that once they get started using Munki, their next
+step will be to start using AutoPkg. I gave each person the same
+response: “you’re doing it wrong”.</p>
+
+<p>AutoPkg a has a reputation of being difficult to use. This is totally
+unjustfied. You don’t need to be using Munki for it to be useful, you
+don’t need to set it up to run automatically via Jenkins or a
+LaunchDaemon. If you need to get software into a package,  AutoPkg is
+the easiest way.</p>
+
+<h2 id="installing-autopkg">Installing AutoPkg</h2>
+
+<p>Head over to the <a href="https://github.com/autopkg/autopkg/releases/latest">releases page on AutoPkg’s GitHub repository</a> and
+download the latest version  (0.3.0 at the time of writing). It’s an
+Apple package, so double click it and get it installed. If you have Gate Keeper enabled, you’ll need to right-click on the package and choose to install it from there, as it’s not been signed.</p>
+
+<h2 id="recipes">Recipes</h2>
+
+<p>AutoPkg is useless without recipes. Fortunately, there are hundreds
+that have already been made by the community.</p>
+
+<p>We’ll add the set of recipes maintained by AutoPkg’s authors, which
+contains some of the most common software. Open up a terminal window
+and enter :</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>autopkg repo-add https://github.com/autopkg/recipes</div></div></pre></div></figure>
+
+<p>You’ll see AutoPkg downloading and adding the recipes to your Mac.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Attempting git clone...
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">Adding /Users/grahamgilbert/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes to RECIPE_SEARCH_DIRS...
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">Updated search path:
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="s1">&#39;.&#39;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="s1">&#39;~/Library/AutoPkg/Recipes&#39;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="s1">&#39;/Library/AutoPkg/Recipes&#39;</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="s1">&#39;/Users/vagrant/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes&#39;</span></div></div></pre></div></figure>
+
+<h2 id="using-the-thing">Using the thing</h2>
+
+<p>Let’s see what recipes we just added. Still in your terminal, enter:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>autopkg list-recipes</div></div></pre></div></figure>
+
+<p>You’ll see a whole load of output like:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Adium.download
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">Adium.munki
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">Adium.pkg
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAIR.pkg
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAcrobatPro9Update.download
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAcrobatPro9Update.munki
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAcrobatProXUpdate.download
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAcrobatProXUpdate.munki
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeAir.munki
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeFlashPlayer.download
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeFlashPlayer.munki
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeFlashPlayer.pkg
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">AdobeFlashPlayerExtractPackage.munki
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">...</div></div></pre></div></figure>
+
+<p>The naming convention in AutoPKG is SoftwareName.output. For for
+example, to run a recipe that downloads Google Chrome and adds it to
+Munki, you would use the GoogleChrome.munki recipe, but if you just
+wanted to download it an make a package, you’d use the GoogleChrome.pkg recipe. It just so happens that making a package of Chrome is exactly what we want to do.</p>
+
+<p>Back into your terminal and enter:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>autopkg run GoogleChrome.pkg</div></div></pre></div></figure>
+
+<p>The AutoPkg robot will churn away and you’ll get some output similar to:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Processing GoogleChrome.pkg...
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">The following new items were downloaded:
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/downloads/GoogleChrome.dmg
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">The following packages were built:
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">    Identifier               Version          Pkg path                        
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">    ----------               -------          --------                        
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">    com.google.Chrome        35.0.1916.153    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/GoogleChrome-35.0.1916.153.pkg</div></div></pre></div></figure>
+
+<p>And when it’s all finished, you’ll be left with a nice package that
+you can use anywhere you’d use finely crafted packages - ARD, AutoDMG or even Casper if you’re that way inclined (although Allister Banks has been
+working on a way of automating importing packages into the JSS - see
+his <a href="http://tmblr.co/ZHT_Wy1J-Hk5I">recent talk</a> for more on that subject).</p>
+
+<h2 id="doing-it-all-again">Doing it all again</h2>
+
+<p>What happens next time you want to build an updated package?</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>autopkg run GoogleChrome.pkg</div></div></pre></div></figure>
+
+<p>Right?</p>
+
+<p>Well, kinda.</p>
+
+<p>What happens if Google changes the URL AutoPkg uses to download
+Chrome? Fortunately we’re using the community provided recipes, and if
+something’s broken they usually get fixed pretty quickly. We just need
+to tell AutoPkg to update the installed recipes.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>autopkg update-repo all</div></div></pre></div></figure>
+
+<p>And then we’re able to build our package safe in the knowledge that
+someone else has done all of the hard work for us.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2014/06/30/making-packages-with-autopkg/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Making packages with AutoPkg</strong> was published on <time datetime="2014-06-30T10:12:10+01:00">June 30, 2014</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

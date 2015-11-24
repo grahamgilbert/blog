@@ -1,0 +1,340 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Getting started with Puppet on OS X (part 1) &#8211; graham gilbert dot com</title>
+<meta name="description" content="When I was first getting started, the first hurdle I had to get over was trying to work out how it would apply to what I do - manage Macs. There are plenty of resources on managing servers with Puppet, but precious little on using Puppet with OS X - so, here’s how to get started with Puppet.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Getting started with Puppet on OS X (part 1)">
+<meta name="twitter:description" content="When I was first getting started, the first hurdle I had to get over was trying to work out how it would apply to what I do - manage Macs. There are plenty of resources on managing servers with Puppet, but precious little on using Puppet with OS X - so, here’s how to get started with Puppet.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting started with Puppet on OS X (part 1)">
+<meta property="og:description" content="When I was first getting started, the first hurdle I had to get over was trying to work out how it would apply to what I do - manage Macs. There are plenty of resources on managing servers with Puppet, but precious little on using Puppet with OS X - so, here’s how to get started with Puppet.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/" rel="bookmark" title="Getting started with Puppet on OS X (part 1)">Getting started with Puppet on OS X (part 1)</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>When I was first getting started, the first hurdle I had to get over was trying to work out how it would apply to what I do - manage Macs. There are plenty of resources on managing servers with Puppet, but precious little on using Puppet with OS X - so, here’s how to get started with Puppet.
+<!-- more -->
+First off, grab yourself the Puppet Enterprise demo VM from the <a href="http://puppetlabs.com">Puppet Labs</a> site - setting up your own Puppet Master is beyond the scope of these articles.</p>
+
+<p>You will also need either a Mac running OS X 10.8 you don’t mind (possibly) nuking, or preferably a virtual machine, so you can reset it easily.</p>
+
+<p>I’m using VMWare Fusion here - please translate the commands to whatever virtualisation app you’re using.</p>
+
+<h2 id="some-setup-on-the-puppet-master">Some setup on the Puppet Master</h2>
+<p>There are a couple of things we need to do to the Puppet Master before we get stuck in with configuring our Mac client. First, change the networking settings so that it appears directly on your network. The default for the VMWare VM is NAT - this won’t work for us. Now you can boot it up and SSH into it - if you wait for a minute or two, the IP address of the VM will be displayed on the screen.</p>
+
+<p>The VM you’ve downloaded is Puppet Enterprise - this is the paid for version of Puppet, that ships pre-configured. We use the open source version, which requires some assembly on the server end (which I will hopefully cover one day). As it’s Puppet Enterprise, it comes with the Dashboard all ready to use - we won’t be using it here, so don’t worry about it. All we want is the IP address.</p>
+
+<p><img class="center" src="/images/posts/2013-01-25/Learning_Puppet_VM__(PE_2.7.0).png" alt="" /></p>
+
+<p>So, let’s get into the box:</p>
+
+<pre><code>ssh root@192.168.3.149
+</code></pre>
+
+<p>The password will be <em>puppet</em></p>
+
+<p>As I mentioned above, being Puppet Enterprise, there are a few differences - the biggest one as far as we’re concerned is that the actual Puppet files are in a different location - we’ll create a symlink to the “normal” place for Puppet Open Source:</p>
+
+<pre><code>ln -s /etc/puppetlabs/puppet /etc/puppet
+</code></pre>
+
+<p>This is optional, but I recommend it, as I will be referring to all paths on the Puppet Master based in this symlink being in place.</p>
+
+<p>Now, onto the Mac - first things first, get SSH turned on - open System Preferences -&gt; Sharing and check Remote Login. Once again, not essential, but it will make your life much easier.</p>
+
+<p>In the real world, you would set up a DNS entry for your Puppet Master - it’s likely you won’t want to do this when you’re just testing out, so let’s fake it. Either SSH into your Mac, or just open terminal and issue:</p>
+
+<pre><code>sudo nano /etc/hosts
+</code></pre>
+
+<p>You can of course, use whatever text editor you want to - if you’ve not used nano before, here’s a one line crash course: ctrl + O writes the file (you can change the name or just press return and confirm you want to overwrite the file) and ctrl + x to exit. There are more functions of course, but this will get you started enough for this article.</p>
+
+<p>Scroll down to the bottom and put in an entry for your Puppet server’s IP address:</p>
+
+<p><img class="center" src="/images/posts/2013-01-25/host_edit.png" alt="" /></p>
+
+<p>Still with me? Good, it’s time to install Puppet and Facter. Head on over to <a href="http://downloads.puppetlabs.com/mac">the Puppet Labs download</a> page and get the latest versions of Puppet and Facter (3.0.2 and 1.6.17 respectively) and install them on your test Mac. Or if you’re still SSH’ed into the Mac, you can run this command (which will download and install both Puppet and Facter).</p>
+
+<pre><code>curl -s https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py | sudo python
+</code></pre>
+
+<p>Cushty, Puppet and Facter are installed. Puppet won’t do much though until we write it’s configuration file. I’m going to call the Mac puppetclient here.  Pop <code>sudo nano /etc/puppet/puppet.conf</code> in the Mac’s terminal window and paste in the following and save it:</p>
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">[main]
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">logdir=/var/log/puppet
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">vardir=/var/lib/puppet
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">ssldir=/var/lib/puppet/ssl
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">#rundir=/var/run/puppet
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">factpath=$vardir/lib/facter
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">templatedir=$confdir/templates
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">[master]
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line"># These are needed when the puppet master is run by passenger
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line"># and can safely be removed if webrick is used.
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">ssl_client_header = SSL_CLIENT_S_DN 
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">ssl_client_verify_header = SSL_CLIENT_VERIFY
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">[agent]
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">##This is the name of our server
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">server=puppet
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">##This is where we specify the name of our client
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">certname=puppetclient
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">report=true
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">pluginsync=true</div></div></pre></div></figure>
+
+<p>We’re now ready to get our client talking to the server. Make sure you’ve got SSH sessions open to both the client and server, as we’ll need to work on both.</p>
+
+<p>On the Mac:</p>
+
+<pre><code>sudo puppet agent --server puppet --waitforcert 60 --test --group 0
+</code></pre>
+
+<p>And on the Puppet Master we want to list all of the certificates waiting to be signed:</p>
+
+<pre><code>puppet cert --list
+</code></pre>
+
+<p>Once you see your puppetclient’s certificate waiting to be signed, sign it on the Master with:</p>
+
+<pre><code>puppet cert --sign puppetclient
+</code></pre>
+
+<p>After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it’s magic - although Puppet won’t do anything yet, as you’ve not described any configuration for the client - yet. We’ll do that next time.</p>
+
+<p>Apologies for the slightly boring post, but you’ve done the hard part now, it’s all good from here!</p>
+
+<p><a href="/blog/2013/01/27/getting-started-with-puppet-on-os-x-part-2/">Onwards to part 2!</a></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Getting started with Puppet on OS X (part 1)</strong> was published on <time datetime="2013-01-25T21:22:00+00:00">January 25, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

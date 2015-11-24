@@ -1,0 +1,395 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Releasing Changes With Sharding &#8211; graham gilbert dot com</title>
+<meta name="description" content="Sharding is traditionally associated with databases - splitting up your dataset to make it more manageable. When using the term in this instance we are taking about splitting up our computers - there are several reasons you might want to do this. You might want to split them up for similar performance reasons - if you’re deploying large software updates your server might not be able to cope with all your clients pulling it at once. You might want a way to roll changes out to certain groups of machines.
+
+Facebook spoke about sharding at macbrained in May 2015, but they weren’t clear on how they use it (edit: they actually first spoke about it at MacSysAdmin). A few people were pretty interested in using this method of rolling out changes to their machines, but it was Victor Vrantchan who came up with a method of deriving a value between one and 100 based on the machines serial number (edit: this was based on Facebook’s and Google’s code. Elliot Jordan also came up with something similar for Casper).
+
+Using this condition as a base and a similar Facter Fact I’ve started using the method outlined below to release changes to the macs I look after.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Releasing Changes With Sharding">
+<meta name="twitter:description" content="Sharding is traditionally associated with databases - splitting up your dataset to make it more manageable. When using the term in this instance we are taking about splitting up our computers - there are several reasons you might want to do this. You might want to split them up for similar performance reasons - if you’re deploying large software updates your server might not be able to cope with all your clients pulling it at once. You might want a way to roll changes out to certain groups of machines.
+
+Facebook spoke about sharding at macbrained in May 2015, but they weren’t clear on how they use it (edit: they actually first spoke about it at MacSysAdmin). A few people were pretty interested in using this method of rolling out changes to their machines, but it was Victor Vrantchan who came up with a method of deriving a value between one and 100 based on the machines serial number (edit: this was based on Facebook’s and Google’s code. Elliot Jordan also came up with something similar for Casper).
+
+Using this condition as a base and a similar Facter Fact I’ve started using the method outlined below to release changes to the macs I look after.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Releasing Changes With Sharding">
+<meta property="og:description" content="Sharding is traditionally associated with databases - splitting up your dataset to make it more manageable. When using the term in this instance we are taking about splitting up our computers - there are several reasons you might want to do this. You might want to split them up for similar performance reasons - if you’re deploying large software updates your server might not be able to cope with all your clients pulling it at once. You might want a way to roll changes out to certain groups of machines.
+
+Facebook spoke about sharding at macbrained in May 2015, but they weren’t clear on how they use it (edit: they actually first spoke about it at MacSysAdmin). A few people were pretty interested in using this method of rolling out changes to their machines, but it was Victor Vrantchan who came up with a method of deriving a value between one and 100 based on the machines serial number (edit: this was based on Facebook’s and Google’s code. Elliot Jordan also came up with something similar for Casper).
+
+Using this condition as a base and a similar Facter Fact I’ve started using the method outlined below to release changes to the macs I look after.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" rel="bookmark" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Sharding is traditionally associated with databases - splitting up your dataset to make it more manageable. When using the term in this instance we are taking about splitting up our computers - there are several reasons you might want to do this. You might want to split them up for similar performance reasons - if you’re deploying large software updates your server might not be able to cope with all your clients pulling it at once. You might want a way to roll changes out to certain groups of machines.</p>
+
+<p>Facebook spoke about sharding at <a href="http://macbrained.org/recap-may-quantcast/">macbrained in May 2015</a>, but they weren’t clear on how they use it (<strong>edit:</strong> they actually first spoke about it at <a href="https://macsysadmin.se/2014/Thursday.html">MacSysAdmin</a>). A few people were pretty interested in using this method of rolling out changes to their machines, but it was <a href="http://groob.io/">Victor Vrantchan</a> who came up with a <a href="https://github.com/whitby/mac-scripts/tree/master/munki_condition_shard">method of deriving a value between one and 100 based on the machines serial number</a> (<strong>edit:</strong> this was based on <a href="https://github.com/facebook/IT-CPE/blob/master/code/lib/modules/sys_tools.py#L161">Facebook’s</a> and <a href="https://github.com/google/macops/blob/master/gmacpyutil/gmacpyutil/experiments.py">Google’s</a> code. Elliot Jordan also came up with something <a href="https://gist.github.com/homebysix/b35f1979d5b11e00602c">similar for Casper</a>).</p>
+
+<p>Using this condition as a base and a similar Facter Fact I’ve started using the method outlined below to release changes to the macs I look after. <!-- more --></p>
+
+<h2 id="the-process">The process</h2>
+
+<p>Since the condition and fact gives me a nice number between 1 and 100, I’ve split my machines into four groups - the lower 25%, the lower 50%, the lower 75% and general release group (all of the machines) - the first three groups comprise of shards 1 to 3. For normal software or config change releases (where there are no major security implications of delaying release), the software is tested by IT for installation issues and major, obvious bugs. Once this has been concluded, we use the following process:</p>
+
+<ul>
+  <li>Software is released to shard 1 (lower 25%).</li>
+  <li>If no issues are reported, after 72 hours, the change is promoted to shard 2.</li>
+  <li>After a further 48 hours, the change is promoted to shard 3.</li>
+  <li>Once a final 48 hours has passed, the change will be promoted to general release.</li>
+</ul>
+
+<p>If any issues are found at any stage, it will go back to the beginning of the process.</p>
+
+<h2 id="which-shard-is-jim-bob-in">Which shard is Jim-Bob in?</h2>
+
+<p>This whole system falls down if your IT staff don’t know what to expect when they build a machine. Of course they can run <code>facter -p</code> or look at the <code>ManagedInstallReport.plist</code>, but that’s not exactly scalable. Your reporting tool should do this for you. I’ve written a <a href="https://github.com/salopensource/grahamgilbert-plugins/tree/master/shard">plugin</a> for <a href="https://github.com/salopensource/sal">Sal</a>:</p>
+
+<p><img class="center" src="/images/posts/2015-11-23/Sal-shard.png" width="300px" /></p>
+
+<h2 id="but-what-about-my-bosses-bosses-boss">But what about my bosses bosses boss?</h2>
+
+<p>Of course there are machines you absolutely don’t want to be testing things on. Important people, your mum, whoever. Conversely, there will be people you want to be out there on the front lines testing everything you can throw at them. Let’s take the <a href="https://github.com/grahamgilbert/macscripts/tree/master/Munki/Condtion%20Packages/shard">condition</a> (as my ruby in the <a href="https://github.com/grahamgilbert/puppet-mac_admin/blob/master/lib/facter/shard.rb">Fact</a> will probably offend your eyes). If <code>/usr/local/shard/production</code> is present, the machine always gets a shard value of <code>1</code>. If <code>/usr/local/shard/testing</code> is present, the machine will get a shard value of 100:</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">/usr/local/munki/conditions/shard</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c">#!/usr/bin/env python</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kn">import</span> <span class="nn">hashlib</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kn">import</span> <span class="nn">subprocess</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kn">import</span> <span class="nn">os</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kn">import</span> <span class="nn">plistlib</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kn">from</span> <span class="nn">Foundation</span> <span class="kn">import</span> <span class="n">CFPreferencesCopyAppValue</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">MOD_VALUE</span> <span class="o">=</span> <span class="mi">10000</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># Read the location of the ManagedInstallDir from ManagedInstall.plist</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">BUNDLE_ID</span> <span class="o">=</span> <span class="s">&#39;ManagedInstalls&#39;</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">pref_name</span> <span class="o">=</span> <span class="s">&#39;ManagedInstallDir&#39;</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">managedinstalldir</span> <span class="o">=</span> <span class="n">CFPreferencesCopyAppValue</span><span class="p">(</span><span class="n">pref_name</span><span class="p">,</span> <span class="n">BUNDLE_ID</span><span class="p">)</span>
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c"># Make sure we&#39;re outputting our information to &quot;ConditionalItems.plist&quot;</span>
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">conditionalitemspath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">managedinstalldir</span><span class="p">,</span> <span class="s">&#39;ConditionalItems.plist&#39;</span><span class="p">)</span>
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">def</span> <span class="nf">get_serial</span><span class="p">():</span>
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="sd">&#39;&#39;&#39;Returns the serial number of this Mac&#39;&#39;&#39;</span>
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;/usr/sbin/ioreg&#39;</span><span class="p">,</span> <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;IOPlatformExpertDevice&#39;</span><span class="p">,</span> <span class="s">&#39;-d&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">]</span>
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="k">if</span> <span class="s">&#39;IOPlatformSerialNumber&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">            <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; = &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&quot;</span><span class="s">&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">return</span> <span class="bp">None</span>
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">def</span> <span class="nf">get_shard</span><span class="p">():</span>
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/local/shard/production&#39;</span><span class="p">):</span>
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">shard</span> <span class="o">=</span> <span class="mi">100</span>
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/local/shard/testing&#39;</span><span class="p">):</span>
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">shard</span> <span class="o">=</span> <span class="mi">1</span>
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">else</span><span class="p">:</span>
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">serial</span> <span class="o">=</span> <span class="n">get_serial</span><span class="p">()</span>
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">sha256</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">serial</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span><span class="mi">16</span><span class="p">)</span>
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">shard</span> <span class="o">=</span> <span class="p">((</span><span class="n">sha256</span> <span class="o">%</span> <span class="n">MOD_VALUE</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">MOD_VALUE</span><span class="p">)</span>
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">newdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">shard</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">shard</span><span class="p">))</span>
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># CRITICAL!</span>
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">conditionalitemspath</span><span class="p">):</span>
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># &quot;ConditionalItems.plist&quot; exists, so read it FIRST (existing_dict)</span>
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">existing_dict</span> <span class="o">=</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">readPlist</span><span class="p">(</span><span class="n">conditionalitemspath</span><span class="p">)</span>
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># Create output_dict which joins new data generated in this script with existing data</span>
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">output_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">existing_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span> <span class="n">newdict</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">else</span><span class="p">:</span>
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># &quot;ConditionalItems.plist&quot; does not exist,</span>
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="c"># output only consists of data generated in this script</span>
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="n">output_dict</span> <span class="o">=</span> <span class="n">newdict</span>
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="c"># Write out data to &quot;ConditionalItems.plist&quot;</span>
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">plistlib</span><span class="o">.</span><span class="n">writePlist</span><span class="p">(</span><span class="n">output_dict</span><span class="p">,</span> <span class="n">conditionalitemspath</span><span class="p">)</span>
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">get_shard</span><span class="p">()</span></div></div></pre></div></figure>
+
+<h2 id="the-joy-of-sharding">The joy of sharding</h2>
+
+<p>There are two primary benefits in my organisation to sharding. The first is the obvious - it allows us to smoke test changes and updates and potentially roll them back if they have any adverse effect on our fleet before too many machines are effected. The second is an important consideration if you have a large, dispersed fleet. We have a large number of at home workers - by staggering the number of machines pulling the upate at once, we can avoid a thundering heard situation on our primary servers without having to use more expensive CDN-backed bandwidth (which we still use when we have a time critical update).</p>
+
+<h2 id="using-sharding-with-puppet">Using sharding with Puppet</h2>
+
+<p>Puppet is our primary configuration management tool for our OS X devices - and as we are quite literally using code to define our configuration, it’s really easy to use the shard value to limit who gets which configuration:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">if</span> <span class="nv">$shard</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">notify</span><span class="p">&#x7b;</span><span class="s">&#39;shard value is less than or equal to 25&#39;</span><span class="p">:</span> <span class="p">&#x7d;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>Or to use it for something more useful, let’s say we are going to use different <a href="https://github.com/wdas/reposado">Reposado</a> branches depending on which shard they fall into:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">if</span> <span class="nv">$shard</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nv">$shard_sus_url</span> <span class="o">=</span> <span class="s">&#39;http://sus.company.com/sus/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1_shard1.sucatalog&#39;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">elsif</span> <span class="nv">$shard</span> <span class="o">&lt;=</span> <span class="mi">50</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nv">$shard_sus_url</span> <span class="o">=</span> <span class="s">&#39;http://sus.company.com/sus/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1_shard2.sucatalog&#39;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">elsif</span> <span class="nv">$shard</span> <span class="o">&lt;=</span> <span class="mi">75</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nv">$shard_sus_url</span> <span class="o">=</span> <span class="s">&#39;http://sus.company.com/sus/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1_shard3.sucatalog&#39;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">else</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nv">$shard_sus_url</span> <span class="o">=</span> <span class="s">&#39;http://sus.company.com/sus/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1_production.sucatalog&#39;</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">class</span> <span class="na">mac_admin</span><span class="p">::</span><span class="na">sus</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="na">sus_url_1011</span> <span class="o">=&gt;</span> <span class="nv">$shard_sus_url,</span>
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<h2 id="using-sharding-with-munki">Using sharding with Munki</h2>
+
+<p>You have a few more options when you’re sharding software with Munki.</p>
+
+<p>Usually, when I’m ready to move onto the sharding phase of release, I move the item into the production catalog and add <code>installable_condition</code> to it’s pkgsinfo file to limit installs to the right shard:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;key&gt;</span>installable_condition<span class="nt">&lt;/key&gt;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;string&gt;</span>shard <span class="ni">&amp;lt;</span>= 25<span class="nt">&lt;/string&gt;</span></div></div></pre></div></figure>
+
+<p>This is fine if there are other versions of that particular item in your production catalog. If it’s a new item, your reporting tool is going to get filled up with warnings.</p>
+
+<p><img src="/images/posts/2015-11-23/Sal-warnings.png" alt="Install warnings in Sal" /></p>
+
+<p>This might not worry you - maybe you don’t have a reporting tool for Munki (you’re doing it wrong) or you don’t care about warnings (you’re only doing it slightly less wrong).</p>
+
+<p>The way around this is to use <a href="https://github.com/munki/munki/wiki/Conditional-Items"><code>conditional items</code></a> for the first release of a particular item. This means that no machines will fail to find the item in a catalog (remember that putting an item into <code>managed_installs</code> means you’re telling Munki that the item <em>must</em> be installed on this client), as they are only adding it to their <code>managed_installs</code> when the condition is met. This of course has the downside of you now having two places to manage the sharding of your Munki items. This may be an acceptable trade off to keep your warnings useful (as it is to me).</p>
+
+<h2 id="wrap-up">Wrap up</h2>
+
+<p>This is only the beginning of my use of sharding. I’m sure there will be improvements and refinements along the way, but it has worked well for me so far.</p>
+
+<p>Links:</p>
+
+<ul>
+  <li><a href="https://github.com/grahamgilbert/macscripts/tree/master/Munki/Condtion%20Packages/shard">Munki condition</a></li>
+  <li><a href="https://github.com/grahamgilbert/puppet-mac_admin/blob/master/lib/facter/shard.rb">Facter fact</a></li>
+  <li><a href="https://github.com/salopensource/sal">Sal</a></li>
+  <li><a href="https://github.com/salopensource/grahamgilbert-plugins/tree/master/shard">Sal Plugin</a></li>
+</ul>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Releasing Changes With Sharding</strong> was published on <time datetime="2015-11-23T19:16:02+00:00">November 23, 2015</time> and last modified on <time datetime="2015-11-24">November 24, 2015</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/" title="Upgrading OS X using a package">Upgrading OS X using a package</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Getting Started With Puppet on OS X (Part 4) &#8211; graham gilbert dot com</title>
+<meta name="description" content="We’ve made quite a bit of progress with our Puppet install. We’ve already made Puppet do something useful with setting up an admin user, but let’s get back to being lazy - let’s get someone else to write the code.
+
+Before reading this post, you really need to read part 1, part 2 and part 3 of the series.
+
+Modules are little pre-built bits of Puppet code. They’re a good example of Puppet’s philosophy of convention over configuration - Puppet will assume your modules follow a set pattern. We’ll be using two of the available folders in modules today: files and manifests. Files are static files that Puppet will copy over to our client machine, and manifests will contain the Puppet code we’ve previously been putting into /etc/puppet/manifests/site.pp - whilst it’s been easy to put code into this file, it can become unwieldy when you have a few nodes to manage.
+
+There are also loads of pre-built modules on the Puppet Forge - it’s one of these modules we’ll be using today.
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Getting Started With Puppet on OS X (Part 4)">
+<meta name="twitter:description" content="We’ve made quite a bit of progress with our Puppet install. We’ve already made Puppet do something useful with setting up an admin user, but let’s get back to being lazy - let’s get someone else to write the code.
+
+Before reading this post, you really need to read part 1, part 2 and part 3 of the series.
+
+Modules are little pre-built bits of Puppet code. They’re a good example of Puppet’s philosophy of convention over configuration - Puppet will assume your modules follow a set pattern. We’ll be using two of the available folders in modules today: files and manifests. Files are static files that Puppet will copy over to our client machine, and manifests will contain the Puppet code we’ve previously been putting into /etc/puppet/manifests/site.pp - whilst it’s been easy to put code into this file, it can become unwieldy when you have a few nodes to manage.
+
+There are also loads of pre-built modules on the Puppet Forge - it’s one of these modules we’ll be using today.
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Started With Puppet on OS X (Part 4)">
+<meta property="og:description" content="We’ve made quite a bit of progress with our Puppet install. We’ve already made Puppet do something useful with setting up an admin user, but let’s get back to being lazy - let’s get someone else to write the code.
+
+Before reading this post, you really need to read part 1, part 2 and part 3 of the series.
+
+Modules are little pre-built bits of Puppet code. They’re a good example of Puppet’s philosophy of convention over configuration - Puppet will assume your modules follow a set pattern. We’ll be using two of the available folders in modules today: files and manifests. Files are static files that Puppet will copy over to our client machine, and manifests will contain the Puppet code we’ve previously been putting into /etc/puppet/manifests/site.pp - whilst it’s been easy to put code into this file, it can become unwieldy when you have a few nodes to manage.
+
+There are also loads of pre-built modules on the Puppet Forge - it’s one of these modules we’ll be using today.
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/" rel="bookmark" title="Getting Started With Puppet on OS X (Part 4)">Getting Started With Puppet on OS X (Part 4)</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>We’ve made quite a bit of progress with our Puppet install. We’ve already made Puppet do something useful with setting up an admin user, but let’s get back to being lazy - let’s get someone else to write the code.</p>
+
+<p>Before reading this post, you really need to read <a href="http://grahamgilbert.com/blog/2013/01/25/getting-started-with-puppet-part-1/">part 1</a>, <a href="http://grahamgilbert.com/blog/2013/01/27/getting-started-with-puppet-on-os-x-part-2/">part 2</a> and <a href="http://grahamgilbert.com/blog/2013/02/24/getting-started-with-puppet-on-os-x-part-3/">part 3</a> of the series.</p>
+
+<p>Modules are little pre-built bits of Puppet code. They’re a good example of Puppet’s philosophy of convention over configuration - Puppet will assume your modules follow a set pattern. We’ll be using two of the available folders in modules today: files and manifests. Files are static files that Puppet will copy over to our client machine, and manifests will contain the Puppet code we’ve previously been putting into <code>/etc/puppet/manifests/site.pp</code> - whilst it’s been easy to put code into this file, it can become unwieldy when you have a few nodes to manage.</p>
+
+<p>There are also loads of pre-built modules on the <a href="http://forge.puppetlabs.com/">Puppet Forge</a> - it’s one of these modules we’ll be using today.<!-- more --></p>
+
+<p>Assuming you’re still using the Vagrant-based Puppet Master from <a href="http://grahamgilbert.com/blog/2013/02/24/getting-started-with-puppet-on-os-x-part-3/">part 3</a>, cd into the directory you’ve cloned the repository to, issue a <code>vagrant up</code> command. Once you’ve booted the VM, we need to SSH into it.</p>
+
+<pre><code>vagrant ssh
+</code></pre>
+
+<p>Puppet provides a handy tool to manage modules - <code>puppet module</code>. To install the <a href="http://forge.puppetlabs.com/rcoleman/mac_profiles_handler">mac_profiles_handler by Ryan Coleman</a>, tap in:</p>
+
+<pre><code>sudo puppet module install rcoleman/mac_profiles_handler
+</code></pre>
+
+<p>Pretty straightforward syntax there - the person who wrote the module comes before the slash, and the name of the module after it. You’ll see some bumph about Puppet downloading the module, and if the author has specified any dependency on other modules, they’ll be downloaded as well.</p>
+
+<p>If you switch back to your Mac and look in the folder you cloned the vagrant-puppetmaster git repository into (mine is at <code>~/src/Mine/blog-post</code>), you’ll see the module you just installed in the <code>puppet/modules</code> directory.</p>
+
+<p><img src="/images/posts/2013-03-05/mac_profiles_handler.png" /></p>
+
+<p>Feel free to have a nose around to get the general structure for what a Puppet module can look like. It’s ok, I’ll wait.</p>
+
+<p>Time for us to make our own module. In <code>puppet/modules</code> create a folder called <code>my_super_module</code>. Within that, make <code>files</code> and <code>manifests</code> directories.</p>
+
+<p><img src="/images/posts/2013-03-05/my_super_module.png" /></p>
+
+<p>Next, grab <a href="/images/posts/2013-03-05/com.grahamgilbert.vpn.mobileconfig">this simple configuration profile</a> I made. It configures a VPN connection - it’s unsigned, so you can see what you’re installing on your test Mac if you’d like. Place this .mobileconfig file in <code>puppet/modules/my_super_module/files</code>. Or, if you’d rather, you can make your own for something else - configuring WiFi is pretty handy - I made this one in two minutes using <a href="http://support.apple.com/kb/dl1465">iPhone Configuration Utility</a>, but you can also make them with Profile Manager (I would recommend making them unsigned though, but that’s outside the scope of this article).</p>
+
+<p>For the actual meat of our module, we need some Puppet code. In your favourite text editor (please remember, not TextEdit!), create <code>puppet/modules/my_super_module/init.pp</code>, and make it look like the following:</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">puppet/modules/my_super_module/init.pp</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">class</span> <span class="n">my_super_module</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">mac_profiles_handler</span><span class="o">::</span><span class="n">manage</span> <span class="p">&#x7b;</span> <span class="s1">&#39;com.grahamgilbert.vpn&#39;</span><span class="p">:</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="k">ensure</span>       <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="n">file_source</span>  <span class="o">=&gt;</span> <span class="s1">&#39;puppet:///modules/my_super_module/com.grahamgilbert.vpn.mobileconfig&#39;</span><span class="p">,</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="p">&#x7d;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>There are a few bits we’ve not seen before here:</p>
+
+<pre><code>ensure =&gt; present,
+</code></pre>
+
+<p>We’re simply telling puppet that we want to make sure this profile is always installed. If it’s missing, re-install it. If we set this to <code>ensure =&gt; absent</code>, we’d be telling Puppet to remove the profile. If we wanted to simply update the profile, we’d just replace the mobileconfig file (this module will be aware of the change and update the installed profile).</p>
+
+<pre><code>file_source  =&gt; 'puppet:///modules/my_super_module/com.grahamgilbert.vpn.mobileconfig',
+</code></pre>
+
+<p>This is referring to the file in our module. The important bit is <code>puppet:///</code> with three slashes. That point to the server we’re currently running on (and also makes our module portable to other servers). We don’t need to do any other configuration to get Puppet serving this file now, as it expects to serve static files out of the <code>files</code> directory.</p>
+
+<p>As we are using the built in web server for our Puppet Master, we need to restart the puppetmaster service to let it know about our new module. When you’re on the Mac side, it’s easiest just to reload the whole server:</p>
+
+<pre><code>cd ~/src/wherever/your/code/is
+vagrant reload
+</code></pre>
+
+<p>Time to test it. Fire up your test Mac or your VM (if you need to configure it, please look at the <a href="http://grahamgilbert.com/blog/2013/02/24/getting-started-with-puppet-on-os-x-part-3/">last post</a>, I’m assuming it’s still set up), and perform a Puppet run:</p>
+
+<pre><code>sudo puppet agent --test
+</code></pre>
+
+<p>Wait! Nothing happened. That’s because we’ve not told the Puppet Master to apply this particular module to our client Mac.</p>
+
+<p>Make your <code>puppet/manifests/site.pp</code> look like this:</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">puppet/manifests/site.pp</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">node</span> <span class="n">puppetclient</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="kp">include</span> <span class="n">my_super_module</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>All we’re doing here is telling Puppet to include our module with the default settings (as we didn’t make any settings that can be changed - once again, outside the scope of this post). Splitting your code into modules not only allows you to share them with others if you wish, but also means you only need to change your code once and have it affect all of your applicable nodes.</p>
+
+<p>Anyway, save your <code>site.pp</code> and perform another run on your client:</p>
+
+<pre><code>sudo puppet agent --test
+</code></pre>
+
+<p>And now you’ll see something along the lines of:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Info: Retrieving plugin
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet]/ensure: created
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet/provider]/ensure: created
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet/provider/profile_manager]/ensure: created
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet/provider/profile_manager/osx.rb]/ensure: defined content as '&#x7b;md5&#x7d;48a098b58bf3fdf38f32a0261026fa59'
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet/type]/ensure: created
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/puppet/type/profile_manager.rb]/ensure: defined content as '&#x7b;md5&#x7d;578a75ebe7f9972c7f49f8c5d4e1ad43'
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/facter]/ensure: created
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /File[/var/lib/puppet/lib/facter/profiles.rb]/ensure: defined content as '&#x7b;md5&#x7d;54c12303c601579fb2282304363c8425'
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">Info: Loading facts in /var/lib/puppet/lib/facter/profiles.rb
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">Info: Caching catalog for puppetclient
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">Info: Applying configuration version '1362471535'
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /Stage[main]/My_super_module/Mac_profiles_handler::Manage[com.grahamgilbert.vpn]/File[/var/lib/puppet/mobileconfigs]/ensure: created
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /Stage[main]/My_super_module/Mac_profiles_handler::Manage[com.grahamgilbert.vpn]/File[/var/lib/puppet/mobileconfigs/com.grahamgilbert.vpn]/ensure: defined content as '&#x7b;md5&#x7d;48232db3a25fd851d1b1c7ec7c9557c8'
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">Info: /Stage[main]/My_super_module/Mac_profiles_handler::Manage[com.grahamgilbert.vpn]/File[/var/lib/puppet/mobileconfigs/com.grahamgilbert.vpn]: Scheduling refresh of Exec[remove-profile-com.grahamgilbert.vpn]
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /Stage[main]/My_super_module/Mac_profiles_handler::Manage[com.grahamgilbert.vpn]/Exec[remove-profile-com.grahamgilbert.vpn]: Triggered 'refresh' from 1 events
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: /Stage[main]/My_super_module/Mac_profiles_handler::Manage[com.grahamgilbert.vpn]/Profile_manager[com.grahamgilbert.vpn]/ensure: created
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">Info: Creating state file /var/lib/puppet/state/state.yaml
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">Notice: Finished catalog run in 1.57 seconds</div></div></pre></div></figure>
+
+<p>And if you look in System Preferences, you’ll see the Profiles icon has appeared, and that your profile has been installed.</p>
+
+<p><img src="/images/posts/2013-03-05/profiles.png" /></p>
+
+<p>And in the Network pane, your VPN connection has been configured:</p>
+
+<p><img src="/images/posts/2013-03-05/vpn.png" /></p>
+
+<p>Next time, we’ll look at using Facter to make our code a little more intelligent. As ever, comments, corrections and general abuse is welcome.</p>
+
+<p>(Not the abuse, that’s not nice.)</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2013/03/05/getting-started-with-puppet-on-os-x-part-4/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Getting Started With Puppet on OS X (Part 4)</strong> was published on <time datetime="2013-03-05T14:59:00+00:00">March 05, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

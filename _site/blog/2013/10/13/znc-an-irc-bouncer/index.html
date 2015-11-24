@@ -1,0 +1,495 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>ZNC: An IRC Bouncer &#8211; graham gilbert dot com</title>
+<meta name="description" content="Yes,  it’s true. The most interesting conversations in the Mac admin world take place using technology from the 1980’s - IRC (##osx-server on freenode). Those of you who know me will know that I’m borderline OCD. In this instance, my major annoyance was that I’d only get half of the conversation and I’d miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient conenction to IRC without having to sit infront of my computer 24/7.
+
+I’d heard of IRC bouncers before - an app that runs on a server, saving the messages in the rooms you specify for you until you are able to read them, but always assumed they were much more difficult to set up than it turned out to be.
+
+This is set up on a box running Ubuntu 12.04, with port 6666 opened on your firewall and forwarded to the box if you want to access it from outside the network. Mine is running on an Amazon EC2 Micro instance - available for free for one year if you don’t already have a server to run it on.
+
+Right, let’s get started. All of these commands are to be run as your normal user (graham in this case - not root). First we’re going to enable backports in Ubuntu. I like editing text files in nano so I’m going to install that first, but feel free to use Vi or whatever you like.
+
+bash
+$ sudo apt-get install -y nano
+$ sudo nano /etc/apt/sources.list
+
+
+Find the two backports lines commented out (lines 44-45 on my test box) and unomment them.
+
+bash
+deb http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+
+
+If you are using nano, hit CTRL+O and press return to save it, then CTRL-X to exit.
+
+To install ZNC, issue the following command:
+
+bash
+$ sudo apt-get update
+$ sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports
+
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="ZNC: An IRC Bouncer">
+<meta name="twitter:description" content="Yes,  it’s true. The most interesting conversations in the Mac admin world take place using technology from the 1980’s - IRC (##osx-server on freenode). Those of you who know me will know that I’m borderline OCD. In this instance, my major annoyance was that I’d only get half of the conversation and I’d miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient conenction to IRC without having to sit infront of my computer 24/7.
+
+I’d heard of IRC bouncers before - an app that runs on a server, saving the messages in the rooms you specify for you until you are able to read them, but always assumed they were much more difficult to set up than it turned out to be.
+
+This is set up on a box running Ubuntu 12.04, with port 6666 opened on your firewall and forwarded to the box if you want to access it from outside the network. Mine is running on an Amazon EC2 Micro instance - available for free for one year if you don’t already have a server to run it on.
+
+Right, let’s get started. All of these commands are to be run as your normal user (graham in this case - not root). First we’re going to enable backports in Ubuntu. I like editing text files in nano so I’m going to install that first, but feel free to use Vi or whatever you like.
+
+bash
+$ sudo apt-get install -y nano
+$ sudo nano /etc/apt/sources.list
+
+
+Find the two backports lines commented out (lines 44-45 on my test box) and unomment them.
+
+bash
+deb http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+
+
+If you are using nano, hit CTRL+O and press return to save it, then CTRL-X to exit.
+
+To install ZNC, issue the following command:
+
+bash
+$ sudo apt-get update
+$ sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports
+
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZNC: An IRC Bouncer">
+<meta property="og:description" content="Yes,  it’s true. The most interesting conversations in the Mac admin world take place using technology from the 1980’s - IRC (##osx-server on freenode). Those of you who know me will know that I’m borderline OCD. In this instance, my major annoyance was that I’d only get half of the conversation and I’d miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient conenction to IRC without having to sit infront of my computer 24/7.
+
+I’d heard of IRC bouncers before - an app that runs on a server, saving the messages in the rooms you specify for you until you are able to read them, but always assumed they were much more difficult to set up than it turned out to be.
+
+This is set up on a box running Ubuntu 12.04, with port 6666 opened on your firewall and forwarded to the box if you want to access it from outside the network. Mine is running on an Amazon EC2 Micro instance - available for free for one year if you don’t already have a server to run it on.
+
+Right, let’s get started. All of these commands are to be run as your normal user (graham in this case - not root). First we’re going to enable backports in Ubuntu. I like editing text files in nano so I’m going to install that first, but feel free to use Vi or whatever you like.
+
+bash
+$ sudo apt-get install -y nano
+$ sudo nano /etc/apt/sources.list
+
+
+Find the two backports lines commented out (lines 44-45 on my test box) and unomment them.
+
+bash
+deb http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+
+
+If you are using nano, hit CTRL+O and press return to save it, then CTRL-X to exit.
+
+To install ZNC, issue the following command:
+
+bash
+$ sudo apt-get update
+$ sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports
+
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/" rel="bookmark" title="ZNC: An IRC Bouncer">ZNC: An IRC Bouncer</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Yes,  it’s true. The most interesting conversations in the Mac admin world take place using technology from the 1980’s - <a href="http://en.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> (##osx-server on <a href="http://freenode.net/">freenode</a>). Those of you who know me will know that I’m borderline OCD. In this instance, my major annoyance was that I’d only get half of the conversation and I’d miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient conenction to IRC without having to sit infront of my computer 24/7.</p>
+
+<p>I’d heard of IRC bouncers before - an app that runs on a server, saving the messages in the rooms you specify for you until you are able to read them, but always assumed they were much more difficult to set up than it turned out to be.</p>
+
+<p>This is set up on a box running Ubuntu 12.04, with port 6666 opened on your firewall and forwarded to the box if you want to access it from outside the network. Mine is running on an <a href="http://aws.amazon.com/free/">Amazon EC2 Micro instance</a> - available for free for one year if you don’t already have a server to run it on.</p>
+
+<p>Right, let’s get started. All of these commands are to be run as your normal user (<code>graham</code> in this case - <strong>not root</strong>). First we’re going to enable backports in Ubuntu. I like editing text files in <code>nano</code> so I’m going to install that first, but feel free to use Vi or whatever you like.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo apt-get install -y nano
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo nano /etc/apt/sources.list</div></div></pre></div></figure>
+
+<p>Find the two backports lines commented out (lines 44-45 on my test box) and unomment them.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">deb http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">deb-src http://us.archive.ubuntu.com/ubuntu/ precise-backports main restricted universe multiverse</div></div></pre></div></figure>
+
+<p>If you are using nano, hit <code>CTRL+O</code> and press return to save it, then <code>CTRL-X</code> to exit.</p>
+
+<p>To install ZNC, issue the following command:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo apt-get update
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports</div></div></pre></div></figure>
+
+<!-- more -->
+
+<p>Thankfully there is a easy wizard to follow to configure ZNC. Below is a transcript of my settings, but feel free to adjust them to your tastes (make sure you are running this as your normal user, not sudo/root). Do not be scared by the masses of text, you have to type in very little.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">$ znc --makeconf
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">[ ok ] Checking for list of available modules...
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] Building new config
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] First let's start with some global settings...
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] What port would you like ZNC to listen on? (1025 to 65535): 6666
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like ZNC to listen using SSL? (yes/no) [no]: yes
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] Unable to locate pem file: [/home/graham/.znc/znc.pem]
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to create a new pem file now? (yes/no) [yes]: yes
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">[ ok ] Writing Pem file [/home/graham/.znc/znc.pem]...
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like ZNC to listen using ipv6? (yes/no) [yes]: no
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Listen Host (Blank for all ips):
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">[ ok ] Verifying the listener...
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] -- Global Modules --
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-----------+----------------------------------------------------------+
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | Name      | Description                                              |
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-----------+----------------------------------------------------------+
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | partyline | Internal channels and queries for users connected to znc |
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | webadmin  | Web based administration module                          |
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-----------+----------------------------------------------------------+
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] And 12 other (uncommon) modules. You can enable those later.
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load global module &lt;partyline&gt;? (yes/no) [no]:
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load global module &lt;webadmin&gt;? (yes/no) [no]:
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] Now we need to set up a user...
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Username (AlphaNumeric): grahamgilbert
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Enter Password:
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Confirm Password:
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like this user to be an admin? (yes/no) [yes]: yes
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Nick [grahamgilbert]:
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Alt Nick [grahamgilbert_]:
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Ident [grahamgilbert]:
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Real Name [Got ZNC?]: Graham Gilbert
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Bind Host (optional):
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Number of lines to buffer per channel [50]: 1000
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to clear channel buffers after replay? (yes/no) [yes]: yes
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Default channel modes [+stn]:
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] -- User Modules --
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +--------------+------------------------------------------------------------------------------------------+
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | Name         | Description                                                                              |
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +--------------+------------------------------------------------------------------------------------------+
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | chansaver    | Keep config up-to-date when user joins/parts                                             |
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | controlpanel | Dynamic configuration through IRC. Allows editing only yourself if you're not ZNC admin. |
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | perform      | Keeps a list of commands to be executed when ZNC connects to IRC.                        |
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +--------------+------------------------------------------------------------------------------------------+
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] And 22 other (uncommon) modules. You can enable those later.
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;chansaver&gt;? (yes/no) [no]: yes
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;controlpanel&gt;? (yes/no) [no]:
+</div></div><div data-line="57" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;perform&gt;? (yes/no) [no]:
+</div></div><div data-line="58" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="59" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to set up a network? (yes/no) [no]: yes
+</div></div><div data-line="60" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Network (e.g. `freenode' or `efnet'): freenode
+</div></div><div data-line="61" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="62" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] -- Network Modules --
+</div></div><div data-line="63" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="64" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-------------+-------------------------------------------------------------------------------------------------+
+</div></div><div data-line="65" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | Name        | Description                                                                                     |
+</div></div><div data-line="66" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-------------+-------------------------------------------------------------------------------------------------+
+</div></div><div data-line="67" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | chansaver   | Keep config up-to-date when user joins/parts                                                    |
+</div></div><div data-line="68" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | keepnick    | Keep trying for your primary nick                                                               |
+</div></div><div data-line="69" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | kickrejoin  | Autorejoin on kick                                                                              |
+</div></div><div data-line="70" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | nickserv    | Auths you with NickServ                                                                         |
+</div></div><div data-line="71" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | perform     | Keeps a list of commands to be executed when ZNC connects to IRC.                               |
+</div></div><div data-line="72" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] | simple_away | This module will automatically set you away on IRC while you are disconnected from the bouncer. |
+</div></div><div data-line="73" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] +-------------+-------------------------------------------------------------------------------------------------+
+</div></div><div data-line="74" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] And 17 other (uncommon) modules. You can enable those later.
+</div></div><div data-line="75" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="76" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;chansaver&gt;? (yes/no) [no]: yes
+</div></div><div data-line="77" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;keepnick&gt;? (yes/no) [no]: no
+</div></div><div data-line="78" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;kickrejoin&gt;? (yes/no) [no]: no
+</div></div><div data-line="79" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;nickserv&gt;? (yes/no) [no]: no
+</div></div><div data-line="80" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;perform&gt;? (yes/no) [no]: no
+</div></div><div data-line="81" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Load module &lt;simple_away&gt;? (yes/no) [no]: yes
+</div></div><div data-line="82" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="83" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] -- IRC Servers --
+</div></div><div data-line="84" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] Only add servers from the same IRC network.
+</div></div><div data-line="85" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] If a server from the list can't be reached, another server will be used.
+</div></div><div data-line="86" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="87" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] IRC server (host only): irc.freenode.net
+</div></div><div data-line="88" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] [irc.freenode.net] Port (1 to 65535) [6667]:
+</div></div><div data-line="89" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] [irc.freenode.net] Password (probably empty):
+</div></div><div data-line="90" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Does this server use SSL? (yes/no) [no]:
+</div></div><div data-line="91" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="92" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to add another server for this IRC network? (yes/no) [no]:
+</div></div><div data-line="93" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="94" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] -- Channels --
+</div></div><div data-line="95" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="96" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to add a channel for ZNC to automatically join? (yes/no) [yes]: yes
+</div></div><div data-line="97" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Channel name: ##osx-server
+</div></div><div data-line="98" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to add another channel? (yes/no) [no]: no
+</div></div><div data-line="99" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to set up another network? (yes/no) [no]: no
+</div></div><div data-line="100" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="101" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Would you like to set up another user? (yes/no) [no]: no
+</div></div><div data-line="102" class="code-highlight-row numbered"><div class="code-highlight-line">[ ok ] Writing config [/home/vagrant/.znc/configs/znc.conf]...
+</div></div><div data-line="103" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="104" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] To connect to this ZNC you need to connect to it as your IRC server
+</div></div><div data-line="105" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] using the port that you supplied.  You have to supply your login info
+</div></div><div data-line="106" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] as the IRC server password like this: user/network:pass.
+</div></div><div data-line="107" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="108" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] Try something like this in your IRC client...
+</div></div><div data-line="109" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] /server &lt;znc_server_ip&gt; +6666 grahamgilbert:&lt;pass&gt;
+</div></div><div data-line="110" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] And this in your browser...
+</div></div><div data-line="111" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ] https://&lt;znc_server_ip&gt;:6666/
+</div></div><div data-line="112" class="code-highlight-row numbered"><div class="code-highlight-line">[ ** ]
+</div></div><div data-line="113" class="code-highlight-row numbered"><div class="code-highlight-line">[ ?? ] Launch ZNC now? (yes/no) [yes]: no</div></div></pre></div></figure>
+
+<p>Still with me? One last thing to do - make sure ZNC starts and keeps running. We’ll use Upstart (hat-tip to <a href="https://twitter.com/natewalck/status/389345376811356160">@natewalck</a>).</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo nano /etc/init/znc.conf</div></div></pre></div></figure>
+
+<p>And pop in the following, replacing <code>sudo -u graham</code> with your own username.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"># znc - IRC Bouncer
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">description "IRC Bouncer"
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">start on runlevel [2345]
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">stop on runlevel [016]
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">respawn
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">respawn limit 15 5
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">script
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">  exec sudo -u graham /usr/bin/znc
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">end script</div></div></pre></div></figure>
+
+<p>Then finally start it up:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo start znc</div></div></pre></div></figure>
+
+<p>Configuring each IRC client is different, but for Textual (my prefered client), it’s pretty straightforward. Go to the Server menu and choose Add Server. Make the settings look like below, obviously replaing the hostname and password with the ones you chose.</p>
+
+<p><img class="center" src="/images/posts/2013-10-13/textual_settings.png" /></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2013/10/13/znc-an-irc-bouncer/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>ZNC: An IRC Bouncer</strong> was published on <time datetime="2013-10-13T08:35:00+01:00">October 13, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>

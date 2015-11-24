@@ -1,0 +1,419 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Upgrading OS X using a package &#8211; graham gilbert dot com</title>
+<meta name="description" content="It’s the time of year where we start to think about upgrading our machines to the latest version of OS X. There are several ways of doing this, but assuming your users are unable to perform the upgrade themselves via the App Store (if they’re running as a standard user or your policies prohibit the use of the App Store), you might be wondering how you can use your management tool to get your machines upgraded and make sure they stay enrolled in your management tool.
+
+We’re fortunate that we have a standard packaging format on OS X that virtually all management tools can install, so this is the most universal way of distributing software. Greg Neagle wrote createOSXinstallPkg a few years ago that has several nice features for mac admins:
+
+
+  It wraps up an OS X Installer into a standard package.
+  It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.
+
+
+">
+<meta name="keywords" content="">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Upgrading OS X using a package">
+<meta name="twitter:description" content="It’s the time of year where we start to think about upgrading our machines to the latest version of OS X. There are several ways of doing this, but assuming your users are unable to perform the upgrade themselves via the App Store (if they’re running as a standard user or your policies prohibit the use of the App Store), you might be wondering how you can use your management tool to get your machines upgraded and make sure they stay enrolled in your management tool.
+
+We’re fortunate that we have a standard packaging format on OS X that virtually all management tools can install, so this is the most universal way of distributing software. Greg Neagle wrote createOSXinstallPkg a few years ago that has several nice features for mac admins:
+
+
+  It wraps up an OS X Installer into a standard package.
+  It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.
+
+
+">
+<meta name="twitter:site" content="@grahamgilbert">
+<meta name="twitter:creator" content="@grahamgilbert">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Upgrading OS X using a package">
+<meta property="og:description" content="It’s the time of year where we start to think about upgrading our machines to the latest version of OS X. There are several ways of doing this, but assuming your users are unable to perform the upgrade themselves via the App Store (if they’re running as a standard user or your policies prohibit the use of the App Store), you might be wondering how you can use your management tool to get your machines upgraded and make sure they stay enrolled in your management tool.
+
+We’re fortunate that we have a standard packaging format on OS X that virtually all management tools can install, so this is the most universal way of distributing software. Greg Neagle wrote createOSXinstallPkg a few years ago that has several nice features for mac admins:
+
+
+  It wraps up an OS X Installer into a standard package.
+  It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.
+
+
+">
+<meta property="og:url" content="http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/">
+<meta property="og:site_name" content="graham gilbert dot com">
+
+<meta property="og:image" content="http://grahamgilbert.com/images/default-thumb.png">
+
+
+
+
+
+<link rel="canonical" href="http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/">
+<link href="http://grahamgilbert.com/atom.xml" type="application/atom+xml" rel="alternate" title="graham gilbert dot com Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://grahamgilbert.com/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://grahamgilbert.com/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://grahamgilbert.com/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://grahamgilbert.com/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://grahamgilbert.com/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://grahamgilbert.com/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://grahamgilbert.com/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://grahamgilbert.com/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://grahamgilbert.com/images/apple-touch-icon-144x144-precomposed.png">
+<link href='/stylesheets/all-476e6a9e20e90d95691860a993d65b96.css' media='all' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://grahamgilbert.com/">graham gilbert dot com</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/talks/" >Talks</a></li>
+				
+				    
+				        
+				        
+				    <li><a href="http://twitter.com/grahamgilbert" target="_blank">Twitter</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="http://grahamgilbert.com/posts/" >Archives</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="http://grahamgilbert.com/images/about.jpg" class="bio-photo" alt="Graham Gilbert bio photo">
+
+
+  <h3 itemprop="name">Graham Gilbert</h3>
+  <p>A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.</p>
+  <a href="http://twitter.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/grahamgilbert" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/" rel="bookmark" title="Upgrading OS X using a package">Upgrading OS X using a package</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>It’s the time of year where we start to think about upgrading our machines to the latest version of OS X. There are several ways of doing this, but assuming your users are unable to perform the upgrade themselves via the App Store (if they’re running as a standard user or your policies prohibit the use of the App Store), you might be wondering how you can use your management tool to get your machines upgraded and make sure they stay enrolled in your management tool.</p>
+
+<p>We’re fortunate that we have a standard packaging format on OS X that virtually all management tools can install, so this is the most universal way of distributing software. Greg Neagle wrote <a href="https://github.com/munki/createOSXinstallPkg">createOSXinstallPkg</a> a few years ago that has several nice features for mac admins:</p>
+
+<ul>
+  <li>It wraps up an OS X Installer into a standard package.</li>
+  <li>It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.<!-- more --></li>
+</ul>
+
+<p><a href="https://github.com/munki/createOSXinstallPkg#further-note-on-additional-packages-and-yosemite">Yosemite introduced</a> a nice undocumented requirement that all packages included in the OS X installer environment are distribution packages. This is in addition to the limited OS X Installer environment not having many of the command line tools you might expect to be there.</p>
+
+<p>One solution to these issues is to use <a href="https://github.com/grahamgilbert/first-boot-pkg">first-boot-pkg</a> - a tool that will install a set of packages at first boot, and will wrap them in a distribution style package so it can be used with createOSXinstallPkg.</p>
+
+<h2 id="the-first-boot-package">The first boot package</h2>
+
+<p>Our first job is to build the package that will be installed at first boot. I am only going to make sure that Munki is installed at first boot, but some other things you might want to put in include:</p>
+
+<ul>
+  <li>Your local admin user</li>
+  <li>Puppet and Facter</li>
+  <li>A payload free package to configure your SUS CatalogURL</li>
+</ul>
+
+<h3 id="prep-for-the-first-boot-package">Prep for the first boot package</h3>
+
+<p>First off we’re going to need the script to build a first boot package. Assuming you’re going to keep your code in <code>~/src</code>:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd</span> ~/src
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>git clone https://github.com/grahamgilbert/first-boot-pkg.git
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd </span>first-boot-pkg</div></div></pre></div></figure>
+
+<p>You have two options for configuring the first boot package - you can pass it options on the command line or you can use a plist. We’re using a plist as it’s the most repeatable and sharable method. If you need further options, such as disabling the network check, see the <a href="https://github.com/grahamgilbert/first-boot-pkg">project on Github</a>.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">~/src/first-boot-pkg/first-boot-config.plist</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot;      &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;dict&gt;</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;key&gt;</span>Packages<span class="nt">&lt;/key&gt;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;array&gt;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nt">&lt;string&gt;</span>munkitools-2.3.1.2535.pkg<span class="nt">&lt;/string&gt;</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;/array&gt;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;key&gt;</span>Name<span class="nt">&lt;/key&gt;</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;string&gt;</span>post-elcap-upgrade.pkg<span class="nt">&lt;/string&gt;</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;key&gt;</span>Identifier<span class="nt">&lt;/key&gt;</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;string&gt;</span>com.company.post-elcap-upgrade<span class="nt">&lt;/string&gt;</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;key&gt;</span>Version<span class="nt">&lt;/key&gt;</span>
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">&lt;string&gt;</span>0.1<span class="nt">&lt;/string&gt;</span>
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;/dict&gt;</span>
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">&lt;/plist&gt;</span></div></div></pre></div></figure>
+
+<p>The above is assuming you’ve saved your Munki package to <code>~/src/first-boot-pkg/munkitools-2.3.1.2535.pkg</code> (i.e. in the same directory as your <code>first-boot-config.plist</code>).</p>
+
+<h3 id="building-the-first-boot-package">Building the first boot package</h3>
+
+<p>Let’s make sure we’re in the right directory:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd</span> ~/src/first-boot-pkg</div></div></pre></div></figure>
+
+<p>And let’s build the package:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo ./first-boot-pkg --plist first-boot-config.plist
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">Validating packages:
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">munkitools-2.3.1.2535.pkg looks good.
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">pkgbuild: Inferring bundle components from contents of /tmp/tmpfCF2Ry
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">pkgbuild: Adding component at Library/PrivilegedHelperTools/LoginLog.app
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">pkgbuild: Wrote package to /tmp/tmp0kZed8/post-elcap-upgrade.pkg
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">productbuild: Wrote product to /Users/grahamgilbert/src/first-boot-pkg/post-elcap-upgrade.pkg</div></div></pre></div></figure>
+
+<h2 id="making-the-os-x-upgrade-package">Making the OS X upgrade package</h2>
+
+<p>As previously mentioned, we’re going to use createOSXinstallPkg, so let’s grab that:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd</span> ~/src
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>git clone https://github.com/munki/createOSXinstallPkg.git
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">cd </span>createOSXinstallPkg</div></div></pre></div></figure>
+
+<p>And assuming your OS X Installer is saved to the usual place:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>sudo ./createOSXinstallPkg --pkg ../first-boot-pkg/post-elcap-upgrade.pkg --source <span class="s2">&quot;/Applications/Install OS X El Capitan GM Candidate.app&quot;</span></div></div></pre></div></figure>
+
+<p>createOSXinstallPkg will let you know how it’s doing:</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">Examining and verifying source...
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">InstallESD.dmg: /Applications/Install OS X El Capitan GM Candidate.app/Contents/SharedSupport/InstallESD.dmg
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">OS Version: 10.11
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">OS Build: 15A282b
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">Output path: /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">Additional packages:
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">post-elcap-upgrade.pkg
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">Total additional package size: <span class="m">1856</span> Kbytes
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">Checking available space on /Applications/Install OS X El Capitan GM Candidate.app/Contents/SharedSupport/InstallESD.dmg...
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">Creating package wrapper...
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">Creating MacOSXInstaller.choiceChanges...
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">Downloading and adding IncompatibleAppList pkg...
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">Downloading http://swcdn.apple.com/content/downloads/03/34/031-32728/f7ouzm6ipiy5h4c325qbantr81tw7o9yyi/OSX_10_11_IncompatibleAppList.pkg to /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg/Contents/Resources/OS X Install Data/OSX_10_11_IncompatibleAppList.pkg...
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">Writing index.sproduct to /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg/Contents/Resources/OS X Install Data/index.sproduct...
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">Copying InstallESD into package...
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">Mounting /Applications/Install OS X El Capitan GM Candidate.app/Contents/SharedSupport/InstallESD.dmg...
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">Copying additional packages to InstallESD/Packages/:
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">    Copying flat package ../first-boot-pkg/post-elcap-upgrade.pkg
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">Creating /private/tmp/tmp4hDxTs/dmg.BzTtzS/Packages/OSInstall.collection
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">Unmounting /Applications/Install OS X El Capitan GM Candidate.app/Contents/SharedSupport/InstallESD.dmg...
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">Creating disk image at /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg/Contents/Resources/InstallESD.dmg...
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">Preparing imaging engine…
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">Reading Protective Master Boot Record <span class="o">(</span>MBR : 0<span class="o">)</span>…
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$9A0557B7</span>: Protective Master Boot Record <span class="o">(</span>MBR : 0<span class="o">))</span>
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">Reading GPT Header <span class="o">(</span>Primary GPT Header : 1<span class="o">)</span>…
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$39D58726</span>: GPT Header <span class="o">(</span>Primary GPT Header : 1<span class="o">))</span>
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">Reading GPT Partition Data <span class="o">(</span>Primary GPT Table : 2<span class="o">)</span>…
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$F5D8C782</span>: GPT Partition Data <span class="o">(</span>Primary GPT Table : 2<span class="o">))</span>
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">Reading  <span class="o">(</span>Apple_Free : 3<span class="o">)</span>…
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$00000000</span>:  <span class="o">(</span>Apple_Free : 3<span class="o">))</span>
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">Reading EFI System Partition <span class="o">(</span>C12A7328-F81F-11D2-BA4B-00A0C93EC93B : 4<span class="o">)</span>…
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">...
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$B54B659C</span>: EFI System Partition <span class="o">(</span>C12A7328-F81F-11D2-BA4B-00A0C93EC93B : 4<span class="o">))</span>
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">Reading disk image <span class="o">(</span>Apple_HFS : 5<span class="o">)</span>…
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">...............................................................................................
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$0A97BB61</span>: disk image <span class="o">(</span>Apple_HFS : 5<span class="o">))</span>
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">Reading  <span class="o">(</span>Apple_Free : 6<span class="o">)</span>…
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">................................................................................................
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$00000000</span>:  <span class="o">(</span>Apple_Free : 6<span class="o">))</span>
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">Reading GPT Partition Data <span class="o">(</span>Backup GPT Table : 7<span class="o">)</span>…
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">................................................................................................
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$F5D8C782</span>: GPT Partition Data <span class="o">(</span>Backup GPT Table : 7<span class="o">))</span>
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">Reading GPT Header <span class="o">(</span>Backup GPT Header : 8<span class="o">)</span>…
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">.................................................................................................
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">   <span class="o">(</span>CRC32 <span class="nv">$A9B0AD1F</span>: GPT Header <span class="o">(</span>Backup GPT Header : 8<span class="o">))</span>
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">Adding resources…
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">.................................................................................................
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">Elapsed Time:  1m 13.452s
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">File size: <span class="m">6060448966</span> bytes, Checksum: CRC32 <span class="nv">$613FF36A</span>
+</div></div><div data-line="57" class="code-highlight-row numbered"><div class="code-highlight-line">Sectors processed: 13002104, <span class="m">12518380</span> compressed
+</div></div><div data-line="58" class="code-highlight-row numbered"><div class="code-highlight-line">Speed: 83.2Mbytes/sec
+</div></div><div data-line="59" class="code-highlight-row numbered"><div class="code-highlight-line">Savings: 9.0%
+</div></div><div data-line="60" class="code-highlight-row numbered"><div class="code-highlight-line">created: /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg/Contents/Resources/InstallESD.dmg
+</div></div><div data-line="61" class="code-highlight-row numbered"><div class="code-highlight-line">----------------------------------------------------------------
+</div></div><div data-line="62" class="code-highlight-row numbered"><div class="code-highlight-line">Done! Completed package at: /Users/grahamgilbert/src/createOSXinstallPkg/InstallOSX_10.11_15A282b_custom.pkg</div></div></pre></div></figure>
+
+<p>And voilla! You have a package that can be deployed by virtually any management tool (Munki in my case) that will make sure the latest version of Munki is also installed at the same time.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://grahamgilbert.com/blog/2015/09/28/upgrading-os-x-using-a-package/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Upgrading OS X using a package</strong> was published on <time datetime="2015-09-28T11:35:55+01:00">September 28, 2015</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://grahamgilbert.com/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/23/releasing-changes-with-sharding/" title="Releasing Changes With Sharding">Releasing Changes With Sharding</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/11/12/mactech-2015-hands-on-with-imagr/" title="MacTech 2015: Hands on with Imagr">MacTech 2015: Hands on with Imagr</a></li>
+    
+      <li><a href="http://grahamgilbert.com/blog/2015/10/15/detecting-when-a-munki-client-is-on-the-corporate-network/" title="Detecting when a Munki client is on the corporate network">Detecting when a Munki client is on the corporate network</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    <span>&copy; 2015 Graham Gilbert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://grahamgilbert.com/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://grahamgilbert.com/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-27233739-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'grahamgilbert'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</body>
+</html>
