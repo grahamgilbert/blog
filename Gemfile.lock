@@ -16,6 +16,7 @@ GEM
     ffi (1.9.10)
     ffi (1.9.10-x64-mingw32)
     ffi (1.9.10-x86-mingw32)
+    gsl (1.16.0.6)
     jekyll (2.5.3)
       classifier-reborn (~> 2.0)
       colorator (~> 0.1)
@@ -47,6 +48,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     mercenary (0.3.5)
+    narray (0.6.1.1)
     octopress (3.0.11)
       jekyll (>= 2.0)
       mercenary (~> 0.3.2)
@@ -125,8 +127,10 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  gsl
   jekyll (= 2.5.3)
   jekyll-sitemap
+  narray
   octopress (~> 3.0)
   octopress-codeblock
   octopress-codefence

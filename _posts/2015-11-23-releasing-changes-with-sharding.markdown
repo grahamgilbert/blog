@@ -2,7 +2,7 @@
 layout: post
 title: Releasing Changes With Sharding
 modified: 2015-11-24T09:16:02+00:00
-categories: 
+categories:
 - munki
 - puppet
 - ruby
@@ -36,7 +36,7 @@ This whole system falls down if your IT staff don't know what to expect when the
 
 ## But what about my bosses bosses boss?
 
-Of course there are machines you absolutely don't want to be testing things on. Important people, your mum, whoever. Conversely, there will be people you want to be out there on the front lines testing everything you can throw at them. Let's take the [condition](https://github.com/grahamgilbert/macscripts/tree/master/Munki/Condtion%20Packages/shard) (as my ruby in the [Fact](https://github.com/grahamgilbert/puppet-mac_admin/blob/master/lib/facter/shard.rb) will probably offend your eyes). If ``/usr/local/shard/production`` is present, the machine always gets a shard value of ``1``. If ``/usr/local/shard/testing`` is present, the machine will get a shard value of 100:
+Of course there are machines you absolutely don't want to be testing things on. Important people, your mum, whoever. Conversely, there will be people you want to be out there on the front lines testing everything you can throw at them. Let's take the [condition](https://github.com/grahamgilbert/macscripts/tree/master/Munki/Condtion%20Packages/shard) (as my ruby in the [Fact](https://github.com/grahamgilbert/puppet-mac_admin/blob/master/lib/facter/shard.rb) will probably offend your eyes). If ``/usr/local/shard/production`` is present, the machine always gets a shard value of ``100``. If ``/usr/local/shard/testing`` is present, the machine will get a shard value of ``1``:
 
 ``` python /usr/local/munki/conditions/shard
 #!/usr/bin/env python
@@ -87,7 +87,7 @@ def get_shard():
         # "ConditionalItems.plist" does not exist,
         # output only consists of data generated in this script
         output_dict = newdict
- 
+
     # Write out data to "ConditionalItems.plist"
     plistlib.writePlist(output_dict, conditionalitemspath)
 
@@ -144,7 +144,7 @@ This is fine if there are other versions of that particular item in your product
 
 ![Install warnings in Sal](/images/posts/2015-11-23/Sal-warnings.png)
 
-This might not worry you - maybe you don't have a reporting tool for Munki (you're doing it wrong) or you don't care about warnings (you're only doing it slightly less wrong). 
+This might not worry you - maybe you don't have a reporting tool for Munki (you're doing it wrong) or you don't care about warnings (you're only doing it slightly less wrong).
 
 The way around this is to use [``conditional items``](https://github.com/munki/munki/wiki/Conditional-Items) for the first release of a particular item. This means that no machines will fail to find the item in a catalog (remember that putting an item into ``managed_installs`` means you're telling Munki that the item *must* be installed on this client), as they are only adding it to their ``managed_installs`` when the condition is met. This of course has the downside of you now having two places to manage the sharding of your Munki items. This may be an acceptable trade off to keep your warnings useful (as it is to me).
 
