@@ -1,7 +1,14 @@
 ---
 title: Dynamic first boot scripts with Imagr and Flask&#58; Part 4
+date: 2016-01-20T05:49:05+00:00
+layout: post
+categories:
+- Imagr
+- Flask
+- Docker
+- Python
 ---
-If you are just starting with this series, it is highly recommended you start with Part 1. 
+If you are just starting with this series, it is highly recommended you start with [Part 1](http://grahamgilbert.com/blog/2016/01/05/dynamic-first-boot-scripts-with-imagr-and-flask/).
 
 The last part of this series is making it work in a Docker container. This is **not** a Docker tutorial - please head over to Docker's [getting started](https://docs.docker.com/mac/) pages to get yourself set up with the Docker Toolbox.
 
@@ -11,7 +18,7 @@ In the same ``~/src/boostrapapp`` directory as your main script, create a new fi
 
 ``` dockerfile ~/src/boostrapapp/Dockerfile
 FROM python:2.7-slim
-
+ENV BOOTSTRAP_DEBUG=false BOOTSTRAP_USERNAME=admin BOOTSTRAP_PASSWORD=secret BOOTSTRAP_URL="http://localhost:5000"
 COPY requirements.txt /requirements.txt
 COPY gunicorn_config.py /gunicorn_config.py
 COPY bootstrap.py /bootstrap.py
@@ -19,6 +26,7 @@ RUN pip install -r /requirements.txt && \
     rm /requirements.txt && \
     pip install gunicorn futures
 CMD gunicorn -c gunicorn_config.py bootstrap:app
+EXPOSE 5000
 VOLUME ["/munki_repo"]
 ```
 
@@ -143,7 +151,7 @@ data = {{
 'build': build
 }}
 
-cmd = ['/usr/bin/curl', '-u', username_and_password, '--data', urllib.urlencode(data), url+'/gen_manifest/']
+cmd = ['/usr/bin/curl', '-u', username_and_password, '--data', urllib.urlencode(data), url+'/gen_manifest']
 task = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
 
 '''.format(site, build, my_username, my_password, url)
@@ -195,9 +203,35 @@ And you can also see what your container is doing:
 docker logs bootstrap
 ```
 
+## Using it with Imagr
+
+Now to last part - using the thing. Let's generate the hash of your chosen username and password:
+
+``` bash linenos:false
+$ python -c 'import base64; print "Authorization: Basic %s" % base64.b64encode("USERNAME:PASSWORD")'
+Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=
+```
+
+And add the following component to your Imagr workflow, substituting the output of the previous command:
+
+``` xml linenos:false
+<dict>
+    <key>additional_headers</key>
+    <array>
+        <string>Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=</string>
+        <string>X-enrolment-build: some_build</string>
+        <string>X-enrolment-site: test_site</string>
+    </array>
+    <key>type</key>
+    <string>script</string>
+    <key>url</key>
+    <string>http://172.16.155.136:5000</string>
+</dict>
+```
+
 ## What's next?
 
-You could now [push this image to the Docker Hub](https://docs.docker.com/engine/userguide/dockerrepos/), or you could build it on your server. If you want to see the completed project, I've posted it on GitHub, and I've set up an automated build on the Docker Hub if you want to use it and be lazy ;)
+You could now [push this image to the Docker Hub](https://docs.docker.com/engine/userguide/dockerrepos/), or you could build it on your server. If you want to see the completed project, I've posted it on [GitHub](https://github.com/grahamgilbert/bootstrapapp), and I've set up an [automated build on the Docker Hub](https://hub.docker.com/r/grahamgilbert/bootstrapapp) if you want to use it and be lazy ;)
 
 ## Fin
 

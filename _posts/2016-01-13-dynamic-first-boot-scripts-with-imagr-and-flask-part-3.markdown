@@ -1,7 +1,14 @@
 ---
 title: Dynamic first boot scripts with Imagr and Flask&#58; Part 3
+date: 2016-01-13T08:51:26+00:00
+layout: post
+categories:
+- Imagr
+- Flask
+- Docker
+- Python
 ---
-If you are just starting with this series, it is highly recommended you start with Part 1. 
+If you are just starting with this series, it is highly recommended you start with [Part 1](http://grahamgilbert.com/blog/2016/01/05/dynamic-first-boot-scripts-with-imagr-and-flask/).
 
 Last time around we got our app returning something useful to Imagr. This time around we'll make our second endpoint - the one that will create the machine's individual Munki manifest on the server.
 
@@ -140,6 +147,11 @@ def gen_manifest():
     munki_repo = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                             'munki_repo')
     manifest_file = os.path.join(munki_repo, 'manifests', serial)
+    
+    # if the manifests dir doesn't exist, make it
+    if not os.path.exists(os.path.join(munki_repo, 'manifests')):
+        os.makedirs(os.path.join(munki_repo, 'manifests'))
+    
     # if the manifest doesn't already exist set the catalog
     if not os.path.isfile(manifest_file):
         manifest = {}

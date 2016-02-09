@@ -1,19 +1,26 @@
 ---
 title: Dynamic first boot scripts with Imagr and Flask&#58; Part 2
+date: 2016-01-07T09:33:31+00:00
+layout: post
+categories:
+- Imagr
+- Flask
+- Docker
+- Python
 ---
 
-If you are just starting with this series, it is highly recommended you start with Part 1.
+If you are just starting with this series, it is highly recommended you start with [Part 1](http://grahamgilbert.com/blog/2016/01/05/dynamic-first-boot-scripts-with-imagr-and-flask/).
 
-Last time we built a basic app that will ask for a username and password to access it. Now we're going to add in some other data that will ultimately be sent by Imagr to let our script be dynamically generated.
+Last time we built a basic app that will ask for a username and password to access it. Now we're going to add in some other data that will eventually be sent by Imagr to let our script be dynamically generated. <!-- more -->
 
 First off we need to pull out the headers that Imagr will send. We are going to need:
 
 * The Mac's Build
-* The Mac's Location<!-- more -->
+* The Mac's Location
 
 These two options will be stored in a couple of headers. Fortunately, Flask has a built in way of getting the headers from a request. Open up ``bootstrap.py`` and make our main function look like:
 
-``` python linenos:false ~/src/bootstrapapp/boostrap.py
+```python linenos:false ~/src/bootstrapapp/boostrap.py
 @app.route('/')
 @requires_auth
 def index():
@@ -37,7 +44,6 @@ Aussuming your username and password are ``admin`` and ``secret``, open up your 
 ``` bash
 $ curl --user "admin:secret" --header "X-bootstrap-build: build" --header "X-bootstrap-site: site" http://localhost:5000
 ```
-
 
 Of course all we're doing is spitting out the header values at the moment - let's add those values to our first boot script. Make your index function look like:
 
@@ -103,17 +109,17 @@ Now we can test this with Imagr. Open up your Imagr configuration plist and make
 
 ``` xml linenos:false
 <dict>
-					<key>additional_headers</key>
-					<array>
-						<string>Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=</string>
-						<string>X-enrolment-build: basic</string>
-						<string>X-enrolment-site: london</string>
-					</array>
-					<key>type</key>
-					<string>script</string>
-					<key>url</key>
-					<string>http://yourIPAddress:5000</string>
-				</dict>
+	<key>additional_headers</key>
+	<array>
+		<string>Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ=</string>
+		<string>X-enrolment-build: basic</string>
+		<string>X-enrolment-site: london</string>
+	</array>
+	<key>type</key>
+	<string>script</string>
+	<key>url</key>
+	<string>http://yourIPAddress:5000</string>
+</dict>
 ```
 
 You can generate the authorization header, by replacing the appropriate pairts and running this in your terminal:

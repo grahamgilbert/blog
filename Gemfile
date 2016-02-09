@@ -9,6 +9,6 @@ gem 'gsl'
 group :jekyll_plugins do
   gem 'octopress-image-tag'
   gem 'octopress-codeblock'
-  gem 'octopress-codefence'
+  gem 'octopress-codefence', '1.6.1'
   gem 'octopress-solarized'
 end
