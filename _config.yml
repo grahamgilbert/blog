@@ -1,73 +1,39 @@
-# Site wide configuration
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
 
-title:            graham gilbert dot com
-locale:           en_GB
-url: http://grahamgilbert.com
+# Setup
+title:               graham gilbert dot com
+tagline:             'Mac administration and assorted nerdity'
+description:         'A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.'
+url:                 http://grahamgilbert.com
+baseurl:             ''
+paginate:            5
 
+# About/contact
+author:
+  name:              Graham Gilbert
+  url:               http://grahamgilbert.com
+  email:             graham@grahamgilbert.com
 
-# Jekyll configuration
-defaults:
-  -
-    scope:
-      path: "" # an empty string here means all files in the project
-    values:
-      comments: true
+# Custom vars
+version:             1.0.0
 
-permalink:   /blog/:year/:month/:day/:title/
-markdown:    kramdown
-highlighter: pygments
-sass:
-  sass_dir: _sass
-  style: compressed
 gems:
   - octopress-codefence
   - octopress-codeblock
   - octopress-solarized
   - jekyll-sitemap
 
+permalink:   /blog/:year/:month/:day/:title/
+markdown:    kramdown
+highlighter: pygments
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      comments: true
 excerpt_separator: <!-- more -->
-
-kramdown:
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  use_coderay: false
-  # input: GFM
-
-
-# Site owner
-owner:
-  name: Graham Gilbert
-  avatar: about.jpg
-  bio: "A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer."
-  email: graham@grahamgilbert.com
-  disqus-shortname: grahamgilbert
-  twitter: grahamgilbert
-  facebook: #username
-  google:
-    plus: #username
-    analytics: UA-27233739-1
-    verify: #verify
-    ad-client: #
-    ad-slot: #
-  bing-verify:
-  github: grahamgilbert
-  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
-  linkedin: grahamgilbert
-  xing: #username
-  instagram: #username
-  lastfm: #username
-  tumblr: #username
-  pinterest: #username
-  foursquare: #username
-  steam: #username
-  dribbble: #username
-  youtube: #username
-  soundcloud: #username
-  weibo: #username
-  flickr: #username
-  codepen: #username
-
-include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
