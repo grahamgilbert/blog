@@ -17,7 +17,7 @@ This post will walk you through the development of a a simple Puppet module and 
 
 Before you do anything, you're going to need a profile. There are [plenty](https://github.com/nmcspadden/Profiles) [of](https://github.com/gregneagle/profiles) [the](https://github.com/golbiga/Profiles) [things](https://github.com/rtrouton/profiles) on Github, or you could run Profile Manager in a VM (please don't use it for anything more than this, it should never be managing your devices directly), or in the future you'll be able to use Erik Berglund's [ProfileCreator](https://github.com/ProfileCreator/ProfileCreator).
 
-This time I'm going to be an evil admin and enforce a desktop picture on my users - there are a couple of profiles on the repositories I linked to above that have an example of this.
+Today I'm going to be an evil admin and enforce a desktop picture on my users - there are a couple of profiles on the repositories I linked to above that have an example of this.
 
 We are going to keep our module in git - we'll use GitHub today, as you can get a free repository and the GUI app is really simple. This is not a git tutorial, so all you will need to do it 'commit' your code and sync it to Github. Go ahead and get the [application](https://desktop.github.com) and create a new git repository (File -> New in the app once you've logged in). It doesn't matter what you call the repo, but I like to keep my Puppet modules prefixed with ``puppet-`` so they line up nicely in the Finder.
 
@@ -36,7 +36,7 @@ Now we're ready to start writing our module. Open up the directory you just made
 
 The first file we're going to create is our profile template. It will be just the same as any profile you've worked with before, but we're putting in a placeholder where you'd normally put in the path to the image you want to be used for the desktop picture. You should probably replace the reverse domain (``com.grahamgilbert``) with ``com.yourcompany``.
 
-``` xml templates/com.grahamgilbert.config.desktop.mobileconfig.erb
+``` xml mark:23 templates/com.grahamgilbert.config.desktop.mobileconfig.erb
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
