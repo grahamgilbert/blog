@@ -9,7 +9,9 @@ categories:
 
 There are many ways of managing configuration profiles on OS X - you can use MDM, Munki or any one of the other many great tools. My preferred method however is using Puppet.
 
-By using Puppet, I get access to it's templating features, and I can let others in my team adjust exposed settings through Hiera. Convinced? Let's get going.<!-- more -->
+By using Puppet, I get access to it's templating features, and I can let others in my team adjust exposed settings through Hiera.
+
+This post will walk you through the development of a a simple Puppet module and how to test it on an OS X virtual machine.<!-- more -->
 
 ## Prep
 
