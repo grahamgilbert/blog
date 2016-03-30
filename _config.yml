@@ -1,7 +1,7 @@
 # Permalinks
 #
 # Use of `relative_permalinks` ensures post links from the index work properly.
-permalink:           pretty
+#permalink:           pretty
 relative_permalinks: true
 
 # Setup
@@ -26,6 +26,10 @@ gems:
   - octopress-codeblock
   - octopress-solarized
   - jekyll-sitemap
+  - jekyll-feed
+
+feed:
+  path: atom.xml
 
 permalink:   /blog/:year/:month/:day/:title/
 markdown:    kramdown

@@ -1,0 +1,12 @@
+/* overrides of the lousy styles from _syntax.scss */
+.CodeRay pre {
+  background: none;
+  color: #000;
+}
+
+/* fixes issue where the whole line wouldn't get colored in a diff */
+.CodeRay span.insert, .CodeRay span.change, .CodeRay span.delete {
+        width: auto;
+}
+
+@import "coderay-github"
