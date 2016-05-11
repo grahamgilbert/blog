@@ -34,5 +34,6 @@ There are lots of places you can find help. Places chock full of your fellow Mac
 * [Slack](http://macadmins.org)
 * [Twitter](https://twitter.com/search?src=typd&q=%23macadmins%20OR%20%23macadmin)
 * [Conferences](http://krypted.com/community/macadmin-conferences/)
+* [Meetups](http://www.londonappleadmins.org.uk/)
 
 Good luck! We're all counting on you!
