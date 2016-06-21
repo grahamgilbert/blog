@@ -1,0 +1,14 @@
+---
+title: Imagr 1.1.1
+date: 2016-06-01T15:33:37+01:00
+layout: post
+categories:
+  - Imagr
+  - Release
+---
+
+I'm pleased to announce that [Imagr 1.1.1 is out](https://github.com/grahamgilbert/imagr/releases/tag/1.1.1)! Why am I so happy? This is the first release that's made up nearly all of community contributions. So many thanks to everyone who has helped out with code, documentation and filing bugs.
+
+And if you're going to be at [MacDevOps:YVR](http://www.macdevops.ca/) in a few weeks, we'll be taking a look at how to use some of these new features.
+
+Find out more about this [release over on GitHub](https://github.com/grahamgilbert/imagr/releases/tag/1.1.1).
