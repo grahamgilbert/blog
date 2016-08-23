@@ -17,7 +17,7 @@ module Jekyll
     def render(context)
       @div_width = @width.to_i + 20
       @div_height = @height.to_i + 15
-      %(<div style="width:#{@div_width}px;height:#{@div_height}px;margin-bottom:20px"><iframe width="#{@width}" height="#{@height}" src="http://www.youtube.com/embed/#{@id}" frameborder="0" allowfullscreen> </iframe></div>)
+      %(<div style="width:#{@div_width}px;height:#{@div_height}px;margin-bottom:20px"><iframe width="#{@width}" height="#{@height}" src="https://www.youtube.com/embed/#{@id}" frameborder="0" allowfullscreen> </iframe></div>)
     end
   end
 end

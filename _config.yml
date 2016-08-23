@@ -8,14 +8,15 @@ relative_permalinks: true
 title:               graham gilbert dot com
 tagline:             'Mac administration and assorted nerdity'
 description:         'A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.'
-url:                 http://grahamgilbert.com
+url:                 https://grahamgilbert.com
 baseurl:             ''
 paginate:            5
+enforce_ssl: grahamgilbert.com
 
 # About/contact
 author:
   name:              Graham Gilbert
-  url:               http://grahamgilbert.com
+  url:               https://grahamgilbert.com
   email:             graham@grahamgilbert.com
 
 # Custom vars

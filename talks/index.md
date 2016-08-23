@@ -6,6 +6,12 @@ sharing: true
 footer: true
 ---
 
+## Puppet on OS X
+
+{% youtube Z2quMhdgILo 420 315 %}
+
+Configuration management and DevOps are the current buzzwords bandied around, but how can they be applied to managing OS X? This session took a look at where Puppet fits into the Mac Management ecosystem, how it can be used in combination with Facter to apply dynamic configuration to OS X and looked at some common use cases. ([slides](http://grahamgilbert.com/images/posts/2016-02-09/Puppet_On_OS_X.pdf))
+
 ## Hands on with Imagr (MacTech Conference, 2015)
 
 This session introduced participants to [Imagr](https://github.com/grahamgilbert/imagr), the open source OS X deployment tool. Workshop participants got hands on with Imagr, going from setting up the server environment to configuring Imagr and deploying an OS X machine. [(slides)](/images/posts/2015-11-12/ImagrLab.pdf)
