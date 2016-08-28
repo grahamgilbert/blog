@@ -3,14 +3,12 @@ layout: default
 ---
 
 <div class="post">
-    <h1 class="post-title">
-      <a href="{{ site.url }}{{ page.url }}">
-        {{ page.title }}
-      </a>
-    </h1>
+  <h1 class="post-title">{{ page.title }}</h1>
   <span class="post-date">{{ page.date | date_to_string }}</span>
   {{ content }}
-  {% if page.comments %}<div id="disqus_thread"></div>
+</div>
+{% if page.comments %}
+<div id="disqus_thread"></div>
 <script>
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -31,16 +29,15 @@ layout: default
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>{% endif %}
-</div>
-
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+{% endif %}
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
     {% for post in site.related_posts limit:3 %}
       <li>
         <h3>
-          <a href="{{ site.baseurl }}{{ post.url }}">
+          <a href="{{ post.url }}">
             {{ post.title }}
             <small>{{ post.date | date_to_string }}</small>
           </a>

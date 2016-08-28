@@ -5,11 +5,11 @@
 relative_permalinks: true
 
 # Setup
-title:               graham gilbert dot com
+title:               graham gilbert
 tagline:             'Mac administration and assorted nerdity'
-description:         'A Mac admin, automating the hell out of things in London.<br /><br />The opinions on this site are my own, and are not necessarily shared by my employer.'
+description:         'A Mac admin, automating the hell out of things in London.'
 url:                 https://grahamgilbert.com
-baseurl:             ''
+baseurl:             '/'
 paginate:            5
 enforce_ssl: grahamgilbert.com
 
