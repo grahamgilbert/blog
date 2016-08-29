@@ -14,4 +14,5 @@ group :jekyll_plugins do
   gem 'octopress-codefence', '1.6.1'
   gem 'octopress-solarized'
   gem 'jekyll-feed'
+  gem 'jekyll-read-more'
 end

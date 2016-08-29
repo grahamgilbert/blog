@@ -43,6 +43,8 @@ GEM
     jekyll-gist (1.4.0)
       octokit (~> 4.2)
     jekyll-paginate (1.1.0)
+    jekyll-read-more (0.1.3)
+      liquid
     jekyll-sass-converter (1.4.0)
       sass (~> 3.4)
     jekyll-sitemap (0.9.0)
@@ -144,6 +146,7 @@ DEPENDENCIES
   gsl
   jekyll (= 2.5.3)
   jekyll-feed
+  jekyll-read-more
   jekyll-sitemap
   kramdown
   narray
@@ -154,4 +157,4 @@ DEPENDENCIES
   octopress-solarized
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
