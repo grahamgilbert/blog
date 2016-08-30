@@ -6,7 +6,7 @@ categories:
  - Yo
  - Scripting
 ---
-Last time, we look our first look at the fantastic Yo. This time, we're going to o something useful - we're going to open an item up in Managed Software Centre.
+Last time, we took our first look at the fantastic Yo. This time, we're going to o something useful - we're going to open an item up in Managed Software Centre.
 
 Let's build our command to show the notification. Note that InstallElCap is the name of the relevent item in Munki. You could for example, replace it with `munki://detail-GoogleChrome`.
 
@@ -32,9 +32,9 @@ $ mkdir -p payload/opt/grahamgilbert/bin
 $ mkdir -p payload/LaunchAgents
 ```
 
-Now we've got our directory structure, create a file at `payload/grahamgilbert/bin/notifier` with the following content
+Now we've got our directory structure, create a file at `payload/grahamgilbert/bin/updatenotifier` with the following content
 
-``` bash payload/grahamgilbert/bin/notifier
+``` bash payload/grahamgilbert/bin/updatenotifier
 #!/bin/bash
 
 /Applications/Utilities/yo.app/Contents/MacOS/yo --title "Update Required" --info "Your operating system is out of date. Please upgrade ASAP." --action-btn "More Info" --action-path "munki://detail-InstallElCap"
