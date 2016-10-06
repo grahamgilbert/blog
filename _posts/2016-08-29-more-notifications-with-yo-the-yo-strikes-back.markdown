@@ -29,7 +29,7 @@ $ cd ~/src
 $ mkdir updatenotifier
 $ cd updatenotifier
 $ mkdir -p payload/opt/grahamgilbert/bin
-$ mkdir -p payload/LaunchAgents
+$ mkdir -p payload/Library/LaunchAgents
 ```
 
 Now we've got our directory structure, create a file at `payload/grahamgilbert/bin/updatenotifier` with the following content
@@ -46,9 +46,9 @@ Let's make it executable
 $ chmod 755 payload/opt/grahamgilbert/bin/updatenotifier
 ```
 
-And for our launchagent, add the following at `payload/LaunchAgents/com.grahamgilbert.updatenotifier.plist`
+And for our launchagent, add the following at `payload/Library/LaunchAgents/com.grahamgilbert.updatenotifier.plist`
 
-``` xml payload/LaunchAgents/com.grahamgilbert.updatenotifier.plist
+``` xml payload/Library/LaunchAgents/com.grahamgilbert.updatenotifier.plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -73,7 +73,7 @@ And for our launchagent, add the following at `payload/LaunchAgents/com.grahamgi
 And finally, let's build the package
 
 ``` bash
-pkgbuild --root payload --identifier com.grahamgilbert.updatenotifier --version 1.0.0 ~/Desktop/UpdateNotifier.pkg
+$ pkgbuild --root payload --identifier com.grahamgilbert.updatenotifier --version 1.0.0 ~/Desktop/UpdateNotifier.pkg
 ```
 
 Now you've got a notification that pops up once an hour, on the hour that lets people know they should upgrade. Where could we improve on this? We could only bug them once a day as this is going to get incredibly annoying. We should also target those who need to upgrade. We also probably want to put our corporate logo on the pop up so our users know it came from us - well, guess what's coming in the next couple of parts?
