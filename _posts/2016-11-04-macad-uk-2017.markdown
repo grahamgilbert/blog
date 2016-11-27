@@ -1,0 +1,11 @@
+---
+title: MacAD.UK 2017
+date: 2016-11-04T17:40:19+00:00
+layout: post
+categories:
+ - Conference
+---
+
+I'm delighted to announce that the lovely people at Amsys have asked me to return to speak at [MacAD.UK 2017](http://www.macad.uk/) for it's second year. This year I will be talking about [Airbnb's transition from a commercial macOS management platform to an entirely open source stack](http://www.macad.uk/speaker/speaker-graham-gilbert/) - *"Something something commercial, something something open source"*.
+
+See you all in February!
