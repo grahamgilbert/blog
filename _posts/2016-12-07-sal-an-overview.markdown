@@ -1,6 +1,7 @@
 ---
 title: "Sal: an overview"
-date: 2016-11-27T11:09:39-08:00
+date: 2016-12-07T11:09:39-08:00
+layout: post
 categories:
  - Sal
 ---
@@ -17,19 +18,19 @@ That's the 10000 feet overview, let's take a look at some of it's functionality 
 
 ## The dashboard
 
-{% img center /images/posts/2016-11-27/01-Dashboard.png %}
+{% img center /images/posts/2016-12-07/01-Dashboard.png %}
 
 The first thing you see when you log into Sal is the dashboard. This is where you can get access to a quick overview of your fleet. Each graph, chart, set of buttons is a plugin - this means that each one can be re-ordered and removed - you can even make your own if you need to (more on that another time). Most plugins are clickable - click on the relevent part to show a list of machines it is referring to - and if the plugin supports showing the list (and all of the built in ones do), you can export the list to CSV (since all managers love spreadsheets, right?).<!-- more -->
 
 ## Machine detail
 
-{% img center /images/posts/2016-11-27/02-MachineDetail.png %}
+{% img center /images/posts/2016-12-07/02-MachineDetail.png %}
 
 The machine detail page is where you can take a closer look at one particular machine. It's here you can get the status of each machine's Munki installs, take a look at the machine's Munki conditions and Facts (if you are using Facter), and see if there are any errors or warnings from Munki. Need something that's not included? Read on to find out about plugins.
 
 ## Plugins
 
-{% img center /images/posts/2016-11-27/03-Widgets.png %}
+{% img center /images/posts/2016-12-07/03-Widgets.png %}
 
 Sal is designed to be completely customisable - if you need a specific widget on the dashboard for your organisation, you can write it without forking and having to maintain your own copy of Sal. If there is a widget included you don't need, simply disable it through the GUI - no editing of configuration files needed.
 
@@ -51,19 +52,19 @@ Some of the built in widgets include:
 
 ## Search
 
-{% img center /images/posts/2016-11-27/04-SearchBuild.png %}
+{% img center /images/posts/2016-12-07/04-SearchBuild.png %}
 
 One of the most important parts of a reporting tool is getting information out of it. One of the strengths of commercial tools is their ability to build complex queries without needing to be a programmer. Sal 3.0 introduces advanced search. Sal's search allows you to build complicated search queries on any of the data points it collects on the machines in your inventories from the GUI. And to keep your manager happy, each search can be exported to a CSV.
 
 ### Saved searches
 
-{% img center /images/posts/2016-11-27/05-SavedSearch.png %}
+{% img center /images/posts/2016-12-07/05-SavedSearch.png %}
 
 If you have searches your team performs regularly, you can choose to save your search - they are then avaialble for the rest of your team.
 
 ## Application inventory
 
-{% img center /images/posts/2016-11-27/06-AppInventory.png %}
+{% img center /images/posts/2016-12-07/06-AppInventory.png %}
 
 Of course, you don't only care about the apps you're telling Munki to install. Sal will track the complete application inventory for all of your machines. Want to know if anyone has been naught and installed Mac Keeper? We've got you covered.
 
