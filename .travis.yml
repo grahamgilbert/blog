@@ -4,4 +4,5 @@ rvm:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libgsl0ldbl libgsl0-dev
-install: gem install bundler && gem install s3_website && bundle install
+install: gem install bundler && gem install s3_website && gem install rake && bundle install
+script: jekyll build
