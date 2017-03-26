@@ -5,5 +5,4 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libgsl0ldbl libgsl0-dev
 install: gem install bundler && gem install s3_website && gem install rake && bundle install
-script: jekyll build
-after_success: s3_website push
+script: jekyll build && s3_website push
