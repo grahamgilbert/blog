@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Something something commercial, something something opensource
 date: 2017-02-08T09:49:16+00:00
 categories:

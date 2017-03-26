@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Loading LaunchAgents as root
 date: 2017-03-25T19:03:19-07:00
 categories:
