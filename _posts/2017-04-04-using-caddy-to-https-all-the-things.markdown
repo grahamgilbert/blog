@@ -8,7 +8,9 @@ categories:
  - LetsEncrypt
 ---
 
-[Caddy](https://caddyserver.com/) is a lightweight web server that amongst it's features, has integration with [LetsEncrypt](https://letsencrypt.org) to automatically request certificates. This means that you now have absolutely no excuse anymore to run your apps over plain old HTTP anymore. Let me be clearer. If you are running web services over HTTP, regardless of whether it touches the internet or not, __you are doing it wrong__.  <!-- more -->
+[Caddy](https://caddyserver.com/) is a lightweight web server that amongst it's features, has integration with [LetsEncrypt](https://letsencrypt.org) to automatically request certificates. This means that you now have absolutely no excuse anymore to run your apps over plain old HTTP anymore. Let me be clearer. If you are running web services over HTTP, regardless of whether it touches the internet or not, __you are doing it wrong__.  
+
+{% img center /images/posts/2017-04-04/https_all_the_things.jpg %} <!-- more -->
 
 ## The setup
 
