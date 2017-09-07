@@ -16,7 +16,7 @@ So, after several months of me saying "I should open source that", here is our f
 
 As you may have guessed, it is a Puppet module that installs and configures [Munki](https://github.com/munki/munki/). More specifically:
 
-* It will install your specified version of Munki, making sure all of it's services are loaded (so no need to reboot when upgrading!)
+* It will install your specified version of Munki, making sure all of its services are loaded (so no need to reboot when upgrading!)
 * It will generate and install a configuration profile that covers all (probably!) of Munki's preferences
 * Supports local only manifests so managed installs and uninstalls can be specified with the module
 * Is fully configurable with Hiera, so configuration can be specified as generally or as granularly as you need
