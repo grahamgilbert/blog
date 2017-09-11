@@ -1,3 +1,3 @@
 #!/bin/bash
-
-/usr/local/bin/s3_website push
+gem install s3_website
+s3_website push
