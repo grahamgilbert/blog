@@ -8,7 +8,7 @@ install: gem install bundler && gem install s3_website && gem install rake && bu
 script: jekyll build --lsi
 deploy:
   provider: script
-  script: "./deploy.sh"
+  script: "chmod +x deploy.sh && ./deploy.sh"
   skip_cleanup: true
   on:
     branch: master

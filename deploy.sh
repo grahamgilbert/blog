@@ -1,3 +1,3 @@
 #!/bin/bash
 
-s3_website push
+/usr/local/bin/s3_website push
