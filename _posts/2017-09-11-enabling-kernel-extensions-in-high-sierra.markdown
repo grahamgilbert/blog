@@ -22,7 +22,7 @@ The first thing you will want to do is to get a clean install of High Sierra (no
 Once all of your KEXTs are loaded, fire up Terminal and open up the database that actually stores all of this information.
 
 ```
-$ squite3 /var/db/SystemPolicyConfiguration/KextPolicy
+$ sqlite3 /var/db/SystemPolicyConfiguration/KextPolicy
 ```
 
 Your button clicking will result in a Team ID being whitelisted in the `kext_policy` table. Let’s  have a look in there:
