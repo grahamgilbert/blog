@@ -51,6 +51,7 @@ GEM
       listen (~> 3.0, < 3.1)
     json (2.0.3)
     kramdown (1.13.2)
+    libv8 (3.16.14.19)
     liquid (2.6.3)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -121,12 +122,16 @@ GEM
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     redcarpet (3.4.0)
+    ref (2.0.0)
     rubypants-unicode (0.2.5)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     titlecase (0.1.1)
     toml (0.1.2)
       parslet (~> 1.5.0)
@@ -152,6 +157,7 @@ DEPENDENCIES
   octopress-codefence (= 1.6.1)
   octopress-image-tag
   octopress-solarized
+  therubyracer
 
 BUNDLED WITH
-   1.14.3
+   1.16.0

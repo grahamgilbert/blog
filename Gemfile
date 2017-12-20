@@ -7,6 +7,7 @@ gem 'narray'
 gem 'gsl'
 gem 'kramdown'
 gem 'coderay'
+gem 'therubyracer'
 
 group :jekyll_plugins do
   gem 'octopress-image-tag'

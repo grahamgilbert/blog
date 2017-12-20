@@ -17,7 +17,7 @@ Sal appears to work fine on High Sierra. Some of the external scripts may need u
 
 ## Crypt
 
-Amazingly, the way we interact with FileVault as admins seems to not have changed at all, so Crypt has been reported to work perfectly (I will confirm when I get back to my testing computers that I don't mind nuking). Apple has had a habit of wiping out the authorization database for basically every update during Sierra's life, so this isn't really a surprise. Wither managing the entries with your configuration management tool, or simply reinstalling the package will get things working again.
+Amazingly, the way we interact with FileVault as admins seems to not have changed at all, so Crypt has been reported to work perfectly (I will confirm when I get back to my testing computers that I don't mind nuking). Apple has had a habit of wiping out the authorization database for basically every update during Sierra's life, so this isn't really a surprise. Whether managing the entries with your configuration management tool, or simply reinstalling the package will get things working again.
 
 Now we know it works, I will be pushing ahead with migrating it to Swift 3 so it can be built on a modern version of Xcode. If anyone wants to help with this effort, [please help out on the PR](https://github.com/grahamgilbert/crypt2/pull/38).
 
