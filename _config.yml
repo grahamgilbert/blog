@@ -12,6 +12,7 @@ url:                 https://grahamgilbert.com
 baseurl:             '/'
 paginate:            5
 enforce_ssl: grahamgilbert.com
+encoding: utf-8
 
 # About/contact
 author:
