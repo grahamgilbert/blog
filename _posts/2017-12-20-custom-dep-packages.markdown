@@ -1,6 +1,6 @@
 ---
 title: Custom DEP Packages
-date: 2017-12-13T20:42:55-08:00
+date: 2017-12-20T09:42:55-08:00
 layout: post
 categories:
  - DEP
@@ -23,7 +23,7 @@ If you are of the open source management tool persuasion, chances are that like 
 * As part of that configuration, Puppet installs [Munki](https://github.com/munki/munki)
 * Munki installs the software
 
-So it looked pretty simple for us to use our existing Plab B package with InstallApplications via an MDM.
+So on the face of it, it looked pretty simple for us to use our existing Plab B package with InstallApplication via an MDM.
 
 # DEPNotify
 
@@ -38,7 +38,7 @@ Rather than make our users sit there and twiddle their thumbs whilst their compu
 
 # File Watcher
 
-The next stage was to start letting the user know what was happening. I started going down the route of modifying our Puppet modules to support outputting text into DEPNotify's log file, but this quickly became a pain - plus not all of our modules are written in house, so we would need to hope that the maintainer decided to merge our PR. So the next best thing was to watch the changes on disk and when certain files or directories appear on disk, we let the user know wha is happening. If I were a smarter person I would probably have used some PyObj-C framework to monitor for changes to the disk, but since we were only really concerned about a few pieces, a simple for loop sufficied. Below is an example of what we ran via a LaunchAgent:
+The next stage was to start letting the user know what was happening. I started going down the route of modifying our Puppet modules to support outputting text into DEPNotify's log file, but this quickly became a pain - plus not all of our modules are written in house, so we would need to hope that the maintainer decided to merge our PR. So the next best thing was to watch the changes on disk and when certain files or directories appear on disk, we let the user know wha is happening. If I were a smarter person I would probably have used some PyObj-C framework to monitor for changes to the disk, but since we were only really concerned about a few pieces, a simple for loop sufficied. Below is an example of what we ran via a LaunchAgent. In addition to updating DEPNotify when some important files were put on disk, it also puts our default browser in the Dock, removes some apps we don't want in there and will pop Munki in when it makes it on disk.
 
 ``` python
 #!/usr/bin/python
@@ -179,7 +179,7 @@ This allowed us to get our bootstrap package down to just a few scripts and a La
 
 # Threads
 
-Running Plan B and then running Munki afterwards was fine when we were imaging. The tech doing the imaging would kick the machine off and then go do something else whilst they waited for the machine to finish building. We couldn't do this with a DEP style deployment - we needed to get everything completed as fast as possible. Threads to the rescue!
+Running Plan B and then running Munki afterwards was fine when we were imaging. The tech doing the imaging would kick the machine off and then go do something else whilst they waited for the machine to finish building. We couldn't do this with a DEP style deployment - we needed to get everything completed as quickly as possible. Threads to the rescue!
 
 By using threads, we are able to run two or more pieces of code in parallel. This meant that as soon as Munki is installed on the device by Puppet, we can kick off a run whilst Puppet continues to configure the rest of the machine.
 
