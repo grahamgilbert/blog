@@ -26,6 +26,7 @@ jobs:
           name: install apt pkgs
           command: |
               sudo apt-get install -y libgsl0ldbl libgsl0-dev
+      - run: gem install bundler
       - run: bundle install
       - run: gem install html-proofer
       - save_cache:
