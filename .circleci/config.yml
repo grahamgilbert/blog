@@ -44,6 +44,7 @@ jobs:
       # specify the version you desire here
        - image: circleci/ruby:2.3
     steps:
+      - run: sudo pip install awscli
       - run: aws s3 sync _site s3://grahamgilbertcom/ --delete
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
 workflows:
