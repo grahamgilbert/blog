@@ -20,7 +20,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/blog
           paths:
-            - _site
+            - '_site'
   deployment:
     <<: *defaults
     docker:
