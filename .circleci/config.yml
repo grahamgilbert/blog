@@ -40,7 +40,7 @@ jobs:
           command: |
             htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
       - persist_to_workspace:
-        root: blog
+          root: blog
   deployment:
     docker:
        - image: circleci/python:2-jessie-browsers
