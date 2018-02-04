@@ -35,10 +35,10 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run: bundle exec jekyll build --lsi
       # run tests!
-      - run:
-          name: run tests
-          command: |
-            htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
+      # - run:
+      #     name: run tests
+      #     command: |
+      #       htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
       - persist_to_workspace:
           root: blog
   deployment:
