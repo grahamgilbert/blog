@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
        - image: circleci/ruby:2.3
       
-      # Specify service dependencies here if necessary CircleCI maintains a library of pre-built images documented at https://circleci.com/docs/2.0/circleci-images/ - image: circleci/postgres:9.4
+    working_directory: /tmp
     steps:
       - checkout
       # Download and cache dependencies
@@ -39,10 +39,16 @@ jobs:
           name: run tests
           command: |
             htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+      	  # taken to be the root directory of the workspace.
+          root: blog
   deployment:
     docker:
        - image: circleci/python:2-jessie-browsers
     steps:
+      - attach_workspace:
+          at: /tmp/blog
       - run: sudo pip install awscli
       - run: aws s3 sync $CIRCLE_WORKING_DIRECTORY/_site s3://grahamgilbertcom/ --dryrun
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
