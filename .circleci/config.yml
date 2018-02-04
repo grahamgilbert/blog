@@ -41,11 +41,10 @@ jobs:
             htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
   deployment:
     docker:
-      # specify the version you desire here
-       - image: circleci/ruby:2.3
+       - image: circleci/python:2-jessie-browsers
     steps:
       - run: sudo pip install awscli
-      - run: aws s3 sync _site s3://grahamgilbertcom/ --delete
+      - run: aws s3 sync $CIRCLE_WORKING_DIRECTORY/_site s3://grahamgilbertcom/ --dry-run
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
 workflows:
   version: 2
