@@ -14,7 +14,7 @@ jobs:
       - attach_workspace:
           at: ~/blog
       - checkout
-      - run: bundle exec jekyll build --lsi --destination $SOURCE_DIR --source $CIRCLE_WORKING_DIRECTORY
+      - run: bundle exec jekyll build --lsi
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
@@ -23,7 +23,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/blog
           paths:
-            - public
+            - _site
   deployment:
     <<: *defaults
     docker:
