@@ -6,23 +6,21 @@ defaults: &defaults
 version: 2
 jobs:
   build:
-    # <<: *defaults
+    <<: *defaults
     docker:
       # specify the version you desire here
-      - image: grahamgilbert/blog-build@sha256:a79f6aef2d6d546a55621c96caa6a5bb592908e7a2b1e46fc68e9d5d4fdac89e
+      - image: grahamgilbert/blog-build@sha256:e969c17890a9b526183cb82a79e58c36e01deeb574d5ca8704dca70e12cf2f94
     steps:
       - checkout
       - run:
           name: jekyll build
           command: |
-            bundle exec jekyll build --lsi -t
+            bundle exec jekyll build --lsi --source $CIRCLE_WORKING_DIRECTORY
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
       #     command: |
       #       htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
-      - run: mkdir -p /tmp/blog
-      - run: cp -R  $CIRCLE_WORKING_DIRECTORY/_site /tmp/blog
       - persist_to_workspace:
           root: /tmp/blog
           paths:
