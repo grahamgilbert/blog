@@ -40,9 +40,7 @@ jobs:
           command: |
             htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
       - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-      	  # taken to be the root directory of the workspace.
-          root: blog
+        root: blog
   deployment:
     docker:
        - image: circleci/python:2-jessie-browsers
