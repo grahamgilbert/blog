@@ -38,7 +38,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            bundle exec htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
+            htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
   deployment:
     docker:
       # specify the version you desire here
