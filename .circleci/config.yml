@@ -4,7 +4,7 @@
 #
 
 defaults: &defaults
-  working_directory: /tmp/workspace
+  working_directory: ~/blog
   
 version: 2
 jobs:
@@ -33,14 +33,15 @@ jobs:
       #     command: |
       #       htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
       - persist_to_workspace:
-          root: blog
+          root: .
+          path: .
   deployment:
     <<: *defaults
     docker:
        - image: circleci/python:2-jessie-browsers
     steps:
       - attach_workspace:
-          at: /tmp/workspace/blog
+          at: ~/blog
       - run: sudo pip install awscli
       - run: aws s3 sync $CIRCLE_WORKING_DIRECTORY/_site s3://grahamgilbertcom/ --dryrun
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
