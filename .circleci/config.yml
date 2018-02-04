@@ -7,7 +7,7 @@ jobs:
     <<: *defaults
     docker:
       # specify the version you desire here
-       - image: grahamgilbert/blog-build:@sha256:bb3f02c7862a53305b8b7ce689a135981632439f
+       - image: grahamgilbert/blog-build:@sha256:05555a5541a111ef8c983e0aa46c05639e34acc7
     steps:
       - checkout
       - run: bundle exec jekyll build --lsi
