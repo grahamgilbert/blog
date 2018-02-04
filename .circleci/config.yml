@@ -4,7 +4,7 @@ defaults: &defaults
     - SOURCE_DIR: /tmp/blog/_site
     - LANG: en_US.UTF-8
     - LANGUAGE: en_US:en
-    - TZ: America/Lost Angeles
+    - TZ: America/Los_Angeles
     - LC_ALL: en_US.UTF-8
     - LANG: en_US.UTF-8
     - LANGUAGE: en_US
