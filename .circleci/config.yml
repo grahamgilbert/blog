@@ -1,8 +1,3 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-
 defaults: &defaults
   working_directory: ~/blog
   
@@ -12,22 +7,11 @@ jobs:
     <<: *defaults
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.3
+       - image: grahamgilbert/blog-build:@sha256:bb3f02c7862a53305b8b7ce689a135981632439f
     steps:
       - checkout
-      - run:
-          name: update
-          command: |
-            sudo apt-get -qq update
-      - run:
-          name: install apt pkgs
-          command: |
-              sudo apt-get install -y libgsl0ldbl libgsl0-dev
-      - run: gem install bundler
-      - run: bundle install
-      - run: gem install html-proofer
       - run: bundle exec jekyll build --lsi
-      # run tests!
+      # run tests! Uncomment these later
       # - run:
       #     name: run tests
       #     command: |
