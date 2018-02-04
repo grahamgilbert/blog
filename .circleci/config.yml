@@ -15,13 +15,12 @@ jobs:
     <<: *defaults
     docker:
       # specify the version you desire here
-      - image: grahamgilbert/blog-build@sha256:267f4ab85757b8f2d14be8c393f2f7434a9610dfb244c8c89cf8cb1a5bcfdbc5
+      - image: grahamgilbert/blog-build@sha256:008eb268fd49391637393ac1811b3f257b0f48ac3048a748fe6032c9b72e06d9
     steps:
       - checkout
       - run:
           name: jekyll build
-          command: |
-            LC_ALL=en_US.UTF-8 bundle exec jekyll build --lsi --source $CIRCLE_WORKING_DIRECTORY
+          command: bundle exec jekyll build --lsi --source $CIRCLE_WORKING_DIRECTORY
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
