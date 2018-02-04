@@ -9,7 +9,7 @@ jobs:
     <<: *defaults
     docker:
       # specify the version you desire here
-      - image: grahamgilbert/blog-build@sha256:5e37231ca375506b8af3f0367db42083310b772326f4becf6b5d3afd83cb3593
+      - image: grahamgilbert/blog-build@sha256:267f4ab85757b8f2d14be8c393f2f7434a9610dfb244c8c89cf8cb1a5bcfdbc5
     steps:
       - checkout
       - run:
