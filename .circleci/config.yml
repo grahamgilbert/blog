@@ -15,7 +15,7 @@ jobs:
       - run:
           name: jekyll build
           command: |
-            bundle exec jekyll build --lsi --source $CIRCLE_WORKING_DIRECTORY
+            bundle exec jekyll build --lsi --source /tmp/blog -t
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
