@@ -9,6 +9,7 @@ defaults: &defaults
 version: 2
 jobs:
   build:
+    <<: *defaults
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.3
@@ -34,6 +35,7 @@ jobs:
       - persist_to_workspace:
           root: blog
   deployment:
+    <<: *defaults
     docker:
        - image: circleci/python:2-jessie-browsers
     steps:
