@@ -39,8 +39,20 @@ jobs:
           command: |
              - bundle exec htmlproofer ./_site --check-html
   deployment:
-    prod:
-      branch: master
-      commands:
-        - aws s3 sync _site s3://grahamgilbertcom/ --delete
-        - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
+    docker:
+      # specify the version you desire here
+       - image: circleci/ruby:2.4.1
+    steps:
+      - run: aws s3 sync _site s3://grahamgilbertcom/ --delete
+      - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deployment:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
