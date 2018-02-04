@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
        - image: circleci/ruby:2.3
       
-    working_directory: /tmp
+    working_directory: /tmp/workspace
     steps:
       - checkout
       # Download and cache dependencies
@@ -46,7 +46,7 @@ jobs:
        - image: circleci/python:2-jessie-browsers
     steps:
       - attach_workspace:
-          at: /tmp/blog
+          at: /tmp/workspace/blog
       - run: sudo pip install awscli
       - run: aws s3 sync $CIRCLE_WORKING_DIRECTORY/_site s3://grahamgilbertcom/ --dryrun
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
