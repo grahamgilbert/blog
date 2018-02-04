@@ -43,5 +43,4 @@ jobs:
       branch: master
       commands:
         - aws s3 sync _site s3://grahamgilbertcom/ --delete
-        - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID \
-  --paths /
+        - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
