@@ -1,5 +1,7 @@
 defaults: &defaults
-  working_directory: ~/blog
+  working_directory: /tmp/blog
+  environment:
+    - SOURCE_DIR: /tmp/blog/public
   
 version: 2
 jobs:
@@ -12,24 +14,25 @@ jobs:
       - attach_workspace:
           at: ~/blog
       - checkout
-      - run: bundle exec jekyll build --lsi
+      - run: bundle exec jekyll build --lsi --destination $SOURCE_DIR
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
       #     command: |
       #       htmlproofer --check-html $CIRCLE_WORKING_DIRECTORY/_site
       - persist_to_workspace:
-          root: .
-          path: .
+          root: /tmp/blog
+          paths:
+            - public
   deployment:
     <<: *defaults
     docker:
        - image: circleci/python:2-jessie-browsers
     steps:
       - attach_workspace:
-          at: ~/blog
+          at: /tmp/blog
       - run: sudo pip install awscli
-      - run: aws s3 sync $CIRCLE_WORKING_DIRECTORY/_site s3://grahamgilbertcom/ --dryrun
+      - run: aws s3 sync $SOURCE_DIR s3://grahamgilbertcom/ --dryrun
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
 workflows:
   version: 2
