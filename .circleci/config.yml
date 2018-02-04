@@ -12,7 +12,11 @@ jobs:
       - image: grahamgilbert/blog-build@sha256:a79f6aef2d6d546a55621c96caa6a5bb592908e7a2b1e46fc68e9d5d4fdac89e
     steps:
       - checkout
-      - run: bundle exec jekyll build --lsi
+      - run:
+          name: jekyll build
+          command: |
+            cd $CIRCLE_WORKING_DIRECTORY
+            bundle exec jekyll build --lsi
       # run tests! Uncomment these later
       # - run:
       #     name: run tests
