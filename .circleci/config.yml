@@ -32,13 +32,13 @@ jobs:
   deploy:
     <<: *defaults
     docker:
-       - image: clburlison/s3deploy@sha256:81c31d3e4a9bc53a6ed17285ed32fcfd05aa0e3cd09469788a20506ff0cc3732
+       - image: grahamgilbert/awscli@sha256:cd9851bb4155e89830f33bca28e2da732077ea99abf7fd8115b42d6a4a499967
     steps:
       - attach_workspace:
           at: /tmp/blog
       - run:
           name: Upload to s3
-          command: /usr/local/bin/s3deploy -source="$SOURCE_DIR" -region="$S3_REGION" -bucket="$S3_BUCKET"
+          command: aws s3 sync $SOURCE_DIR s3://$S3_BUCKET --delete
   invalidate:
     <<: *defaults
     docker:
