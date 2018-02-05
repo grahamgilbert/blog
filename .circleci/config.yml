@@ -2,6 +2,8 @@ defaults: &defaults
   working_directory: /tmp/blog
   environment:
     - SOURCE_DIR: /tmp/blog/_site
+    - S3_BUCKET: grahamgilbertcom
+    - S3_REGION: us-east-1
   
 version: 2
 jobs:
@@ -27,12 +29,18 @@ jobs:
   deployment:
     <<: *defaults
     docker:
-       - image: circleci/python:2-jessie-browsers
+       - image: clburlison/s3deploy@sha256:81c31d3e4a9bc53a6ed17285ed32fcfd05aa0e3cd09469788a20506ff0cc3732
     steps:
       - attach_workspace:
           at: /tmp/blog
-      - run: sudo pip install awscli
-      - run: aws s3 sync $SOURCE_DIR s3://grahamgilbertcom/ --dryrun
+      - run:
+          name: Upload to s3
+          command: /usr/local/bin/s3deploy -source="$SOURCE_DIR" -region="$S3_REGION" -bucket="$S3_BUCKET"
+  invalidation:
+    <<: *defaults
+    docker:
+      - image: grahamgilbert/awscli@sha256:cd9851bb4155e89830f33bca28e2da732077ea99abf7fd8115b42d6a4a499967
+    steps:
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
 workflows:
   version: 2
@@ -45,3 +53,9 @@ workflows:
           filters:
             branches:
               only: master
+      - invalidation:
+          requires:
+            - deployment
+            filters:
+              branches:
+                only: master
