@@ -55,7 +55,7 @@ workflows:
               only: master
       - invalidation:
           requires:
-            - deployment
+              - deployment
             filters:
               branches:
                 only: master
