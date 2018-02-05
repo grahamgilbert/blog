@@ -32,7 +32,7 @@ jobs:
   deploy:
     <<: *defaults
     docker:
-       - image: grahamgilbert/awscli@sha256:cd9851bb4155e89830f33bca28e2da732077ea99abf7fd8115b42d6a4a499967
+       - image: grahamgilbert/awscli@sha256:f885d8ea981fd0b44d119a3d85c6994274b6cf93b05f6f3a883cc8c656ba3763
     steps:
       - attach_workspace:
           at: /tmp/blog
@@ -42,7 +42,7 @@ jobs:
   invalidate:
     <<: *defaults
     docker:
-      - image: grahamgilbert/awscli@sha256:cd9851bb4155e89830f33bca28e2da732077ea99abf7fd8115b42d6a4a499967
+      - image: grahamgilbert/awscli@sha256:f885d8ea981fd0b44d119a3d85c6994274b6cf93b05f6f3a883cc8c656ba3763
     steps:
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /
 workflows:
