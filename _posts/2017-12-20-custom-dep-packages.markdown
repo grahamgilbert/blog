@@ -23,7 +23,7 @@ If you are of the open source management tool persuasion, chances are that like 
 * As part of that configuration, Puppet installs [Munki](https://github.com/munki/munki)
 * Munki installs the software
 
-So on the face of it, it looked pretty simple for us to use our existing Plab B package with InstallApplication via an MDM.
+So on the face of it, it looked pretty simple for us to use our existing Plan B package with InstallApplication via an MDM.
 
 # DEPNotify
 
