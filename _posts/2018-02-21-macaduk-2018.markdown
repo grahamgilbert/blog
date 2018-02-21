@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MacAD.UK 2018&#58; Curing operating blindness
+title: MacAD.UK 2018&#58; Curing operating system blindness
 modified:
 categories:
 - Talks
