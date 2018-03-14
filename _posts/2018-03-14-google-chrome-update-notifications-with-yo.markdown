@@ -28,7 +28,7 @@ If a user by some random chance find their way to finding Google’s built in up
 
 `chrome://restart` has been around for a while, but for obvious reasons doesn’t work anywhere outside of typing it into Chrome’s location bar, which isn’t exactly user friendly.
 
-After various attempts to trigger this someone (I'm sorry, I don't remember who and my search-fu is failing me) on MacAdmins Slack mentioned they had found a way to do it - and it wasn’t pretty, but it worked.
+After various attempts to trigger this Mike Lynn mentioned on MacAdmins Slack that they had found a way to do it - and it wasn’t pretty, but it worked.
 
 It involved (_shudder_) AppleScript.
 
@@ -37,6 +37,15 @@ So, we had a method to restart Chrome and keep our user's tabs safe. We just nee
 ## Which version is running?
 
 When Chrome's auto update runs, they actually replace the app bundle from underneath the user. It took me a while (and some help on Slack from Tim Sutton) to work out what was going on. Google places a copy of the binary that is named the same as the version. This means that we can have multiple copies of the app in the same place.
+
+```
+ls -la /Applications/Google\ Chrome.app/Contents/Versions/
+total 0
+drwxr-xr-x@ 4 root  wheel   128B Mar 13 12:43 .
+drwxr-xr-x@ 9 root  wheel   288B Mar 12 18:30 ..
+drwxr-xr-x  5 root  wheel   160B Mar  5 23:57 65.0.3325.146
+drwxr-xr-x  5 root  wheel   160B Mar 12 17:45 65.0.3325.162
+```
 
 {% img center /images/posts/2018-03-14/clever_girl.gif %}
 
