@@ -1,5 +1,5 @@
 ---
-title: Google Chrome npdate notifications with Yo
+title: Google Chrome update notifications with Yo
 date: 2018-03-14T12:23:33-07:00
 layout: post
 categories:
