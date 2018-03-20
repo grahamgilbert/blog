@@ -6,8 +6,8 @@ relative_permalinks: true
 
 # Setup
 title:               graham gilbert
-tagline:             'Mac administration and assorted nerdity'
-description:         'A Mac admin, automating the hell out of things.'
+tagline:             'assorted nerdity'
+description:         'assorted nerdity'
 url:                 https://grahamgilbert.com
 baseurl:             '/'
 paginate:            5
