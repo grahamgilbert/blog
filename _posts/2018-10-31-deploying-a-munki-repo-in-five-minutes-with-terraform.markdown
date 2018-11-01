@@ -39,7 +39,7 @@ So it makes sense to offload the running of these services so we can get on with
 
 Create a file called `main.tf` wherever you want to store these things. Put the following content in it - adjust the variables to match what you want the bucket to be called (the name must be globally unique across all of Amazon), and the username and password your Munki clients will use to access the repo).
 
-``` terraform
+``` go
 module "munki" {
   source          = "git::https://github.com/grahamgilbert/terraform-munki-repo.git//munki"
   munki_s3_bucket = "my-munki-bucket"
