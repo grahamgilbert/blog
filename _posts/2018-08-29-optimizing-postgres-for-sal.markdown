@@ -46,7 +46,7 @@ As time goes on, these empty tuples will mount up. This is where the database's 
 
 But unfortunately the defaults are basically useless. I am not going to go in depth about why I chose the following settings - I learned a lot from [this post](https://blog.2ndquadrant.com/autovacuum-tuning-basics/) and adjusted their recommendations to meet our needs. My Postgres server is Amazon's RDS, so the settings are entered in the Parameter Group for the database. If you are running a bare metal install, you will be editing the Postgres configuration. I have added a few notes about why we chose the value we did next to the setting. Our general goal was to have maintenance performed more frequently, so it would take less time as it will have less work to do during each run, and to give the maintenance worker as much resources as possible so it would complete as quickly as possible.
 
-```
+``` bash
 autovacuum_analyze_scale_factor = 0.01
 # This means the 1% of the table needs to change to trigger autovacuum.
 

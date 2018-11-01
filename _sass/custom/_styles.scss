@@ -2,6 +2,7 @@
 .CodeRay pre {
   background: none;
   color: #000;
+  overflow: auto;
 }
 
 /* fixes issue where the whole line wouldn't get colored in a diff */
