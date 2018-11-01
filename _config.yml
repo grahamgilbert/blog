@@ -31,7 +31,7 @@ gems:
   - jekyll-feed
 
 feed:
-  path: atom.xml
+  path: /atom.xml
 
 permalink:   /blog/:year/:month/:day/:title/
 markdown:    kramdown
