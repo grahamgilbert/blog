@@ -1,0 +1,11 @@
+[
+    {
+      "id": 26,
+      "device_checked_in": true,
+      "assigned_user": "joe_bloggs"
+    },
+     {
+       "id": 57,
+       "device_checked_in": false
+     }
+]
