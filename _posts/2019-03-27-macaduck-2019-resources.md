@@ -7,7 +7,7 @@ categories:
  - MacAD.UK
 ---
 
-Many thanks to everyone who came to my talk at MacAD.UK. The links to all of the code used in my talk is below.
+The links to all of the code used in my talk at MacAD.UK are below.
 
 * [Movember](https://graham.at/movember)
 * [Movember on Facebook](https://graham.at/fbmovember)
