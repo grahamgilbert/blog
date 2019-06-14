@@ -43,3 +43,11 @@ defaults:
     values:
       comments: true
 excerpt_separator: <!-- more -->
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
