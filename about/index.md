@@ -11,7 +11,7 @@ title: About
 
 I currently work at [Airbnb](http://airbnb.com) as a Systems Engineer, working primarily on their endpoint platform. Any views or opinions expressed on this site are my own and are not necessarily shared by my employer.
 
-Everything on this site is mine, although feel free to link to anything I've written here and all of the code can be considered open source under the Apache license unless otherwise stated. If you find this site or anything else I publish useful, please consider donating to [Movember](https://graham.at/movember).
+Everything on this site is mine, although feel free to link to anything I've written here and all of the code can be considered open source under the Apache license unless otherwise stated. If you find this site or anything else I publish useful, please consider donating to [Movember](https://grahamgilbert.com/movember).
 
 ## Elsewhere
 
