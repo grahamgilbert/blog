@@ -19,4 +19,4 @@ I'm not doing this for fun, or because I enjoy growing silly facial hair. Your d
 
 To everyone who has donated so far: you’re lovely people, and when Lily is old enough to know what is happening, she will thank you (probably with a big drooly kiss).
 
-Those who haven't: "liking" this, retweeting, whatever won’t stop cancer. Thoughts and prayers won't stop it either. Medical research will, and that needs funding. Unless you are really unfortunate, you can all manage to donate a little to help stop men dying too young.
+Those who haven't: "liking" this, retweeting, whatever won’t stop cancer. Thoughts and prayers won't stop it either. Medical research will, and that needs funding. [Unless you are really unfortunate, you can all manage to donate a little to help stop men dying too young](https://graham.at/movember).
