@@ -30,7 +30,7 @@ server {
     access_log            /var/log/nginx/crypt.access.log;
 
     location ~ ^/(checkin) {
-		proxy_pass http://crypt;
+        proxy_pass http://crypt;
         # your proxy settings here
     }
 
@@ -39,8 +39,8 @@ server {
         proxy_pass             http://crypt;
         # your proxy settings here
         allow 10.0.0.0/8; # Office network
-		allow 172.16.0.0/12; #VPC
-		deny all;
+        allow 172.16.0.0/12; #VPC
+        deny all;
     }
 }
 ```
@@ -49,10 +49,9 @@ The above will allow everyone access to the `/checkin` endpoint (so keys continu
 
 But what about when you have multiple application servers behind an [Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)? Wouldn't it be great if you could block the traffic before it even gets to Nginx? Fortunately this is pretty simple with [Listener Rules](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html#listener-rules).
 
-If you have more than one or two subnets that you need to whitelist, you're either going to have a lot of clicking, or if you're doing it (half) right, a lot of copy and pasted Terraform code. But wait - Terraform supports `count`. We can reduce the amount of copypasta with something like this:
+If you have more than one or two subnets that you need to whitelist, you're either going to have a lot of clicking, or if you're doing it (half) right, a lot of copy and pasted Terraform code. But wait - Terraform supports `count`. We can reduce the amount of copypasta with something like this (much is omitted from the below, like instances and the actual load balancer):
 
-```
-
+``` hcl
 variable "allowed_subnets" {
     type = "list"
     default = [
