@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: klakegg/hugo:0.71.1
   environment:
-    - SOURCE_DIR: /tmp/blog/public
+    - SOURCE_DIR: /src/public
     - S3_BUCKET: grahamgilbertcom
     - S3_REGION: us-east-1
 
@@ -17,14 +17,14 @@ jobs:
           name: hugo
           command: hugo --source $CIRCLE_WORKING_DIRECTORY
       - persist_to_workspace:
-          root: /tmp/blog
+          root: /src
           paths:
-            - "hugo"
+            - "public"
   test:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /tmp/blog
+          at: /src
       - run:
           name: run tests
           command: |
@@ -35,7 +35,7 @@ jobs:
       - image: grahamgilbert/awscli@sha256:f885d8ea981fd0b44d119a3d85c6994274b6cf93b05f6f3a883cc8c656ba3763
     steps:
       - attach_workspace:
-          at: /tmp/blog
+          at: /src
       - run:
           name: Upload to s3
           command: aws s3 sync $SOURCE_DIR s3://$S3_BUCKET --delete
