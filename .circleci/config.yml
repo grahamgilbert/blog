@@ -15,7 +15,7 @@ jobs:
       - checkout
       - run:
           name: hugo
-          command: hugp --source $CIRCLE_WORKING_DIRECTORY
+          command: hugo --source $CIRCLE_WORKING_DIRECTORY
       - persist_to_workspace:
           root: /tmp/blog
           paths:
