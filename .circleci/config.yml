@@ -1,12 +1,12 @@
 defaults: &defaults
-  working_directory: /tmp/blog
+  working_directory: /src
   docker:
-    - image: grahamgilbert/blog-build@sha256:008eb268fd49391637393ac1811b3f257b0f48ac3048a748fe6032c9b72e06d9
+    - image: klakegg/hugo:0.71.1
   environment:
-    - SOURCE_DIR: /tmp/blog/_site
+    - SOURCE_DIR: /tmp/blog/public
     - S3_BUCKET: grahamgilbertcom
     - S3_REGION: us-east-1
-  
+
 version: 2
 jobs:
   build:
@@ -14,12 +14,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: jekyll build
-          command: bundle exec jekyll build --lsi --source $CIRCLE_WORKING_DIRECTORY
+          name: hugo
+          command: hugp --source $CIRCLE_WORKING_DIRECTORY
       - persist_to_workspace:
           root: /tmp/blog
           paths:
-            - '_site'
+            - "hugo"
   test:
     <<: *defaults
     steps:
@@ -32,7 +32,7 @@ jobs:
   deploy:
     <<: *defaults
     docker:
-       - image: grahamgilbert/awscli@sha256:f885d8ea981fd0b44d119a3d85c6994274b6cf93b05f6f3a883cc8c656ba3763
+      - image: grahamgilbert/awscli@sha256:f885d8ea981fd0b44d119a3d85c6994274b6cf93b05f6f3a883cc8c656ba3763
     steps:
       - attach_workspace:
           at: /tmp/blog
@@ -60,8 +60,8 @@ workflows:
             branches:
               only: master
       - invalidate:
-            requires:
-              - deploy
-            filters:
-              branches:
-                only: master
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master

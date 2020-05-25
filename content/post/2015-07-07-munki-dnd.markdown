@@ -1,0 +1,18 @@
+---
+categories:
+- Munki
+- Swift
+comments: true
+date: "2015-07-07T17:46:44Z"
+title: Munki DND
+---
+I've been wanting to get stuck in with a simple Swift project for a while, but couldn't think of anything suitable for a first project ([Imagr](https://github.com/grahamgilbert/imagr) was originally going to be that project, but I don't think it would ever have been made if I chose Swift), until I saw [Dr Graham R Pugh's Do Not Disturb application](https://grpugh.wordpress.com/2015/07/03/a-do-not-disturb-application-for-munki/). I thought it was an excellent idea that could be made even better by being a manu bar app.
+
+{{< figure class="center" src="/images/posts/2015-07-07/active.png" >}}
+
+Enter [Munki DND](https://github.com/grahamgilbert/munki-dnd) - it extends Graham's idea by allowing the administrator to configure the number of hours the user is allowed to suppress notifications for, as well as living in the menu bar so the user can check how long they've got until notifications become active again.
+
+{{< figure class="center" src="/images/posts/2015-07-07/disabled.png" >}}
+
+You can grab version 0.0.1 of Munki DND from the [Releases page on GitHub](https://github.com/grahamgilbert/munki-dnd/releases/tag/v0.0.1).
+
