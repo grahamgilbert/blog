@@ -3,7 +3,7 @@ private: true
 title: Movember
 ---
 
-![](/images/movember.jpg)
+{{< figure src="/images/movember.jpg" width="300">}}
 
 In January 2018 I was diagnosed with testicular cancer. I'm lucky - we caught it early and I'm now in remission. Not everyone is so lucky. In November the beard is going and I will be replacing it with a glorious tache (sorry Jen). If you use my software, find my website useful or have attended any of my talks, don't buy me a beer - help save some lives.
 
