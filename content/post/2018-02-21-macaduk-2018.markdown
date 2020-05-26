@@ -1,0 +1,9 @@
+---
+categories:
+- Talks
+date: "2018-02-21T09:09:09Z"
+modified: null
+title: MacAD.UK 2018&#58; Curing operating system blindness
+---
+
+Thanks to those who came to our talk yesterday (if you did come, I don't blame you, the other talk was much better). If you feel so inclined, [here are the slides](/images/posts/2018-02-21/Curing_operating_system_blindness.pdf).

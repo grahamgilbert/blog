@@ -1,0 +1,41 @@
+baseURL: https://grahamgilbert.com
+disablePathToLower: true
+languageCode: en-us
+title: graham gilbert
+theme: axiom
+paginate: 10
+
+permalinks:
+  post: "/blog/:year/:month/:day/:slug/"
+
+disablePathToLower: false
+
+googleAnalytics: UA-27233739-1
+highlight: "dark"
+omitThemeAttribution: true
+markup:
+  highlight:
+    codeFences: true
+    noClasses: false
+
+params:
+  copyrightYear: "2011"
+
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+menu:
+  main:
+  - identifier: about
+    name: about
+    url: /about/
+    weight: -110
+  - name: movember
+    url: /movember/
+    weight: -100
+  - name: projects
+    url: /projects/
+    weight: -90

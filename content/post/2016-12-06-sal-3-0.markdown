@@ -1,0 +1,37 @@
+---
+categories:
+- Sal
+- Python
+date: "2016-12-06T09:21:43Z"
+title: Sal 3.0
+---
+
+[Sal 3.0](https://github.com/salopensource/sal/releases/tag/3.0.0) is a massive upgrade on Sal 2.7, so massive thanks to everyone who has contributed code and bug reports. In particular, big thanks go out to [@sheagcraig](https://github.com/sheagcraig)  for his work on the completely rewritten application inventory features. 
+
+## What's new in Sal 3.0?
+
+### Inventory
+
+Sal's application inventory tracking has been completely re-written (thanks again Shea), and is much more useful, allowing for greater detail on what is installed, and where across your fleet.
+
+### Search
+
+We have migrated the basic search from using an external application that relied on building caches (so doubling the size of your database), to just querying the database directly. 
+
+The advanced search is completely new - it allows you to build up complex queries that would previously require you to build a plugin. These queries can also be saved so they can be shared with the rest of your team. 
+
+### Plugins
+
+Your plugins can now process data server side during checkin. Perhaps you want to update Sal with information from your Inventory tool, or call out to a web service. Documentation can be found [over here](https://github.com/salopensource/sal/wiki/Additional-processing-of-data-in-Pugins).
+
+### Security
+
+Sal scripts version [2.0.0](https://github.com/salopensource/sal-scripts/releases/tag/2.0.0) now uses basic http authentication by default ([using the key set in preferences](https://github.com/salopensource/sal/wiki/Client-configuration)) on any endpoint that it retrieves data from (external scripts etc). This means that any potentially sensitive data you may have in your client side scripts is now protected. This can be [disabled if desired](https://github.com/salopensource/sal/wiki/Settings#basic-authentication-on-http-endpoints) - not recommended!.
+
+### Performance
+
+If you have a lot of plugins enabled with client side scripts to download, you will be getting a lot of requests to your server. There is now a script available that will build a package containing all the external scripts enabled on your Sal install (or just download the files so they can be deployed with something like Puppet or Chef), and after setting the [preference](https://github.com/salopensource/sal/wiki/Client-configuration), the client will use these in preference to downloading them again. 
+
+If you are running Facter, you may be shipping duplicate data that Sal already collects - you are now able to specify facts that should not be sent to the server (enabling you to set different facts to ignore per client) or [set it on the server to configure it globally](https://github.com/salopensource/sal/wiki/Settings#ignore_facts). 
+
+Finally, every single transaction with the database has been optimised. A usual run from a client that has Facter installed with 50 facts has been reduced from 70+ calls to the database to less than 10 (Postgres only, sorry SQLite and MySQL users). 
