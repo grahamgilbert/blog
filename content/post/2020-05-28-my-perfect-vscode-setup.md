@@ -4,7 +4,7 @@ lastmod = 2020-05-28T13:00:00Z
 title = "My Perfect VS Code Setup"
 +++
 
-The role of the traditional Systems Administrator is slowly but surely dying. Clicking on buttons in GUI's is making way for configuration as code. As such, you text editor is more important than ever. I've had several discussion about various setups, so here is mine.
+The role of the traditional Systems Administrator is slowly but surely dying. Clicking on buttons in GUI's is making way for configuration as code. As such, you text editor is more important than ever. I've had several discussions about various setups, so here is mine.
 
 For conxtext on my choices, my day to day activities in a text editor are mainly:
 
