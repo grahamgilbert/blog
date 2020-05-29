@@ -56,10 +56,6 @@ Most of the default settings are sensible, but there are a few tweaks I would re
 
 ![](/images/posts/2020-05-28/python-settings.png)
 
-The default formatter will handle any file format you don't specify one for. Set it to Prettier+.
-
-![](/images/posts/2020-05-28/default-formatter.png)
-
 Now for some Go and Puppet settings. These are easier to copy and paste, so open the command palette (cmd-shift-p on macOS, ctrol-shift-p on Linux and Windows) and type in `Open Settings (JSON)`, and add in the following.
 
 ```json
@@ -77,6 +73,8 @@ Now for some Go and Puppet settings. These are easier to copy and paste, so open
 ```
 
 These settings will set up linting and formatting for Go - you will be prompted to install any missing Go dependencies. We then are turning on the most important setting - enabling formatting when you save a file. This means you never need to think about formatting when you save a file. I did however, find an issue with formatting on save with Puppet files, so that is disabled here.
+
+Prettier+ will handle many file formats - go through the ones you use often (`json` and `yaml` here) and set Prettier+ to be the formatter for those languages. Do _not_ set it to be the default formatter. It will overwrite all of your other formatters.
 
 ## Conclusion
 
