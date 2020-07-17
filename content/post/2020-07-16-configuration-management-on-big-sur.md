@@ -4,7 +4,7 @@ lastmod = 2020-07-16T13:00:00Z
 title = "Managing macOS Profiles with Configuration Management in 2020"
 +++
 
-macOS 11 has brought two, small on their own, but significant changes to how we are able to manage macOS. Today we’ll talk about the first: Prrofiles.
+macOS 11 has brought two, small on their own, but significant changes to how we are able to manage macOS. Today we’ll talk about the first: Profiles.
 
 ## Background
 
