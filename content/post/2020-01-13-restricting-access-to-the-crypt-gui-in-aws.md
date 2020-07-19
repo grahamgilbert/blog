@@ -7,7 +7,7 @@ categories:
   - Terraform
 ---
 
-[Crypt is a client secret escrow tool](https://github.com/grahamgilbert/crypt-server) (primarily FileVault, but other secret types too). Because it hold secrets, it is common to want to restrict access to retrieving secrets to certain locations.
+[Crypt is a client secret escrow tool](https://github.com/grahamgilbert/crypt-server) (primarily FileVault, but other secret types too). Because it holds secrets, it is common to want to restrict access to retrieving secrets to certain locations.
 
 If you are running one node, you can simply add something like the following to your Nginx configuration:
 
