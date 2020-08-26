@@ -26,7 +26,26 @@ They may just be looking for some visibility into the fleet - what operating sys
 
 And if they do insist that they need their tool installed because your data doesn’t meet all of their needs, work with them to first validate the tool - and I don’t just mean that it gets all of the data they need. You should use your platform knowledge to help your security team develop a framework to help evaluate these tools. Your security team may not work on endpoints full time, and they almost certainly don’t have the same knowledge you do. Perhaps they don’t know that Kernel Extensions have been deprecated in favor of System Extensions. Maybe they don’t realize that you don’t need a Kernel Extension to read every file on the disk, merely a whitelist via an MDM profile. Use your expertise to help them make the right decision.
 
-## Step 3: sharing is caring
+## Step 3: data wins arguments
+
+If you already have `terrible product X` installed, start collecting data on _why_ it's terrible. What percentage of your fleet is having kernel panics thanks to it? How much CPU or memory is it eating? How badly does it impact software builds (if you support iOS developers, definitely check this one - we have seen some products cause builds to take up to 20x longer). If you don't have a good way to measure these metrics, you should consider deploying [osquery](https://osquery.io/), so you could run a query such as:
+
+```
+# Track the percentage of total CPU time utilized by $endpoint_security_tool
+osquery> SELECT ((tool_time*100)/(SUM(system_time) + SUM(user_time))) \
+AS pct FROM processes, (SELECT (SUM(processes.system_time)+\
+SUM(processes.user_time)) AS tool_time \
+FROM processes WHERE name='endpoint_security_tool');
++-----+
+| pct |
++-----+
+| 32  |
++-----+
+```
+
+The cost of running software isn't only the sticker price. If `terrible product X` is causing users to be negatively impacted in a measurable way, your security team should be more willing to work with you to find a solution.
+
+## Step 4: sharing is caring
 
 We’ve already covered that you perhaps may want to share your data with your security team. Have you ever considered asking them for access to theirs? A lot of threat detection tools can also make great endpoint management tools. Here’s a little case study:
 
