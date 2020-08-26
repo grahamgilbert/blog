@@ -6,11 +6,11 @@ title = "Making friends with your security team"
 
 First off, let’s talk about the elephant in the room: most endpoint engineers do not get on with their security team. You will often hear complaints like
 
-"Our security team wants us to deploy terrible product X."
+> Our security team wants us to deploy terrible product X.
 
-"Product X is destroying our CPUs / causing kernel panics."
+> Product X is destroying our CPUs / causing kernel panics.
 
-"Security has no idea what they’re doing."
+> Security has no idea what they’re doing.
 
 Let’s see how we can overcome these issues and work more closely with our security team.
 
