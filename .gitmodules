@@ -1,15 +1,3 @@
-[submodule "grahamgilbert/themes/anubis"]
-	path = grahamgilbert/themes/anubis
-	url = https://github.com/mitrichius/hugo-theme-anubis.git
-[submodule "hugo/themes/ananke"]
-	path = hugo/themes/ananke
-	url = https://github.com/budparr/gohugo-theme-ananke.git
-[submodule "hugo/themes/anubis"]
-	path = hugo/themes/anubis
-	url = https://github.com/mitrichius/hugo-theme-anubis.git
-[submodule "hugo/themes/axiom"]
-	path = hugo/themes/axiom
+[submodule "themes/axiom"]
+	path = themes/axiom
 	url = https://github.com/marketempower/axiom.git
-[submodule "hugo/themes/meme"]
-	path = hugo/themes/meme
-	url = https://github.com/reuixiy/hugo-theme-meme.git

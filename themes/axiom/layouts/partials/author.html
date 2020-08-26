@@ -1,9 +1,0 @@
-{{- $author := partial "author-data" . -}}
-{{- $dateFormat := .Site.Params.dateFormat | default "Jan 2, 2006 3:04PM" -}}
-<div class="flex items-center">
-
-  <div class="flex-shrink-0 ml-2 leading-tight font-content-sans">
-
-    <time class="text-sm text-raven-500" datetime="{{ dateFormat "2006-01-02T15:04:05Z" .Date.UTC | safeHTML }}">{{ dateFormat $dateFormat .Date.Local }}</time>
-  </div>
-</div>
