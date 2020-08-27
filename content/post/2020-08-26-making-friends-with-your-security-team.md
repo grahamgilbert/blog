@@ -47,7 +47,7 @@ The cost of running software isn't only the sticker price. If `terrible product 
 
 ## Step 4: sharing is caring
 
-We’ve already covered that you perhaps may want to share your data with your security team. Have you ever considered asking them for access to theirs? A lot of threat detection tools can also make great endpoint management tools. Here’s a little case study:
+We’ve already covered that perhaps you may want to share your data with your security team. Have you ever considered asking for access to theirs? A lot of threat detection tools can also make great endpoint management tools. Here’s a little case study:
 
 A few years back, our security team deployed [osquery](https://osquery.io/) to monitor our endpoints. They also developed [StreamAlert](https://www.streamalert.io/) to process and alert on the data. We helped them deploy it, and moved on. It wasn’t until we had beers after work one day with some of the security engineers that we thought of it again. We were talking about writing some tool to capture logs from devices (I forget which). The person from security mentioned that they got all of that from osquery. Fast forward to 2020 and osquery is now our primary method of retrieving data from our endpoints. We’ve even written our own extension (you can find most of it on [GitHub](https://github.com/macadmins/osquery-extension)) to help retrieve the data we care about.
 
