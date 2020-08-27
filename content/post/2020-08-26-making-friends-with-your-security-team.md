@@ -53,7 +53,7 @@ A few years back, our security team deployed [osquery](https://osquery.io/) to m
 
 When we were evaluating tools that could alert us if our management tools started failing (i.e. Munki runs began failing), we could use [Sal](https://github.com/salopensource/sal), hook it up to an automation that checked whether the devices with errors exceeded a certain percentage of successful devices and page the person that is currently on call. All definitely possible, but would require quite a bit of work.
 
-We knew that our security team had a pipeline with StreamAlert set up that would alert them if certain criteria were met. Why should we reinvent the wheel? So we reached out to them, and they only reason we didn’t have access was because they thought we wouldn’t be interested in it. Half an hour later we had written our first rule and got it into production.
+We knew that our security team had a pipeline with StreamAlert set up that would alert them if certain criteria were met. Why should we reinvent the wheel? So we reached out to them, and the only reason we didn’t have access was because they thought we wouldn’t be interested in it. Half an hour later we had written our first rule and got it into production.
 
 ## The moral of this story
 
