@@ -21,3 +21,7 @@ Any security conscious organization that is running macOS should of course alrea
 ## Custom apps
 
 If your organization delivers internal software that's not signed (really, sign your code), you may hit unexpected issues on Apple Silicon devices. macOS will not run unsigned code that's built on Apple Silicon devices - fortunately there is now a method to sign code on an ad-hoc basis, but this will inevitably catch some out.
+
+## Conculusion
+
+Apple Silicon will definitely bring some interesting changes for Enterprise (largely around security), but we cannot discount the potential difficulties this migration will introduce for many organizations.
