@@ -32,4 +32,4 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         run: |-
-          gsutil -m rsync -R output gs://$GCS_BUCKET
+          gsutil -m rsync -R public gs://$GCS_BUCKET
