@@ -1,5 +1,6 @@
 name: Build and deploy
-
+env:
+  GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
 on:
   push:
     branches:
