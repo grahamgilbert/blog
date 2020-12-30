@@ -22,7 +22,7 @@ jobs:
         run: hugo --minify
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-      - uses: jakejarvis/s3-sync-action@master
+        uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
