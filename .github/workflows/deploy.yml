@@ -1,6 +1,4 @@
 name: Build and deploy
-env:
-  GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
 on:
   push:
     branches:
@@ -20,16 +18,16 @@ jobs:
         with:
           hugo-version: "0.79.1"
           # extended: true
-
       - name: Build
         run: hugo --minify
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ secrets.GCS_PROJECT }}
-          service_account_key: ${{ secrets.GCS_SA_KEY }}
-          export_default_credentials: true
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        run: |-
-          gsutil -m rsync -R public gs://$GCS_BUCKET
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "us-east-1"
+          SOURCE_DIR: "public"
