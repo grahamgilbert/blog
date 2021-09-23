@@ -1,6 +1,6 @@
 +++
-date = 2020-11-13T12:00:00Z
-lastmod = 2020-11-13T12:00:00Z
+date = 2021-01-14T12:00:00Z
+lastmod = 2021-01-14T12:00:00Z
 title = "A pragmatic approach to endpoint security"
 +++
 
