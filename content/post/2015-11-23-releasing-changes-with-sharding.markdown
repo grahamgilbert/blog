@@ -95,7 +95,7 @@ get_shard()
 
 ## The joy of sharding
 
-There are two primary benefits in my organisation to sharding. The first is the obvious - it allows us to smoke test changes and updates and potentially roll them back if they have any adverse effect on our fleet before too many machines are effected. The second is an important consideration if you have a large, dispersed fleet. We have a large number of at home workers - by staggering the number of machines pulling the upate at once, we can avoid a thundering heard situation on our primary servers without having to use more expensive CDN-backed bandwidth (which we still use when we have a time critical update).
+There are two primary benefits in my organisation to sharding. The first is the obvious - it allows us to smoke test changes and updates and potentially roll them back if they have any adverse effect on our fleet before too many machines are effected. The second is an important consideration if you have a large, dispersed fleet. We have a large number of at home workers - by staggering the number of machines pulling the update at once, we can avoid a thundering heard situation on our primary servers without having to use more expensive CDN-backed bandwidth (which we still use when we have a time critical update).
 
 ## Using sharding with Puppet
 
