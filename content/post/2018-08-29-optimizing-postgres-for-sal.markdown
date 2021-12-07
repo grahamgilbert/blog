@@ -38,7 +38,7 @@ XX | XX         | XXXXXX    | XXXXXXX
 06 | 01         | memory    | 16Gb
 ```
 
-As time goes on, these empty tuples will mount up. This is where the database's maintenance tasks come in. They are supposed to come along and vaccuum the tables, removing these dead tuples.
+As time goes on, these empty tuples will mount up. This is where the database's maintenance tasks come in. They are supposed to come along and vacuum the tables, removing these dead tuples.
 
 ## So what can we do?
 
