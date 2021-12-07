@@ -1,8 +1,8 @@
 ---
 categories:
-- OS X
-- Munki
-- Python
+  - OS X
+  - Munki
+  - Python
 comments: true
 date: "2015-09-28T11:35:55Z"
 title: Upgrading OS X using a package
@@ -12,8 +12,8 @@ It's the time of year where we start to think about upgrading our machines to th
 
 We're fortunate that we have a standard packaging format on OS X that virtually all management tools can install, so this is the most universal way of distributing software. Greg Neagle wrote [createOSXinstallPkg](https://github.com/munki/createOSXinstallPkg) a few years ago that has several nice features for mac admins:
 
-* It wraps up an OS X Installer into a standard package.
-* It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.<!--more-->
+- It wraps up an OS X Installer into a standard package.
+- It allows you to add in additional packages - perhaps you want to make sure your admin user is installed or make sure that a version of Munki that is compatible with the new OS is installed.<!--more-->
 
 [Yosemite introduced](https://github.com/munki/createOSXinstallPkg#further-note-on-additional-packages-and-yosemite) a nice undocumented requirement that all packages included in the OS X installer environment are distribution packages. This is in addition to the limited OS X Installer environment not having many of the command line tools you might expect to be there.
 
@@ -23,23 +23,24 @@ One solution to these issues is to use [first-boot-pkg](https://github.com/graha
 
 Our first job is to build the package that will be installed at first boot. I am only going to make sure that Munki is installed at first boot, but some other things you might want to put in include:
 
-* Your local admin user
-* Puppet and Facter
-* A payload free package to configure your SUS CatalogURL
+- Your local admin user
+- Puppet and Facter
+- A payload free package to configure your SUS CatalogURL
 
 ### Prep for the first boot package
 
-First off we're going to need the script to build a first boot package. Assuming you're going to keep your code in ``~/src``:
+First off we're going to need the script to build a first boot package. Assuming you're going to keep your code in `~/src`:
 
-``` bash
+```bash
 $ cd ~/src
 $ git clone https://github.com/grahamgilbert/first-boot-pkg.git
 $ cd first-boot-pkg
 ```
 
-You have two options for configuring the first boot package - you can pass it options on the command line or you can use a plist. We're using a plist as it's the most repeatable and sharable method. If you need further options, such as disabling the network check, see the [project on Github](https://github.com/grahamgilbert/first-boot-pkg).
+You have two options for configuring the first boot package - you can pass it options on the command line or you can use a plist. We're using a plist as it's the most repeatable and shareable method. If you need further options, such as disabling the network check, see the [project on Github](https://github.com/grahamgilbert/first-boot-pkg).
 
 ``` xml ~/src/first-boot-pkg/first-boot-config.plist
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"      "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -58,19 +59,19 @@ You have two options for configuring the first boot package - you can pass it op
 </plist>
 ```
 
-The above is assuming you've saved your Munki package to ``~/src/first-boot-pkg/munkitools-2.3.1.2535.pkg`` (i.e. in the same directory as your ``first-boot-config.plist``).
+The above is assuming you've saved your Munki package to `~/src/first-boot-pkg/munkitools-2.3.1.2535.pkg` (i.e. in the same directory as your `first-boot-config.plist`).
 
 ### Building the first boot package
 
 Let's make sure we're in the right directory:
 
-``` bash
+```bash
 $ cd ~/src/first-boot-pkg
 ```
 
 And let's build the package:
 
-``` bash
+```bash
 $ sudo ./first-boot-pkg --plist first-boot-config.plist
 Validating packages:
 ----------------------------------------------------------------
@@ -86,7 +87,7 @@ productbuild: Wrote product to /Users/grahamgilbert/src/first-boot-pkg/post-elca
 
 As previously mentioned, we're going to use createOSXinstallPkg, so let's grab that:
 
-``` bash
+```bash
 $ cd ~/src
 $ git clone https://github.com/munki/createOSXinstallPkg.git
 $ cd createOSXinstallPkg
@@ -94,13 +95,13 @@ $ cd createOSXinstallPkg
 
 And assuming your OS X Installer is saved to the usual place:
 
-``` bash
+```bash
 $ sudo ./createOSXinstallPkg --pkg ../first-boot-pkg/post-elcap-upgrade.pkg --source "/Applications/Install OS X El Capitan GM Candidate.app"
 ```
 
 createOSXinstallPkg will let you know how it's doing:
 
-``` bash
+```bash
 Examining and verifying source...
 ----------------------------------------------------------------
 InstallESD.dmg: /Applications/Install OS X El Capitan GM Candidate.app/Contents/SharedSupport/InstallESD.dmg

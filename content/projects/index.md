@@ -19,7 +19,7 @@ Features include:
 
 - ASR image restoration
 - Package installation
-- Ability to run arbitary scripts
+- Ability to run arbitrary scripts
 - Included workflows (as well as included workflows as a result of a script)
 
 # Crypt
