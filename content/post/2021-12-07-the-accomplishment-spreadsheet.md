@@ -44,4 +44,4 @@ In my opinion, this is the most important column. If your organization has a car
 
 You should share this document with your manager. I review mine with my manager at least quarterly. This helps me keep on track outside of our performance review cycle, and an outside view means that my estimation of the level which I am performing at is accurate. If I need to improve my performance in any area, I have time to take action.
 
-If you keep this sheet up to date and discuss it regularly, hopefully performance review season can be a little less stressful since it should hopefuly now just be a case of copying and pasting the relevent pieces.
+If you keep this sheet up to date and discuss it regularly, hopefully performance review season can be a little less stressful since it should hopefully now just be a case of copying and pasting the relevant pieces.
