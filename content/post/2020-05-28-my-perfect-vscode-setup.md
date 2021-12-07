@@ -31,7 +31,7 @@ Whilst this shouldn't matter to you at all, nerds sure do like to talk about uni
 
 ## Extensions
 
-On to the important stuff. Extensions are what make VS Code so customizable. Most of these are formatters or extensions that offer autocompletes (or InteliSense as VS Code refers to it).
+On to the important stuff. Extensions are what make VS Code so customizable. Most of these are formatters or extensions that offer autocompletes (or IntelliSense as VS Code refers to it).
 
 - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 - [Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go)

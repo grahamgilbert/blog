@@ -1,8 +1,8 @@
 ---
 categories:
-- Sal
+  - Sal
 date: "2016-12-07T11:09:39Z"
-title: 'Sal: an overview'
+title: "Sal: an overview"
 ---
 
 It's been a long time since I wrote about Sal here (nearly [three years](/blog/2014/01/17/sal-the-munki-puppet/)), so with the release of Sal 3.0, it's time to take another look at it.
@@ -19,7 +19,7 @@ That's the 10000 feet overview, let's take a look at some of it's functionality 
 
 {{< figure class="center" src="/images/posts/2016-12-07/01-Dashboard.png" >}}
 
-The first thing you see when you log into Sal is the dashboard. This is where you can get access to a quick overview of your fleet. Each graph, chart, set of buttons is a plugin - this means that each one can be re-ordered and removed - you can even make your own if you need to (more on that another time). Most plugins are clickable - click on the relevent part to show a list of machines it is referring to - and if the plugin supports showing the list (and all of the built in ones do), you can export the list to CSV (since all managers love spreadsheets, right?).<!--more-->
+The first thing you see when you log into Sal is the dashboard. This is where you can get access to a quick overview of your fleet. Each graph, chart, set of buttons is a plugin - this means that each one can be re-ordered and removed - you can even make your own if you need to (more on that another time). Most plugins are clickable - click on the relevant part to show a list of machines it is referring to - and if the plugin supports showing the list (and all of the built in ones do), you can export the list to CSV (since all managers love spreadsheets, right?).<!--more-->
 
 ## Machine detail
 
@@ -35,19 +35,19 @@ Sal is designed to be completely customisable - if you need a specific widget on
 
 There are three different kinds of widgets:
 
-* Basic widgets - these are what you see on the dashboard. If you need to get a quick overview of your machines, this is the widget for you.
-* Reports - these are widgets that take up the whole screen. They give you a deeper dive into one particular aspect of your machines (for example, an overview of the Munki configuration on your machines).
-* Machine detail widgets - these allow you to extend the Machine detail page. For example, one of the built in machine detail widgets shows the security status of the machine.
+- Basic widgets - these are what you see on the dashboard. If you need to get a quick overview of your machines, this is the widget for you.
+- Reports - these are widgets that take up the whole screen. They give you a deeper dive into one particular aspect of your machines (for example, an overview of the Munki configuration on your machines).
+- Machine detail widgets - these allow you to extend the Machine detail page. For example, one of the built in machine detail widgets shows the security status of the machine.
 
 Some of the built in widgets include:
 
-* Operating system version
-* Munki version
-* Pending third party and Apple updates
-* Disk space avaialble
-* Uptime
-* Gatekeeper, SIP and Encryption status
-* More! (22 are included at the time of writing, with more added with every release)
+- Operating system version
+- Munki version
+- Pending third party and Apple updates
+- Disk space available
+- Uptime
+- Gatekeeper, SIP and Encryption status
+- More! (22 are included at the time of writing, with more added with every release)
 
 ## Search
 
@@ -59,7 +59,7 @@ One of the most important parts of a reporting tool is getting information out o
 
 {{< figure class="center" src="/images/posts/2016-12-07/05-SavedSearch.png" >}}
 
-If you have searches your team performs regularly, you can choose to save your search - they are then avaialble for the rest of your team.
+If you have searches your team performs regularly, you can choose to save your search - they are then available for the rest of your team.
 
 ## Application inventory
 
@@ -71,5 +71,5 @@ Of course, you don't only care about the apps you're telling Munki to install. S
 
 In a future post, I'll go over things that the more developer-minded people will find interesting:
 
-* API: Sal has a full API which will allow you to integrate it with your existing apps (for example, you may be fed up with updating your asset inventory tool with the specs of each machine - let the robots do it)
-* Custom plugins: Each plugin for Sal is written in Python, which allows you to do some incredibly powerful things
+- API: Sal has a full API which will allow you to integrate it with your existing apps (for example, you may be fed up with updating your asset inventory tool with the specs of each machine - let the robots do it)
+- Custom plugins: Each plugin for Sal is written in Python, which allows you to do some incredibly powerful things
