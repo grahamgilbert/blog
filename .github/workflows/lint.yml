@@ -13,4 +13,5 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@master
         with:
-          ignore_words_list: Crate
+          ignore_words_list: Crate, tread
+          path: content
