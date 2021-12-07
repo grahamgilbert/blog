@@ -23,7 +23,7 @@ Winner: Casper - if you've paid for the Casper Suite, you're ready to go after y
 
 A streamlined workflow for Munki takes a little setup. Our Munki repository lives on an Ubuntu box, with the actual repo being shared out via SMB. This could just as easily be configured on a Windows server or an OS X server if you still have them in your server room.
 
-With the sharepoint set up, I can just mount the repo and then run munkiimport to get the software into Munki. Yes, a lot of people will be put off with having to use a command line interface - thats' something all Mac admins will need to get over at some point in their career, it might as well be now!
+With the sharepoint set up, I can just mount the repo and then run munkiimport to get the software into Munki. Yes, a lot of people will be put off with having to use a command line interface - that's something all Mac admins will need to get over at some point in their career, it might as well be now!
 
 Casper's method of getting software into the system is simple, but incredibly long winded. You seem to be expected to repackage nearly everything, which is a major pain in the ass. Your JAMF rep will point you towards the pre-made templates in Composer - ironically, most of the apps listed in there, shouldn't need repackaging in the first place as they're either distributed in reasonable packages (like Office) or have tools available to make a package (like Creative Suite). Once you've got the package, it's super simple to get the package into Casper - crack open Casper Admin and drag the package into it. You need to then make a policy which somehow installs the software (more on that in the next section).
 
