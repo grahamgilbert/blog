@@ -10,7 +10,7 @@ However, the notification users get when we either update the LaunchAgent or Lau
 
 ![Notification Center popup stating Managed Login Items Added](/images/posts/2023-02-08/notification_managed_login_items_added.png)
 
-This notification tells you, nor your users about what might have been updated. Chances are you've not just allow listed your custom software, but third party software too, which you probably have little control over how they behave. And of course, this only helps to further perpeutate comments from users such as "IT are installing more spyware on my computer!" even when we are innocent.
+This notification doesn't tell you, nor your users about what might have been updated. Chances are you've not just allow listed your custom software, but third party software too, which you probably have little control over how they behave. And of course, this only helps to further perpeutate comments from users such as "IT are installing more spyware on my computer!" even when we are innocent.
 
 ## So how can we find the culprit
 
