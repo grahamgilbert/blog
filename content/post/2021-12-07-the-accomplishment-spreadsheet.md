@@ -2,6 +2,7 @@
 date = 2021-12-07T12:00:00Z
 lastmod = 2021-12-07T12:00:00Z
 title = "The Accomplishment Spreadsheet"
+categories = "Career"
 +++
 
 This time of year can be particularly stressful thanks to two words: performance reviews.
@@ -16,7 +17,6 @@ The columns of the spreadsheet are below. I do one tab per half year, but if you
 
 | What | What was the impact? | Who was the customer / who benefited? | Who did you work with? | Level estmiation |
 | :--- | :------------------- | :------------------------------------ | :--------------------- | :--------------- |
-
 
 I prefer keeping this in a Google sheet as I can then update it from my phone when I get inspiration - keeping this in an Excel file on one computer limits the amount you will keep this updated.
 
