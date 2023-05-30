@@ -2,6 +2,7 @@
 date = 2023-02-08T12:00:00Z
 lastmod = 2023-02-08T12:00:00Z
 title = "What's nagging you? Getting to the bottom of Managed Login Items"
+categories = ["macos"]
 +++
 
 macOS 13 Ventura introduced Managed Login Items - a way to keep users informed about what LaunchAgents and LaunchDeamons are running on their devices and easily disable unwanted ones. We also _eventually_ got a [way manage these items on via MDM](https://developer.apple.com/documentation/devicemanagement/loginitemsmanageditems).
