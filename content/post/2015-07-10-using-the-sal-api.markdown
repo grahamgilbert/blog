@@ -7,7 +7,7 @@ date: "2015-07-10T11:12:36Z"
 title: Using the Sal API
 ---
 
-As previously mentioned, Sal now has an [API](https://github.com/salopensource/sal/blob/master/docs/API.md). You might be wondering what you can do with this wonderous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.
+As previously mentioned, Sal now has an [API](https://github.com/salopensource/sal/blob/master/docs/API.md). You might be wondering what you can do with this wondrous API. This is a simple example of using it to automate building packages to enrol Macs into Sal.
 
 The basic workflow of this script is:
 

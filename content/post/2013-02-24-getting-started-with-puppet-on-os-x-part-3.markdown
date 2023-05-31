@@ -24,7 +24,7 @@ Can now be shortened to:
 	
 As the Puppet user and group now exist, you no longer need to run Puppet as root. This creates another issue (the Puppet user is visible at the login screen despite it not being able to log in), but we'll get around that in this article. Regardless, you want to install [Puppet 3.1](http://downloads.puppetlabs.com/mac/). Back to the main event.
 
-First thing’s first, create your admin user. I’ve called mine “Local Administrator”, with a short name of “ladmin” and the very imaginative passord of “password”. Next open up a Terminal window on your puppetclient Mac and issue the following command:
+First thing’s first, create your admin user. I’ve called mine “Local Administrator”, with a short name of “ladmin” and the very imaginative password of “password”. Next open up a Terminal window on your puppetclient Mac and issue the following command:
 
 	sudo puppet resource user ladmin
 	

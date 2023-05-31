@@ -86,7 +86,7 @@ def main():
             good_disks += 1
 
     if good_disks == 0:
-        print 'We couldn\'t find any disks that are external and have ignore permissions disabled.'
+        print "We couldn't find any disks that are external and have ignore permissions disabled."
         print 'Please make sure the disk is attached before running this script.'
         sys.exit(1)
 

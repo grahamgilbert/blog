@@ -16,4 +16,4 @@ I'm not going to try and tell you how to get started with Git ([go here instead 
 4. **Change history** - why was that random change even made? Hopefully it's in the commit message! (Your commit messages are useful, aren't they?!)
 5. **You can be a nice sysadmin** - if you use GitHub it's simple to take your repo public and share your awesomeness.
 
-So there you go - I hope this goes some way to answering the question "why shuold I be using Git?"
+So there you go - I hope this goes some way to answering the question "why should I be using Git?"
