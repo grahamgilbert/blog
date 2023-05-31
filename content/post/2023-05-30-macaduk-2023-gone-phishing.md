@@ -1,6 +1,6 @@
 +++
-date = 2023-05-30T12:00:00Z
-lastmod = 2023-05-30T12:00:00Z
+date = 2023-05-31T12:00:00Z
+lastmod = 2023-05-31T12:00:00Z
 title = "Gone Phishing: Airbnb's Journey to phishing resistant MFA at MacAD.UK 2023"
 categories = ["phishing", "MFA", "security", "Conference Talk"]
 +++
