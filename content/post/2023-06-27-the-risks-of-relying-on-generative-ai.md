@@ -1,7 +1,7 @@
 +++
 date = 2023-06-27T11:00:00Z
 lastmod = 2023-06-27T11:00:00Z
-title = "The risks of relying on Generative AI for IT admins"
+title = "The risks of relying on Generative AI when writing scripts"
 categories = ["AI", "scripting", "security"]
 +++
 
