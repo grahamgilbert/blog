@@ -1,11 +1,11 @@
 +++
 date = 2023-06-27T12:00:00Z
 lastmod = 2023-06-27T12:00:00Z
-title = "The risks of relying on AI"
+title = "The risks of relying on Generative AI"
 categories = ["AI", "scripting", "security"]
 +++
 
-This morning I saw a major MDM vendor advertising an upcoming feature that will write scripts to manage your macOS devices for you - sounds like the end of our profession, right?
+This morning I saw a major MDM vendor advertising an upcoming feature that will write scripts to manage your macOS devices for you using generatice AI - sounds like the end of our profession, right?
 
 Let's look at an example of a common IT task - keeping Chrome on macOS up to date. I asked [ChatGTP](https://chat.openai.com) to "Write me a script to keep Google Chrome updated on macOS".
 
@@ -82,6 +82,6 @@ else
 fi
 ```
 
-Installing Google Chrome via `softwareupdate` isn't a thing unfortunately, as much as it would be nice to have an Apple provided way of keeping third party software up to date. I also have access to GPT-4, and unfortunately it's answer was only slightly better, in that it might actually work - but it did involve requiring [homebrew](https://brew.sh) to be installed.
+Installing Google Chrome via `softwareupdate` isn't a thing unfortunately, as much as it would be nice to have an Apple provided way of keeping third party software up to date. I also have access to GPT-4 - perhaps a newer model will produce a better result? Unfortunately it's answer was only slightly better, in that it might actually work - but it did involve requiring [homebrew](https://brew.sh) to be installed.
 
 So back to my original point - AI can be a great starting point for writing code, but at the moment at least, it is definitely not a "no code" solution. It defintiely does not replace knowing how to write code yet, and you should exercise caution before running any code produced by it.
