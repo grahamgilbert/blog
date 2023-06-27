@@ -5,9 +5,9 @@ title = "The risks of relying on Generative AI when writing scripts"
 categories = ["AI", "scripting", "security"]
 +++
 
-This morning I saw a major MDM vendor advertising an upcoming feature that will write scripts to manage your macOS devices for you using generatice AI - sounds like the end of our profession, right?
+This morning I saw a major MDM vendor advertising an upcoming feature that will write scripts to manage your macOS devices for you using generative AI - sounds like the end of our profession, right?
 
-Let's look at an example of a common IT task - keeping Chrome on macOS up to date. I asked [ChatGTP](https://chat.openai.com) to "Write me a script to keep Google Chrome updated on macOS".
+Let's look at an example of a common IT task - keeping Chrome on macOS up to date. I asked [ChatGPT](https://chat.openai.com) to "Write me a script to keep Google Chrome updated on macOS".
 
 It returned the following:
 
