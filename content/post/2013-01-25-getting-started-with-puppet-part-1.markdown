@@ -14,7 +14,8 @@ You will also need either a Mac running OS X 10.8 you don't mind (possibly) nuki
 
 I'm using VMWare Fusion here - please translate the commands to whatever virtualisation app you're using.
 
-##Some setup on the Puppet Master
+## Some setup on the Puppet Master
+
 There are a couple of things we need to do to the Puppet Master before we get stuck in with configuring our Mac client. First, change the networking settings so that it appears directly on your network. The default for the VMWare VM is NAT - this won't work for us. Now you can boot it up and SSH into it - if you wait for a minute or two, the IP address of the VM will be displayed on the screen.
 
 The VM you've downloaded is Puppet Enterprise - this is the paid for version of Puppet, that ships pre-configured. We use the open source version, which requires some assembly on the server end (which I will hopefully cover one day). As it's Puppet Enterprise, it comes with the Dashboard all ready to use - we won't be using it here, so don't worry about it. All we want is the IP address.
