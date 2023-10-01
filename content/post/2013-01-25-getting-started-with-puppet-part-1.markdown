@@ -24,7 +24,7 @@ The VM you've downloaded is Puppet Enterprise - this is the paid for version of 
 So, let's get into the box:
 
 	ssh root@192.168.3.149
-	
+
 The password will be _puppet_
 
 As I mentioned above, being Puppet Enterprise, there are a few differences - the biggest one as far as we're concerned is that the actual Puppet files are in a different location - we'll create a symlink to the "normal" place for Puppet Open Source:
@@ -48,9 +48,10 @@ Scroll down to the bottom and put in an entry for your Puppet server's IP addres
 Still with me? Good, it's time to install Puppet and Facter. Head on over to [the Puppet Labs download](http://downloads.puppetlabs.com/mac) page and get the latest versions of Puppet and Facter (3.0.2 and 1.6.17 respectively) and install them on your test Mac. Or if you're still SSH'ed into the Mac, you can run this command (which will download and install both Puppet and Facter).
 
 	curl -s https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py | sudo python
-	
+
 Cushty, Puppet and Facter are installed. Puppet won't do much though until we write it's configuration file. I'm going to call the Mac puppetclient here.  Pop ``sudo nano /etc/puppet/puppet.conf`` in the Mac's terminal window and paste in the following and save it:
-{% codeblock %}
+
+```conf
 [main]
 logdir=/var/log/puppet
 vardir=/var/lib/puppet
@@ -62,7 +63,7 @@ templatedir=$confdir/templates
 [master]
 # These are needed when the puppet master is run by passenger
 # and can safely be removed if webrick is used.
-ssl_client_header = SSL_CLIENT_S_DN 
+ssl_client_header = SSL_CLIENT_S_DN
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 
 [agent]
@@ -72,23 +73,23 @@ server=puppet
 certname=puppetclient
 report=true
 pluginsync=true
-{% endcodeblock %}
+```
 
 We're now ready to get our client talking to the server. Make sure you've got SSH sessions open to both the client and server, as we'll need to work on both.
 
 On the Mac:
 
 	sudo puppet agent --server puppet --waitforcert 60 --test --group 0
-	
+
 And on the Puppet Master we want to list all of the certificates waiting to be signed:
-	
+
 	puppet cert --list
-	
+
 Once you see your puppetclient's certificate waiting to be signed, sign it on the Master with:
 
 	puppet cert --sign puppetclient
-	
-After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it's magic - although Puppet won't do anything yet, as you've not described any configuration for the client - yet. We'll do that next time. 
+
+After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it's magic - although Puppet won't do anything yet, as you've not described any configuration for the client - yet. We'll do that next time.
 
 Apologies for the slightly boring post, but you've done the hard part now, it's all good from here!
 

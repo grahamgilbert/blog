@@ -23,15 +23,17 @@ You've got a few options - Iceberg, Packages, Composer, you've even got Package 
 
 We're going to grab the current version of The Luggage from the git repository. If you don't have git, you can install the Command Line Tools from within [Xcode's](https://itunes.apple.com/gb/app/xcode/id497799835?mt=12) preferences if you don't have it. If you don't have Xcode, and the Command Line Tools installed, very little is going to work, so go and install it. It's ok, I'll wait.
 
-{% codeblock lang:bash %}$ cd ~/src
+```sh
+$ cd ~/src
 $ git clone https://github.com/unixorn/luggage.git
-{% endcodeblock %}
+```
 
 Now we are going to use The Luggage to install itself (oooh, meta). You'll be asked for your password, as it will need to perform some tasks as root.
 
-{% codeblock lang:bash %}$ cd ~/src/luggage
+```sh
+$ cd ~/src/luggage
 $ make bootstrap_files
-{% endcodeblock %}
+```
 
 ## Your first Makefile
 
@@ -70,7 +72,7 @@ pack-scriptRunner: l_usr_local_bin
 
 Let's go through this line by line. First, we're overloading a default variable. Back in the day, The Luggage used Package Maker to perform the actual build of the package. This has been deprecated by Apple, replaced with pkgbuild and productbuild. We're just telling The Luggage to go straight ahead and use pkgbuild.
 
-We're then including the main Makefile, which contains all of the pre-built work that we can extend with our own Makefiles. 
+We're then including the main Makefile, which contains all of the pre-built work that we can extend with our own Makefiles.
 
 ``TITLE`` and ``REVERSE_DOMAIN`` are exactly that - the title and reverse domain of the package.
 
@@ -91,7 +93,7 @@ If everything has gone well, some text will scroll into your Terminal window and
 
 That's all well and good, but we need a LaunchAgent to run the script when someone logs in. Save the following in ``~/src/scriptRunnerPkg`` and name it ``com.grahamgilbert.scriptrunner.plist``.
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
