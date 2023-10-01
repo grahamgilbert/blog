@@ -9,7 +9,7 @@ private: true
 
 ## Puppet on OS X
 
-{% youtube Z2quMhdgILo 420 315 %}
+{{% youtube Z2quMhdgILo 420 315 %}}
 
 Configuration management and DevOps are the current buzzwords bandied around, but how can they be applied to managing OS X? This session took a look at where Puppet fits into the Mac Management ecosystem, how it can be used in combination with Facter to apply dynamic configuration to OS X and looked at some common use cases. ([slides](http://grahamgilbert.com/images/posts/2016-02-09/Puppet_On_OS_X.pdf))
 
@@ -23,7 +23,7 @@ Munki is one of the best tools for installing software on a Mac, but it isn't a 
 
 ## Automate yourself out of a job (Penn State MacAdmins, 2014)
 
-{% youtube sjbESCx-G48 420 315 %}
+{{% youtube sjbESCx-G48 420 315 %}}
 
 Many new mac admins start off by accident. First there are a few macs, then there's a whole lab of them. And before you know it, you're managing hundreds of them. Techniques that worked with a few machines are no longer scalable without an army of staff. When you could once set up each new mac and user by hand, you now need a repeatable, automated method of deploying your customisations and preferences to your machines.
 
@@ -31,12 +31,12 @@ This session will cover how to configure default user preferences on first login
 
 ## Multi Tenanted Munki with Puppet and Sal (Penn State MacAdmins, 2014)
 
-{% youtube BPTJnz27T44 420 315%}
+{{% youtube BPTJnz27T44 420 315%}}
 
 I spoke about how I tackled the problem of managing multiple Munki stallations by automating the configuration of the remote cache repositories, dynamically configure the clients based on their location and how we empowered our clients by giving them detailed information on their Mac estate with Sal (the Munki Puppet). [(pdf)](/images/posts/2014-07-09/Multi_site_Munki.pdf)
 
 ## Managing Macs with Puppet (Penn State MacAdmins, 2013)
 
-{% youtube GqerWmKU1Js 420 315 %}
+{{% youtube GqerWmKU1Js 420 315 %}}
 
 I spoke about why we chose to use Puppet at pebble.it, how it differs from competing solutions, and how we have utilised it in conjunction with Facter to dynamically configure our machines and gain visibility into the Macs we looked after. [(pdf)](/images/posts/2013-05-24/Managing_Macs_with_Puppet.pdf)
