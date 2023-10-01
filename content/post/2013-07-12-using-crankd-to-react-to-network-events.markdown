@@ -42,22 +42,24 @@ sudo ./install-crankd.sh
 
 That will install the crankd.py executable and it's supporting files, now for the Launch Daemon to make it start at boot. You'll need to put the following into a file at ``/Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist``.
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-    	<key>KeepAlive</key>
-    	<true/>
-    	<key>Label</key>
-    	<string>com.googlecode.pymacadmin.crankd</string>
-    	<key>ProgramArguments</key>
-    	<array>
-    		<string>/usr/local/sbin/crankd.py</string>
-    	</array>
-    	<key>RunAtLoad</key>
-    	<true/>
-    </dict>
-    </plist>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>KeepAlive</key>
+  <true/>
+  <key>Label</key>
+  <string>com.googlecode.pymacadmin.crankd</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/sbin/crankd.py</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+```
 
 And set the right ownership and permissions on the plist
 
@@ -75,17 +77,17 @@ As we want to call the CrankTools class and the OnNetworkLoad method every time 
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>SystemConfiguration</key>
+  <key>SystemConfiguration</key>
+  <dict>
+    <key>State:/Network/Global/IPv4</key>
     <dict>
-        <key>State:/Network/Global/IPv4</key>
-        <dict>
-            <key>method</key>
-            <array>
-                <string>CrankTools</string>
-                <string>OnNetworkLoad</string>
-            </array>
-        </dict>
+      <key>method</key>
+      <array>
+        <string>CrankTools</string>
+        <string>OnNetworkLoad</string>
+      </array>
     </dict>
+  </dict>
 </dict>
 </plist>
 ```
