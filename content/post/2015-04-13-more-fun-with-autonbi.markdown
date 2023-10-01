@@ -23,13 +23,13 @@ As I mentioned above, we're going to make a simple NetInstall that will open up 
 
 Somewhere on your Mac, make a directory called ``Packages`` and then inside that, make a directory called ``Extras``. Inside that directory we're going to create a file called ``rc.imaging`` with the following contents:
 
-{% codeblock lang:bash Packages/Extras/rc.imaging %}
+```sh
 #!/bin/bash
 
 /Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
 
 /sbin/reboot
-{% endcodeblock %}
+```
 
 And make sure it's executable:
 

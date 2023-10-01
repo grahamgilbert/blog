@@ -58,13 +58,13 @@ $ mkdir -p /usr/local/docker/nbi
 
 And fire up your favourite editor and put in the first part of our script:
 
-{% codeblock lang:bash /usr/local/docker/startup.sh %}
+```sh
 #!/bin/bash
 
 docker pull macadmins/tftpd
 docker pull macadmins/netboot-httpd
 docker pull bruienne/bsdpy:1.0
-{% endcodeblock %}
+```
 
 Now we just need to make it executable and we can run it:
 

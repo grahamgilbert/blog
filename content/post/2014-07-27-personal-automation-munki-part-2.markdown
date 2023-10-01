@@ -16,7 +16,7 @@ The next piece of 'non standard' software I need is [Homebrew](http://brew.sh). 
 
 I'm going to utilise a ``nopkg`` pkginfo file to perform the installation. The first part of our script to install Homebrew is to make sure that a user (me!) is logged in. Homebrew doesn't like being owned by root, so first we need to make sure that there is a user logged in.
 
-{% codeblock lang:bash %}
+```sh
 #!/bin/bash
 
 CURRENT_USER=`/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }'`
@@ -25,11 +25,11 @@ if [ "$CURRENT_USER" == 'root' ]; then
     # this can't run at the login window, we need the current user
     exit 1
 fi
-{% endcodeblock %}
+```
 
 So now we know that there's a user logged in, and who that user is. Time to install Homebrew as the current user.
 
-{% codeblock lang:bash %}
+```sh
 mkdir -p /usr/local
 mkdir -p /usr/local/homebrew
 mkdir -p /usr/local/bin
@@ -38,11 +38,11 @@ chown $CURRENT_USER:_developer /usr/local/bin
 
 #download and install homebrew
 su $CURRENT_USER -c "/bin/bash -o pipefail -c '/usr/bin/curl -skSfL https://github.com/mxcl/homebrew/tarball/master | (cd /usr/local ; /usr/bin/tar xz -m --strip 1 -C homebrew; ln -s /usr/local/homebrew/bin/brew /usr/local/bin/brew)'"
-{% endcodeblock %}
+```
 
 As we're using a ``nopkg`` with Munki rather than a payload free package, we've not left any receipts, so Munki doesn't know if Homebrew is installed. We're going to use an installs array to tell Munki what to look for when determining whether Homebrew is installed or not.
 
-{% codeblock lang:xml %}
+```xml
 <key>installs</key>
 	<array>
 		<dict>
@@ -52,6 +52,6 @@ As we're using a ``nopkg`` with Munki rather than a payload free package, we've 
 			<string>file</string>
 		</dict>
 	</array>
-{% endcodeblock %}
+```
 
 You might be crying "but Homebrew needs the Xcode Command Line Tools installed!" - and you'd be 100% correct. You have the option of importing the downloaded package into Munki, but I have adapted [Tim Sutton's script](https://github.com/timsutton/osx-vm-templates/blob/master/scripts/xcode-cli-tools.sh) into a ``nopkg``. To find out what's installed, I ran [fseventer](http://www.fernlightning.com/doku.php?id=software%3afseventer%3astart) and chose a random file to act as my installs array. I've posted the pkginfos for both the [Xcode CLI tools](https://github.com/grahamgilbert/macscripts/blob/master/Munki/pkginfos/Xcode/XcodeCLITools-2014.07.15.plist) and all of the [Homebrew installs](https://github.com/grahamgilbert/macscripts/tree/master/Munki/pkginfos/Homebrew) on Github.

@@ -18,7 +18,7 @@ The convention I'd like everyone to follow is to drop your plugins into the `plu
 
 The first piece you'll need is a `.yapsy-plugin` file. This contains the metadata for your plugin. It's all pretty self explanatory. This is `plugins/grahamgilbert/mavcompatibility/mavcompatibility.yapsy-plugin`.
 
-{% codeblock %}
+```conf
 [Core]
 Name = MavCompatibility
 Module = mavcompatibility
@@ -28,7 +28,7 @@ Author = Graham Gilbert
 Version = 0.1
 Website = http://grahamgilbert.com
 Description = Displays macs that aren't compatible with 10.9.
-{% endcodeblock %}
+```
 
 ## Now for the meat
 
@@ -49,7 +49,7 @@ First off, a little about how Sal stores the data you send it. Sal stores Munki'
 
 When displaying the plugin, Sal will look for a function called show_widget, passing the information mentioned previously. Don't worry too much about the templates, we'll cover them later.
 
-{% codeblock grahamgilbert/mavcompatibility/mavcompatibility.py %}
+```py
 from yapsy.IPlugin import IPlugin
 from yapsy.PluginManager import PluginManager
 from django.template import loader, Context
@@ -78,8 +78,7 @@ def show_widget(self, page, machines=None, theid=None):
             'theid': theid
         })
         return t.render(c), 3
-
-{% endcodeblock %}
+```
 
 Skip to line 20 - this is where the real work starts. All we're doing is taking the machines we were passed and first off finding the machines that have the condition we're looking for. We then want to remove those that contain 10.9 in that data.
 
