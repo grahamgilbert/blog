@@ -59,7 +59,7 @@ So how does the `proxy` container know about the other containers? When you link
 - `CONTAINERNAME_PORT_EXPOSEDPORTNUMBER_TCP_ADDR`
 - `CONTAINERNAME_PORT_EXPOSEDPORTNUMBER_TCP_PORT`
 
-So in the case of the Sal container, it would be `SAL_PORT_8000_TCP_ADDR` and `SAL_PORT_8000_TCP_PORT`. The [`grahamgilbert/proxy`](https://hub.docker.com/r/grahamgilbert/proxy/) image will simply run over any file named `*.tmpl` in `/etc/nginx/sites-templates` and replace the palceholders with the value that's in the environment variable - here's my nginx configuration file template for Sal:
+So in the case of the Sal container, it would be `SAL_PORT_8000_TCP_ADDR` and `SAL_PORT_8000_TCP_PORT`. The [`grahamgilbert/proxy`](https://hub.docker.com/r/grahamgilbert/proxy/) image will simply run over any file named `*.tmpl` in `/etc/nginx/sites-templates` and replace the placeholders with the value that's in the environment variable - here's my nginx configuration file template for Sal:
 
 {% codeblock nginx /etc/nginx/sites-templates/sal.example.com.tmpl %}
 server {
