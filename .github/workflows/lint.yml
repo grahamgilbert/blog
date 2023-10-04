@@ -5,13 +5,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4.1
         with:
           submodules: true # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
 
       - name: Codespell
-        uses: codespell-project/actions-codespell@master
+        uses: codespell-project/actions-codespell@94259cd
         with:
           ignore_words_list: crate,tread,sur,bu
           path: content
