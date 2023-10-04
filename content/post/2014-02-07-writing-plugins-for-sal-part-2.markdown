@@ -15,7 +15,7 @@ In the previous part, we got our basic widget working. This time, we're going to
 
 When displaying the list of machines, Sal will call the ``filter_machines`` function in your plugin. I'm sure you don't want to disappoint, so here's that function added on to the plugin we wrote last time.
 
-{% codeblock grahamgilbert/mavcompatibility/mavcompatibility.py %}
+```py
 from yapsy.IPlugin import IPlugin
 from yapsy.PluginManager import PluginManager
 from django.template import loader, Context
@@ -27,16 +27,16 @@ class MavCompatibility(IPlugin):
 
         if page == 'front':
             t = loader.get_template('grahamgilbert/mavcompatibility/templates/front.html')
-        
+
         if page == 'bu_dashboard':
             t = loader.get_template('grahamgilbert/mavcompatibility/templates/id.html')
-        
+
         if page == 'group_dashboard':
             t = loader.get_template('grahamgilbert/mavcompatibility/templates/id.html')
-            
-        
+
+
         not_compatible = machines.filter(condition__condition_name='supported_major_os_upgrades').exclude(condition__condition_name='supported_major_os_upgrades', condition__condition_data__contains='10.9').count()
-        
+
         c = Context({
             'title': '10.9 Compatibility',
             'not_compatible': not_compatible,
@@ -44,7 +44,7 @@ class MavCompatibility(IPlugin):
             'theid': theid
         })
         return t.render(c), 3
-        
+
     def filter_machines(self, machines, data):
         if data == 'notcompatible':
             machines = machines.filter(condition__condition_name='supported_major_os_upgrades').exclude(condition__condition_name='supported_major_os_upgrades', condition__condition_data__contains='10.9')
@@ -52,9 +52,9 @@ class MavCompatibility(IPlugin):
         else:
             machines = None
             title = None
-        
+
         return machines, title
-{% endcodeblock %}
+```
 
 You'll notice that our filter on the machines is pretty much identical to what we were looking for before - that's because we're looking for the same machines. We're taking some input (a bunch of machines, and a string that we'll come back to), and giving back the machine that fit our search and a title to show at the top of the page.
 

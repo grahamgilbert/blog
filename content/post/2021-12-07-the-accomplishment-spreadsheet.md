@@ -9,7 +9,7 @@ This time of year can be particularly stressful thanks to two words: performance
 
 It's not that we've not done great work, it's often that we either struggle with articulating the work we've done, and sometimes it's just about remembering it all! If you get asked to do peer reviews, well - you get several times the fun, because you need to remember what work your colleagues did over the year as well as your own.
 
-To help ease the "fun" of performance reviews over the years I have developed a technique that I have glamourously and imaginatively named _The Accomplishment Spreadsheet_. Today we are going to look at how it could help you with your own performance review, and any peer reviews you may be asked to do. We are not going to focus on anything else like getting promoted, but of course keeping a record of what you achieve doesn't hurt when it comes to selling yourself for a promotion.
+To help ease the "fun" of performance reviews over the years I have developed a technique that I have glamorously and imaginatively named _The Accomplishment Spreadsheet_. Today we are going to look at how it could help you with your own performance review, and any peer reviews you may be asked to do. We are not going to focus on anything else like getting promoted, but of course keeping a record of what you achieve doesn't hurt when it comes to selling yourself for a promotion.
 
 ## Setup
 

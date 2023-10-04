@@ -27,7 +27,7 @@ This isn't intended to be a tutorial on the theory of OS X's authorization datab
 
 Our ``installcheck_script`` is going to be very basic. To first open up the root ``system.preferences`` right, we just need to make sure that the group is set to ``everyone`` rather than ``admin``. If you want to use another group, just substitute it in the ``group`` variable in the installcheck_script and the postinstall_script.
 
-{% codeblock lang:python installcheck.py %}
+```py
 #!/usr/bin/env python
 
 import subprocess
@@ -49,13 +49,13 @@ if formatted['group'] == group:
 else:
     # if it doesn't we're exiting with 0 as we need to perform the install
     sys.exit(0)
-{% endcodeblock %}
+```
 
 ## postinstall_script
 
 The ``postinstall_script`` is just an extension of the ``installcheck_script`` - but we're going to make use of Python's built-in ``plistlib`` to modify the plist and feed it back into ``security authorizationdb`` to set our desired settings.
 
-{% codeblock lang:python postinstall.py %}
+```py
 #!/usr/bin/env python
 
 import subprocess
@@ -81,13 +81,13 @@ if formatted['group'] != group:
     command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)
-{% endcodeblock %}
+```
 
 ## uninstall_script
 
 We should be good admins and clean up after ourselves, so we'll include an uninstall script.
 
-{% codeblock lang:python uninstall.py %}
+```py
 #!/usr/bin/env python
 
 import subprocess
@@ -112,16 +112,16 @@ if formatted['group'] != group:
     command = ['/usr/bin/security', 'authorizationdb', 'write', 'system.preferences']
     task = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = task.communicate(input=input_plist)
-{% endcodeblock %}
+```
 
 ## Getting it into Munki
 
 Now we've got our three scripts, we need to get them together into a pkginfo file. Assuming the scripts you've just made live in ``~/src/macscripts/Munki/Auth``:
 
-{% codeblock %}
+```
 $ cd ~/src/macscripts/Munki/Auth
 $ /usr/local/munki/makepkginfo --installcheck_script=installcheck.py --postinstall_script=postinstall.py --uninstall_script=uninstall.py > OpenSysPrefs-1.0.plist
-{% endcodeblock %}
+```
 
 Which will produce the bare bones of a pkginfo file, but there are a few other things we need to add into it. Modify OpenSysPref-1.0.plist to look like the below. For further documentation on what we're doing here, have a look at the [Munki wiki](https://code.google.com/p/munki/wiki/PkginfoFiles). The important parts you'll need to add / modify are:
 
@@ -137,7 +137,7 @@ Which will produce the bare bones of a pkginfo file, but there are a few other t
 * uninstall_method
 * uninstallable
 
-{% codeblock lang:xml %}
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -243,13 +243,13 @@ if formatted['group'] != group:
     (out, err) = task.communicate(input=input_plist)</string>
 </dict>
 </plist>
-{% endcodeblock %}
+```
 
 At this point, you should be able to add this pkginfo to your Munki repository, include it in a manifest and - well, nothing will happen, as this only unlocks the top level of System Preferences. If you want to do more, you'll need to unlock additional parts as well - the scripts to do this can be found in my [macscripts repository](https://github.com/grahamgilbert/macscripts/tree/master/Munki). I've specified that ``OpenSysPrefs`` is required in all of these - this means I can include only the needed modifications in the manifest and not worry about the top level being unlocked.
 
 Also remember that Munki has conditional items built right in - you might only want to unlock the Network pane on laptops so they can install VPN profiles etc using something like this:
 
-{% codeblock lang:xml %}
+```xml
 <key>conditional_items</key>
 <array>
   <dict>
@@ -261,4 +261,4 @@ Also remember that Munki has conditional items built right in - you might only w
     </array>
   </dict>
 </array>
-{% endcodeblock %}
+```

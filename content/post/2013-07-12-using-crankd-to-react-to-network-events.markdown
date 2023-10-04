@@ -35,60 +35,67 @@ git clone https://github.com/acdha/pymacadmin.git
 
 Then ``cd`` into the pymacadmin directory you just cloned and run ``install-crankd.sh``.
 
-{% codeblock lang:bash %}cd ~/src/pymacadmin
+```sh
+cd ~/src/pymacadmin
 sudo ./install-crankd.sh
-{% endcodeblock %}
+```
 
 That will install the crankd.py executable and it's supporting files, now for the Launch Daemon to make it start at boot. You'll need to put the following into a file at ``/Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist``.
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-    	<key>KeepAlive</key>
-    	<true/>
-    	<key>Label</key>
-    	<string>com.googlecode.pymacadmin.crankd</string>
-    	<key>ProgramArguments</key>
-    	<array>
-    		<string>/usr/local/sbin/crankd.py</string>
-    	</array>
-    	<key>RunAtLoad</key>
-    	<true/>
-    </dict>
-    </plist>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>KeepAlive</key>
+  <true/>
+  <key>Label</key>
+  <string>com.googlecode.pymacadmin.crankd</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/sbin/crankd.py</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+```
 
 And set the right ownership and permissions on the plist
 
-{% codeblock lang:bash %}sudo chmod 644 /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist
+```sh
+sudo chmod 644 /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist
 sudo chown root:wheel /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist
-{% endcodeblock %}
+```
 
 So that's the basics. Now we need to tell crankd what events it should listen to and what it should do.
 
 As we want to call the CrankTools class and the OnNetworkLoad method every time the network changes state, we need to do the following in ``/Library/Preferences/com.googlecode.pymacadmin.crankd.plist``. To see what other events you can use with crankd, head on over to the [GitHub repo](https://github.com/acdha/pymacadmin/tree/master/examples/crankd/sample-of-events).
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-        <dict>
-            <key>SystemConfiguration</key>
-            <dict>
-                <key>State:/Network/Global/IPv4</key>
-                <dict>
-                    <key>method</key>
-                        <array>
-                            <string>CrankTools</string>
-                            <string>OnNetworkLoad</string>
-                        </array>
-                </dict>
-            </dict>
-        </dict>
-    </plist>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>SystemConfiguration</key>
+  <dict>
+    <key>State:/Network/Global/IPv4</key>
+    <dict>
+      <key>method</key>
+      <array>
+        <string>CrankTools</string>
+        <string>OnNetworkLoad</string>
+      </array>
+    </dict>
+  </dict>
+</dict>
+</plist>
+```
 
 Now for the actual Python code. This is very heavily inspired by [Gary Larizza's](http://garylarizza.com) work. We're checking if either en0 or en1 has a valid network connection (as this event is for any network change - both connecting and disconnecting), and if there is a valid connection, run Puppet and then run Munki. This code could easily be modified to run anything you wanted to at the command line (for example a Casper policy). Put the following script in ``/Library/Application Support/crankd/CrankTools.py``.
 
-{% codeblock lang:python title:CrankTools.py %}#!/usr/bin/env python
+```py
+#!/usr/bin/env python
 #
 #    CrankTools.py
 #        The OnNetworkLoad method is called from crankd on a network state change, all other
@@ -107,7 +114,7 @@ syslog.openlog("CrankD")
 
 class CrankTools():
     """The main CrankTools class needed for our crankd config plist"""
-    
+
     def puppetRun(self):
         """Checks for an active network connection and calls puppet if it finds one.
             If the network is NOT active, it logs an error and exits
@@ -120,7 +127,7 @@ class CrankTools():
             self.callCmd(command)
         else:
             syslog.syslog(syslog.LOG_ALERT, "Internet Connection Not Found, Puppet Run Exiting...")
-    
+
     def munkiRun(self):
         """Checks for an active network connection and calls Munki if it finds one.
             If the network is NOT active, it logs an error and exits
@@ -133,7 +140,7 @@ class CrankTools():
             self.callCmd(command)
         else:
             syslog.syslog(syslog.LOG_ALERT, "Internet Connection Not Found, Munki Run Exiting...")
-    
+
     def callCmd(self, command):
         """Simple utility function that calls a command via subprocess
         ---
@@ -142,7 +149,7 @@ class CrankTools():
         """
         task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         task.communicate()
-    
+
     def LinkState(self):
         """This utility returns the status of the passed interface.
         ---
@@ -151,9 +158,9 @@ class CrankTools():
         Returns:
             status - The return code of the subprocess call
         """
-        
+
         theState = False
-        
+
         for interface in range(0, 20):
             interface = str(interface)
             adapter = 'en' + interface
@@ -161,9 +168,9 @@ class CrankTools():
             if not subprocess.call(["ipconfig", "getifaddr", adapter]):
                 theState = True
                 break
-        
+
         return theState
-    
+
     def OnNetworkLoad(self, *args, **kwargs):
         """Called from crankd directly on a Network State Change. We sleep for 10 seconds to ensure that
             an IP address has been cleared or attained, and then perform a Puppet run and a Munki run.
@@ -180,9 +187,9 @@ def main():
     crank = CrankTools()
     crank.OnNetworkLoad()
 
-if __name__ == '__main__':  
-    main() 
-{% endcodeblock %}
+if __name__ == '__main__':
+    main()
+```
 
 It's ok, we're nearly there! You just need to set the right owner on ``CrankTools.py`` , load the Launch Daemon and we can get testing.
 
