@@ -8,13 +8,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1
+      - uses: actions/checkout@v4.1.0
         with:
           submodules: true # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@16361eb
+        uses: peaceiris/actions-hugo@16361eb4acea8698b220b76c0d4e84e1fd22c61d
         with:
           hugo-version: "0.79.1"
           # extended: true
@@ -22,7 +22,7 @@ jobs:
         run: hugo --minify
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        uses: jakejarvis/s3-sync-action@be0c4ab
+        uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
@@ -32,7 +32,7 @@ jobs:
           AWS_REGION: "us-east-1"
           SOURCE_DIR: "public"
       - name: Invalidate CloudFront
-        uses: chetan/invalidate-cloudfront-action@master
+        uses: chetan/invalidate-cloudfront-action@c384d5f09592318a77b1e5c0c8d4772317e48b25
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
           PATHS: "/"
