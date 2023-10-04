@@ -29,6 +29,6 @@ So to recap:
 - Munki for software deployment.
 - Puppet must run in the background periodically
 - The configuration must update itself - I don't want to have to sync code across machines.
-- Where possible, re-use existing Puppet modules
+- Where possible, reuse existing Puppet modules
 
 Over the next few posts, I'll go over the different parts of this solution, how I put it together and how you might be able to use this.
