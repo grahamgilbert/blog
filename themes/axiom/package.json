@@ -23,14 +23,14 @@
     "watch:js": "chokidar \"./src/**/*.js\" -c \"NODE_ENV=development npm run js\""
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.4.16",
     "chokidar-cli": "^2.1.0",
     "concat": "^1.0.3",
     "cssnano": "^5.1.13",
     "del-cli": "^3.0.1",
-    "postcss-cli": "^7.1.1",
-    "postcss-import": "^12.0.1",
-    "postcss-nesting": "^7.0.1",
+    "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^12.0.1",
     "tailwindcss": "^3.2.6",
     "terser": "^4.8.0"
   }
