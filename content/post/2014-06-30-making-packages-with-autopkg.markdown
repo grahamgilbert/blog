@@ -33,13 +33,13 @@ We'll add the set of recipes maintained by AutoPkg's authors, which
 contains some of the most common software. Open up a terminal window
 and enter :
 
-{% codeblock lang:bash %}
+```sh
 $ autopkg repo-add https://github.com/autopkg/recipes
-{% endcodeblock %}
+```
 
 You'll see AutoPkg downloading and adding the recipes to your Mac.
 
-{% codeblock lang:bash %}
+```sh
 Attempting git clone...
 
 Adding /Users/grahamgilbert/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes to RECIPE_SEARCH_DIRS...
@@ -48,20 +48,20 @@ Updated search path:
   '~/Library/AutoPkg/Recipes'
   '/Library/AutoPkg/Recipes'
   '/Users/vagrant/Library/AutoPkg/RecipeRepos/com.github.autopkg.recipes'
-{% endcodeblock %}
+```
 
 
 ## Using the thing
 
 Let's see what recipes we just added. Still in your terminal, enter:
 
-{% codeblock lang:bash %}
+```sh
 $ autopkg list-recipes
-{% endcodeblock %}
+```
 
 You'll see a whole load of output like:
 
-{% codeblock lang:bash %}
+```sh
 Adium.download
 Adium.munki
 Adium.pkg
@@ -76,7 +76,7 @@ AdobeFlashPlayer.munki
 AdobeFlashPlayer.pkg
 AdobeFlashPlayerExtractPackage.munki
 ...
-{% endcodeblock %}
+```
 
 The naming convention in AutoPKG is SoftwareName.output. For for
 example, to run a recipe that downloads Google Chrome and adds it to
@@ -85,23 +85,23 @@ wanted to download it an make a package, you'd use the GoogleChrome.pkg recipe. 
 
 Back into your terminal and enter:
 
-{% codeblock lang:bash %}
+```sh
 $ autopkg run GoogleChrome.pkg
-{% endcodeblock %}
+```
 
 The AutoPkg robot will churn away and you'll get some output similar to:
 
-{% codeblock lang:bash %}
+```sh
 Processing GoogleChrome.pkg...
 
 The following new items were downloaded:
     /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/downloads/GoogleChrome.dmg
 
 The following packages were built:
-    Identifier               Version          Pkg path                        
-    ----------               -------          --------                        
+    Identifier               Version          Pkg path
+    ----------               -------          --------
     com.google.Chrome        35.0.1916.153    /Users/grahamgilbert/Library/AutoPkg/Cache/com.github.autopkg.pkg.googlechrome/GoogleChrome-35.0.1916.153.pkg
-{% endcodeblock %}
+```
 
 And when it's all finished, you'll be left with a nice package that
 you can use anywhere you'd use finely crafted packages - ARD, AutoDMG or even Casper if you're that way inclined (although Allister Banks has been
@@ -112,9 +112,9 @@ his [recent talk](http://tmblr.co/ZHT_Wy1J-Hk5I) for more on that subject).
 
 What happens next time you want to build an updated package?
 
-{% codeblock lang:bash %}
+```sh
 $ autopkg run GoogleChrome.pkg
-{% endcodeblock %}
+```
 
 Right?
 
@@ -125,9 +125,9 @@ Chrome? Fortunately we're using the community provided recipes, and if
 something's broken they usually get fixed pretty quickly. We just need
 to tell AutoPkg to update the installed recipes.
 
-{% codeblock lang:bash %}
+```sh
 $ autopkg update-repo all
-{% endcodeblock %}
+```
 
 And then we're able to build our package safe in the knowledge that
 someone else has done all of the hard work for us.

@@ -14,7 +14,8 @@ You will also need either a Mac running OS X 10.8 you don't mind (possibly) nuki
 
 I'm using VMWare Fusion here - please translate the commands to whatever virtualisation app you're using.
 
-##Some setup on the Puppet Master
+## Some setup on the Puppet Master
+
 There are a couple of things we need to do to the Puppet Master before we get stuck in with configuring our Mac client. First, change the networking settings so that it appears directly on your network. The default for the VMWare VM is NAT - this won't work for us. Now you can boot it up and SSH into it - if you wait for a minute or two, the IP address of the VM will be displayed on the screen.
 
 The VM you've downloaded is Puppet Enterprise - this is the paid for version of Puppet, that ships pre-configured. We use the open source version, which requires some assembly on the server end (which I will hopefully cover one day). As it's Puppet Enterprise, it comes with the Dashboard all ready to use - we won't be using it here, so don't worry about it. All we want is the IP address.
@@ -24,7 +25,7 @@ The VM you've downloaded is Puppet Enterprise - this is the paid for version of 
 So, let's get into the box:
 
 	ssh root@192.168.3.149
-	
+
 The password will be _puppet_
 
 As I mentioned above, being Puppet Enterprise, there are a few differences - the biggest one as far as we're concerned is that the actual Puppet files are in a different location - we'll create a symlink to the "normal" place for Puppet Open Source:
@@ -48,9 +49,10 @@ Scroll down to the bottom and put in an entry for your Puppet server's IP addres
 Still with me? Good, it's time to install Puppet and Facter. Head on over to [the Puppet Labs download](http://downloads.puppetlabs.com/mac) page and get the latest versions of Puppet and Facter (3.0.2 and 1.6.17 respectively) and install them on your test Mac. Or if you're still SSH'ed into the Mac, you can run this command (which will download and install both Puppet and Facter).
 
 	curl -s https://raw.github.com/grahamgilbert/macscripts/master/Puppet-Install/install_puppet.py | sudo python
-	
+
 Cushty, Puppet and Facter are installed. Puppet won't do much though until we write it's configuration file. I'm going to call the Mac puppetclient here.  Pop ``sudo nano /etc/puppet/puppet.conf`` in the Mac's terminal window and paste in the following and save it:
-{% codeblock %}
+
+```conf
 [main]
 logdir=/var/log/puppet
 vardir=/var/lib/puppet
@@ -62,7 +64,7 @@ templatedir=$confdir/templates
 [master]
 # These are needed when the puppet master is run by passenger
 # and can safely be removed if webrick is used.
-ssl_client_header = SSL_CLIENT_S_DN 
+ssl_client_header = SSL_CLIENT_S_DN
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 
 [agent]
@@ -72,23 +74,23 @@ server=puppet
 certname=puppetclient
 report=true
 pluginsync=true
-{% endcodeblock %}
+```
 
 We're now ready to get our client talking to the server. Make sure you've got SSH sessions open to both the client and server, as we'll need to work on both.
 
 On the Mac:
 
 	sudo puppet agent --server puppet --waitforcert 60 --test --group 0
-	
+
 And on the Puppet Master we want to list all of the certificates waiting to be signed:
-	
+
 	puppet cert --list
-	
+
 Once you see your puppetclient's certificate waiting to be signed, sign it on the Master with:
 
 	puppet cert --sign puppetclient
-	
-After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it's magic - although Puppet won't do anything yet, as you've not described any configuration for the client - yet. We'll do that next time. 
+
+After a few seconds you will then see loads of output scrolling along. This is Puppet starting to work it's magic - although Puppet won't do anything yet, as you've not described any configuration for the client - yet. We'll do that next time.
 
 Apologies for the slightly boring post, but you've done the hard part now, it's all good from here!
 

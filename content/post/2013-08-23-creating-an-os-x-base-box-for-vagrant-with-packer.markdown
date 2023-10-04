@@ -13,7 +13,7 @@ A while ago, the chaps over at the [Vagrant](http://www.vagrantup.com/) project 
 
 Why is this a good thing? Do you NetBoot VMWare to test your builds? Or maybe you still have that test Mac on your desk to test your builds. Either way, it's going to be several minutes to restore an image, even if you're thin imaging. With the VM already on your machine, you're ready to go in seconds. Another bonus is that Vagrant isn't only limited to OS X virtual machines - for example, I have a Vagrant configuration that spins up an Ubuntu box configured as a Munki server, with a copy of my repository on an external drive. This allows me to test deployments from anywhere, with everything local to my Mac (have you ever tried testing a Final Cut Studio package from home? 48GB takes a while to download.). I'll go into more detail on this setup in a future post, but for now here's how to get a Mac base box into Vagrant.<!--more-->
 
-##Pre-requisites
+## Pre-requisites
 
 - [Install OS X Mountain Lion.app from the App Store](https://itunes.apple.com/gb/app/os-x-mountain-lion/id537386512?mt=12)
 - [VMWare Fusion](http://www.vmware.com/products/fusion/overview.html)
@@ -22,7 +22,7 @@ Why is this a good thing? Do you NetBoot VMWare to test your builds? Or maybe yo
 - [Packer](http://www.packer.io/downloads.html) (I'm using Packer 0.3.1)
 - Git (Install the Command Line Tools from within [Xcode's](https://itunes.apple.com/gb/app/xcode/id497799835?mt=12) preferences if you don't have it).
 
-##Get set up with Packer
+## Get set up with Packer
 
 Before we install Packer, you're going to need to download it. No, really, you need it.
 
@@ -84,7 +84,7 @@ $ packer build template.json
 
 After you hit return, VMware will open up and OS X will start installing. Once everything is done, and Packer tells you it's done in your terminal window, you just need to add it to Vagrant and then you're ready to use it.
 
-##Adding the VM to Vagrant
+## Adding the VM to Vagrant
 
 ```bash
 $ vagrant box add osx ~/src/Others/osx-vm-templates/packer/packer_vmware_vmware.box

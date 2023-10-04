@@ -22,26 +22,26 @@ check_and_install_updates() {
     # Check for updates and get the version
     LATEST_VERSION=$(curl -s "https://omahaproxy.appspot.com/all?os=mac" | grep -m 1 stableversion | cut -d '"' -f 2)
     CURRENT_VERSION=$("$CHROME_PATH" --version | awk '{print $3}')
-    
+
     # Compare versions
     if [[ "$LATEST_VERSION" != "$CURRENT_VERSION" ]]; then
         echo "A new version of Google Chrome is available. Updating..."
-        
+
         # Download the latest version
         curl -O "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
-        
+
         # Mount the downloaded DMG file
         hdiutil attach googlechrome.dmg
-        
+
         # Install the update
         sudo "/Volumes/Google Chrome/Google Chrome.app/Contents/MacOS/Google Chrome" --update
-        
+
         # Eject the mounted DMG file
         hdiutil eject "/Volumes/Google Chrome"
-        
+
         # Clean up the downloaded DMG file
         rm googlechrome.dmg
-        
+
         echo "Google Chrome updated to version $LATEST_VERSION."
     else
         echo "Google Chrome is already up to date (version $CURRENT_VERSION)."
@@ -84,4 +84,4 @@ fi
 
 Installing Google Chrome via `softwareupdate` isn't a thing unfortunately, as much as it would be nice to have an Apple provided way of keeping third party software up to date. I also have access to GPT-4 - perhaps a newer model will produce a better result? Unfortunately it's answer was only slightly better, in that it might actually work - but it did involve requiring [homebrew](https://brew.sh) to be installed.
 
-So back to my original point - AI can be a great starting point for writing code, but at the moment at least, it is definitely not a "no code" solution. It defintiely does not replace knowing how to write code yet, and you should exercise caution before running any code produced by it.
+So back to my original point - AI can be a great starting point for writing code, but at the moment at least, it is definitely not a "no code" solution. It definitely does not replace knowing how to write code yet, and you should exercise caution before running any code produced by it.
