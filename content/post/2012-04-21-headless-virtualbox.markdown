@@ -1,7 +1,7 @@
 ---
 categories:
 - Mac OS X Server
-- Vitualisation
+- Virtualisation
 comments: true
 date: "2012-04-21T00:00:00Z"
 title: Headless VirtualBox

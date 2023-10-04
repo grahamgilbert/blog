@@ -7,7 +7,7 @@ comments: true
 date: "2013-08-19T00:00:00Z"
 title: 'The Luggage: Further automation'
 ---
-As promised in my previous post, today we're going to look at how we can further refine our workflow, with the aim of cutting out as many manual steps as possible (every IT person knows it's not computer that make mistakes, it's the idiots in front of them) and making as much of our code re-usable in other packages.
+As promised in my previous post, today we're going to look at how we can further refine our workflow, with the aim of cutting out as many manual steps as possible (every IT person knows it's not computer that make mistakes, it's the idiots in front of them) and making as much of our code reusable in other packages.
 
 If you've not read the [previous article](http://grahamgilbert.com/blog/2013/08/09/the-luggage-an-introduction/), you will need to before carrying on with this, unless you're already familiar with The Luggage. If you get stuck, all of the code from this post is [up on Github](https://github.com/grahamgilbert/the-luggage-post-201308).<!--more-->
 
