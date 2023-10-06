@@ -1,6 +1,6 @@
 +++
-date = 2023-10-06T12:00:00Z
-lastmod = 2023-10-06T12:00:00Z
+date = 2023-10-06T09:00:00Z
+lastmod = 2023-10-06T09:00:00Z
 title = "Zero Trust is not Zero Effort: Planning your Zero Trust strategy at MacSysAdmin 2023"
 categories = ["Zero Trust", "security", "Conference Talk"]
 +++
