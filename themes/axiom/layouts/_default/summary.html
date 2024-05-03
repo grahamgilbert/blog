@@ -1,4 +1,4 @@
-{{- $dateFormat := .Site.Params.dateFormat | default "Jan 2, 2006 3:04PM" -}}
+{{- $dateFormat := .Site.Params.dateFormat | default "Jan 2, 2006" -}}
 <div class="summary sm:flex">
   {{- if .Params.feature }}
   {{- $imgSrc := partial "cdn-src" (dict "Site" $.Site "Page" . "src" .Params.feature "preset" "summary") }}
