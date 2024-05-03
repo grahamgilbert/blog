@@ -105,7 +105,7 @@ actively_exploited = true
 
 ## Wrapping up
 
-Searching back over macOS release history is interesting, but the real power of this table is in monitoring your fleet for unpatched CVEs. I have the following queries running across my fleet allowing us to make a good assesment of our security posture:
+Searching back over macOS release history is interesting, but the real power of this table is in monitoring your fleet for unpatched CVEs. I have the following queries running across my fleet allowing us to make a good assessment of our security posture:
 
 ```sql
 # Find all unpatched CVEs
