@@ -46,31 +46,31 @@ Nothing too exiting there. Let's add in a function to check for OS updates on ma
 package main
 
 import (
-	"fmt"
-	"log"
-	"os/exec"
+ "fmt"
+ "log"
+ "os/exec"
 )
 
 func main() {
 
     err = downloadUpdates()
-	if err != nil {
-		log.Fatal(err)
-	}
+ if err != nil {
+  log.Fatal(err)
+ }
 
 }
 
 func downloadUpdates() error {
-	cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
+ cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
 
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Print(string(out))
-		return err
-	}
-	fmt.Print(string(out))
+ out, err := cmd.CombinedOutput()
+ if err != nil {
+  fmt.Print(string(out))
+  return err
+ }
+ fmt.Print(string(out))
 
-	return nil
+ return nil
 }
 
 ```
@@ -82,20 +82,20 @@ That's all well and fine, but aren't we supposed to be handling Windows devices 
 ```go
 // more stuff above
 func downloadUpdates() error {
-	cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
-	if runtime.GOOS == "windows" {
-		p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
-		cmd = exec.Command(p, "/detectnow")
-	}
+ cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
+ if runtime.GOOS == "windows" {
+  p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
+  cmd = exec.Command(p, "/detectnow")
+ }
 
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Print(string(out))
-		return err
-	}
-	fmt.Print(string(out))
+ out, err := cmd.CombinedOutput()
+ if err != nil {
+  fmt.Print(string(out))
+  return err
+ }
+ fmt.Print(string(out))
 
-	return nil
+ return nil
 }
 ```
 
@@ -106,81 +106,81 @@ The functions to ensure we are running on supported platforms and to install and
 package main
 
 import (
-	"errors"
-	"fmt"
-	"log"
-	"os/exec"
-	"path/filepath"
-	"runtime"
+ "errors"
+ "fmt"
+ "log"
+ "os/exec"
+ "path/filepath"
+ "runtime"
 )
 
 func main() {
 
-	err := checkForUnsupportedPlatform()
-	if err != nil {
-		log.Fatal(err)
-	}
+ err := checkForUnsupportedPlatform()
+ if err != nil {
+  log.Fatal(err)
+ }
 
-	err = downloadUpdates()
-	if err != nil {
-		log.Fatal(err)
-	}
+ err = downloadUpdates()
+ if err != nil {
+  log.Fatal(err)
+ }
 
-	err = installUpdates()
-	if err != nil {
+ err = installUpdates()
+ if err != nil {
 
-		log.Fatal(err)
-	}
+  log.Fatal(err)
+ }
 
 }
 
 func checkForUnsupportedPlatform() error {
-	if runtime.GOOS != "darwin" && runtime.GOOS != "windows" {
-		err := errors.New("Unsupported platform")
-		return err
-	}
+ if runtime.GOOS != "darwin" && runtime.GOOS != "windows" {
+  err := errors.New("Unsupported platform")
+  return err
+ }
 
-	return nil
+ return nil
 }
 
 func downloadUpdates() error {
-	cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
-	if runtime.GOOS == "windows" {
-		p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
-		cmd = exec.Command(p, "/detectnow")
-	}
+ cmd := exec.Command("/usr/sbin/softwareupdate", "-dla")
+ if runtime.GOOS == "windows" {
+  p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
+  cmd = exec.Command(p, "/detectnow")
+ }
 
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Print(string(out))
-		return err
-	}
-	fmt.Print(string(out))
+ out, err := cmd.CombinedOutput()
+ if err != nil {
+  fmt.Print(string(out))
+  return err
+ }
+ fmt.Print(string(out))
 
-	return nil
+ return nil
 }
 
 func installUpdates() error {
-	cmd := exec.Command("/usr/sbin/softwareupdate", "-dia", "--restart")
-	if runtime.GOOS == "windows" {
-		p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
-		cmd = exec.Command(p, "/updatenow")
-	}
+ cmd := exec.Command("/usr/sbin/softwareupdate", "-dia", "--restart")
+ if runtime.GOOS == "windows" {
+  p := filepath.FromSlash("C:/Windows/system32/wuauclt.exe")
+  cmd = exec.Command(p, "/updatenow")
+ }
 
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Print(string(out))
-		return err
-	}
-	fmt.Print(string(out))
+ out, err := cmd.CombinedOutput()
+ if err != nil {
+  fmt.Print(string(out))
+  return err
+ }
+ fmt.Print(string(out))
 
-	return nil
+ return nil
 }
 ```
 
 ## Building
 
-By default Go will build for the platform you are running. Fortunately we just need to set the `GOOS` environment variable whilst building to get a binary for other platorms.
+By default Go will build for the platform you are running. Fortunately we just need to set the `GOOS` environment variable whilst building to get a binary for other platforms.
 
 ```bash
 GOOS=darwin go build -o build/darwin/osupdate

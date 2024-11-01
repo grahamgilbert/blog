@@ -8,7 +8,7 @@ date: "2013-10-13T00:00:00Z"
 title: "ZNC: An IRC Bouncer"
 ---
 
-Yes, it's true. The most interesting conversations in the Mac admin world take place using technology from the 1980's - [IRC](http://en.wikipedia.org/wiki/Internet_Relay_Chat) (##osx-server on [freenode](http://freenode.net/)). Those of you who know me will know that I'm borderline OCD. In this instance, my major annoyance was that I'd only get half of the conversation and I'd miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient connection to IRC without having to sit infront of my computer 24/7.
+Yes, it's true. The most interesting conversations in the Mac admin world take place using technology from the 1980's - [IRC](http://en.wikipedia.org/wiki/Internet_Relay_Chat) (##osx-server on [freenode](http://freenode.net/)). Those of you who know me will know that I'm borderline OCD. In this instance, my major annoyance was that I'd only get half of the conversation and I'd miss private messages when I had to put my laptop to sleep. I needed to somehow keep a persistient connection to IRC without having to sit in front of my computer 24/7.
 
 I'd heard of IRC bouncers before - an app that runs on a server, saving the messages in the rooms you specify for you until you are able to read them, but always assumed they were much more difficult to set up than it turned out to be.
 
@@ -17,8 +17,8 @@ This is set up on a box running Ubuntu 12.04, with port 6666 opened on your fire
 Right, let's get started. All of these commands are to be run as your normal user (`graham` in this case - **not root**). First we're going to enable backports in Ubuntu. I like editing text files in `nano` so I'm going to install that first, but feel free to use Vi or whatever you like.
 
 ```bash
-$ sudo apt-get install -y nano
-$ sudo nano /etc/apt/sources.list
+sudo apt-get install -y nano
+sudo nano /etc/apt/sources.list
 ```
 
 Find the two backports lines commented out (lines 44-45 on my test box) and unomment them.
@@ -33,8 +33,8 @@ If you are using nano, hit `CTRL+O` and press return to save it, then `CTRL-X` t
 To install ZNC, issue the following command:
 
 ```bash
-$ sudo apt-get update
-$ sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports
+sudo apt-get update
+sudo apt-get install -y znc/precise-backports znc-dbg/precise-backports znc-dev/precise-backports znc-extra/precise-backports znc-perl/precise-backports znc-python/precise-backports znc-tcl/precise-backports
 ```
 
 <!--more-->
@@ -160,7 +160,7 @@ $ znc --makeconf
 Still with me? One last thing to do - make sure ZNC starts and keeps running. We'll use Upstart (hat-tip to [@natewalck](https://twitter.com/natewalck/status/389345376811356160)).
 
 ```bash
-$ sudo nano /etc/init/znc.conf
+sudo nano /etc/init/znc.conf
 ```
 
 And pop in the following, replacing `sudo -u graham` with your own username.
@@ -185,7 +185,7 @@ end script
 Then finally start it up:
 
 ```bash
-$ sudo start znc
+sudo start znc
 ```
 
 Configuring each IRC client is different, but for Textual (my preferred client), it's pretty straightforward. Go to the Server menu and choose Add Server. Make the settings look like below, obviously replaing the hostname and password with the ones you chose.
