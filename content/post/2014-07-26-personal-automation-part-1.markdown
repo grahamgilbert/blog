@@ -22,7 +22,7 @@ My first requirement was that I shouldn't need to run anything to get my configu
 
 As I said before, I really disliked how Boxen installs software. Munki does a much better job, and AutoPkg makes it trivial to make sure you have the latest software version. Being a sysadmin, I need more than simple drag and drop apps and packages though - I make extensive use of [Homebrew](http://brew.sh) to install command line tools like [Packer](http://packer.io), so I needed to come up with a way of installing these with Munki.
 
-However, Munki isn't the best tool for managing my configuration. I've been using Puppet to manage the Macs I look after for nearly three years now, and I wanted to base my system on it as I've already done a lot of the work with making OS X specific modules. I also wanted to use the modules made for Boxen as much as possible (some made too many assumptions about where they were running, so couldn't be re-used.
+However, Munki isn't the best tool for managing my configuration. I've been using Puppet to manage the Macs I look after for nearly three years now, and I wanted to base my system on it as I've already done a lot of the work with making OS X specific modules. I also wanted to use the modules made for Boxen as much as possible (some made too many assumptions about where they were running, so couldn't be reused.
 
 So to recap:
 
