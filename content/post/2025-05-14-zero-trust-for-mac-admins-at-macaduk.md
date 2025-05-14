@@ -1,7 +1,7 @@
 +++
 date = 2025-05-14T09:00:00Z
 lastmod = 2025-05-14T09:00:00Z
-title = "Zero Truat for Mac Admins at MacAD.UK"
+title = "Zero Trust for Mac Admins at MacAD.UK"
 categories = ["osquery", "security", "zero-trust", "conference"]
 +++
 
